@@ -911,4 +911,239 @@ results
 </script>
 
 </body>
+  <!-- =====================================================
+     SYSTEM CHECK — DASHBOARD HEALTH MONITOR
+===================================================== -->
+
+<div id="system-check"
+     style="
+       position:fixed;
+       right:15px;
+       bottom:15px;
+       z-index:9999;
+       max-width:360px;
+       background:#ffffff;
+       border-radius:15px;
+       padding:16px;
+       box-shadow:0 8px 30px rgba(0,0,0,.18);
+       font-family:Arial,sans-serif;
+       font-size:14px;
+     ">
+
+  <b>🛠 DASHBOARD SYSTEM CHECK</b>
+
+  <div id="check-results"
+       style="margin-top:10px;">
+    Текширилмоқда...
+  </div>
+
+</div>
+
+
+<script>
+
+(function(){
+
+  const results = [];
+
+  function check(name, condition){
+
+    results.push({
+
+      name:name,
+      ok:Boolean(condition)
+
+    });
+
+  }
+
+
+  /* ==============================================
+     1. 22 TA HUDUD
+  ============================================== */
+
+  check(
+    "22 та ҳудуд",
+    typeof districtKPI !== "undefined" &&
+    districtKPI.length === 22
+  );
+
+
+  /* ==============================================
+     2. RISK ENGINE
+  ============================================== */
+
+  check(
+    "AI Risk Engine",
+    typeof calculateRisk === "function"
+  );
+
+
+  /* ==============================================
+     3. RISK RESULTS
+  ============================================== */
+
+  check(
+    "Risk натижалари",
+    typeof results !== "undefined" &&
+    results.length === 22
+  );
+
+
+  /* ==============================================
+     4. TOP-5
+  ============================================== */
+
+  check(
+    "TOP-5",
+    document.getElementById("top5") !== null
+  );
+
+
+  /* ==============================================
+     5. RISK MAP
+  ============================================== */
+
+  check(
+    "AI Risk Map",
+    document.getElementById("map") !== null
+  );
+
+
+  /* ==============================================
+     6. DISTRICT DETAIL
+  ============================================== */
+
+  check(
+    "Ҳудуд маълумоти",
+    document.getElementById("detail") !== null
+  );
+
+
+  /* ==============================================
+     7. AI ACTIONS
+  ============================================== */
+
+  check(
+    "AI тавсиялар",
+    document.getElementById("actions") !== null
+  );
+
+
+  /* ==============================================
+     8. RANKING
+  ============================================== */
+
+  check(
+    "22 та рейтинг",
+    document.getElementById("ranking") !== null
+  );
+
+
+  /* ==============================================
+     9. SUMMARY
+  ============================================== */
+
+  check(
+    "Summary KPI",
+    document.getElementById("total") !== null &&
+    document.getElementById("red") !== null &&
+    document.getElementById("yellow") !== null &&
+    document.getElementById("green") !== null
+  );
+
+
+  /* ==============================================
+     SHOW RESULTS
+  ============================================== */
+
+  const box =
+    document.getElementById("check-results");
+
+
+  box.innerHTML =
+    results.map(function(r){
+
+      return `
+
+        <div style="
+          padding:5px 0;
+          color:${r.ok ? '#176b36' : '#b42318'};
+        ">
+
+          ${r.ok ? '✅' : '❌'}
+
+          ${r.name}
+
+        </div>
+
+      `;
+
+    }).join("");
+
+
+  /* ==============================================
+     FINAL STATUS
+  ============================================== */
+
+  const failed =
+    results.filter(r => !r.ok).length;
+
+
+  const status =
+    document.createElement("div");
+
+
+  status.style.marginTop = "10px";
+  status.style.padding = "9px";
+  status.style.borderRadius = "9px";
+  status.style.fontWeight = "bold";
+
+
+  if(failed === 0){
+
+    status.style.background = "#e5f7e9";
+    status.style.color = "#176b36";
+
+    status.innerHTML =
+      "🟢 SYSTEM OK — Dashboard тайёр";
+
+  }
+  else{
+
+    status.style.background = "#ffe5e5";
+    status.style.color = "#b42318";
+
+    status.innerHTML =
+      "🔴 " +
+      failed +
+      " та муаммо аниқланди";
+
+  }
+
+
+  box.appendChild(status);
+
+
+  /* ==============================================
+     AUTO HIDE AFTER 10 SEC
+  ============================================== */
+
+  setTimeout(function(){
+
+    const panel =
+      document.getElementById("system-check");
+
+    if(panel){
+
+      panel.style.opacity = "0.25";
+
+    }
+
+  },10000);
+
+
+})();
+
+</script>
 </html>

@@ -841,7 +841,7 @@ const results =
   districtKPI
   .map(calculateRisk)
   .sort((a,b)=>b.score-a.score);
-
+window.__dashboardResults = results;
 
 /* ======================================================
    SUMMARY

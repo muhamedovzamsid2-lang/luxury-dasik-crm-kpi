@@ -3,163 +3,304 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>Hududgaz Tashkent — AI KPI Dashboard</title>
+
+<title>Hududgaz Tashkent — AI KPI 2.0</title>
 
 <style>
 *{box-sizing:border-box}
+
 body{
- margin:0;
- font-family:Arial,sans-serif;
- background:#f4f7fb;
- color:#172033;
+margin:0;
+font-family:Arial,sans-serif;
+background:#f4f7fb;
+color:#172033;
 }
+
 header{
- background:#102a43;
- color:white;
- padding:18px;
- position:sticky;
- top:0;
- z-index:10;
+background:#102a43;
+color:white;
+padding:17px;
+position:sticky;
+top:0;
+z-index:20;
 }
+
 .header{
- max-width:1200px;
- margin:auto;
- display:flex;
- justify-content:space-between;
- align-items:center;
- gap:15px;
+max-width:1250px;
+margin:auto;
+display:flex;
+justify-content:space-between;
+align-items:center;
 }
+
 .logo{
- font-size:20px;
- font-weight:700;
+font-size:19px;
+font-weight:bold;
 }
-.status{
- background:#1f9d55;
- padding:7px 12px;
- border-radius:20px;
- font-size:12px;
+
+.online{
+background:#1f9d55;
+padding:7px 12px;
+border-radius:20px;
+font-size:12px;
 }
+
 .container{
- max-width:1200px;
- margin:auto;
- padding:20px;
+max-width:1250px;
+margin:auto;
+padding:18px;
 }
+
 .hero{
- background:white;
- border-radius:18px;
- padding:22px;
- box-shadow:0 5px 20px #00000010;
- margin-bottom:18px;
+background:white;
+border-radius:18px;
+padding:22px;
+box-shadow:0 5px 20px #00000010;
+margin-bottom:18px;
 }
-h1{margin:0 0 8px;font-size:25px}
-.subtitle{color:#718096}
+
+h1{
+margin:0 0 7px;
+font-size:25px;
+}
+
+.subtitle{
+color:#718096;
+}
+
 .cards{
- display:grid;
- grid-template-columns:repeat(4,1fr);
- gap:14px;
- margin:18px 0;
+display:grid;
+grid-template-columns:repeat(5,1fr);
+gap:13px;
+margin:18px 0;
 }
+
 .card{
- background:white;
- border-radius:16px;
- padding:18px;
- box-shadow:0 4px 15px #0000000d;
+background:white;
+border-radius:16px;
+padding:17px;
+box-shadow:0 4px 15px #0000000d;
 }
-.card .label{
- color:#718096;
- font-size:13px;
+
+.label{
+color:#718096;
+font-size:12px;
 }
-.card .value{
- font-size:25px;
- font-weight:700;
- margin-top:8px;
+
+.value{
+font-size:25px;
+font-weight:bold;
+margin-top:7px;
 }
+
+.blue{color:#3182ce}
 .red{color:#e53e3e}
 .yellow{color:#d69e2e}
 .green{color:#38a169}
-.blue{color:#3182ce}
-
-.toolbar{
- display:flex;
- gap:10px;
- margin-bottom:15px;
- flex-wrap:wrap;
-}
-input,select{
- padding:12px;
- border:1px solid #d9e2ec;
- border-radius:10px;
- background:white;
- font-size:14px;
-}
-input{flex:1;min-width:220px}
 
 .section{
- background:white;
- border-radius:16px;
- padding:18px;
- margin-bottom:18px;
- box-shadow:0 4px 15px #0000000d;
+background:white;
+border-radius:17px;
+padding:18px;
+margin-bottom:18px;
+box-shadow:0 4px 15px #0000000d;
 }
+
 .section h2{
- margin-top:0;
- font-size:19px;
+margin-top:0;
+font-size:19px;
+}
+
+.form-grid{
+display:grid;
+grid-template-columns:repeat(4,1fr);
+gap:12px;
+}
+
+.field{
+display:flex;
+flex-direction:column;
+gap:6px;
+}
+
+.field label{
+font-size:12px;
+color:#718096;
+font-weight:bold;
+}
+
+input,select{
+padding:12px;
+border:1px solid #d9e2ec;
+border-radius:10px;
+font-size:14px;
+background:white;
+}
+
+button{
+border:0;
+border-radius:10px;
+padding:12px 18px;
+font-weight:bold;
+cursor:pointer;
+}
+
+.primary{
+background:#102a43;
+color:white;
+}
+
+.danger{
+background:#fff5f5;
+color:#c53030;
+}
+
+.success{
+background:#f0fff4;
+color:#2f855a;
+}
+
+.actions{
+display:flex;
+gap:10px;
+margin-top:15px;
+flex-wrap:wrap;
+}
+
+.toolbar{
+display:flex;
+gap:10px;
+margin-bottom:15px;
+flex-wrap:wrap;
+}
+
+.search{
+flex:1;
+min-width:220px;
+}
+
+.table-wrap{
+overflow-x:auto;
 }
 
 table{
- width:100%;
- border-collapse:collapse;
+width:100%;
+border-collapse:collapse;
+min-width:850px;
 }
-th,td{
- padding:12px 9px;
- border-bottom:1px solid #edf2f7;
- text-align:left;
- font-size:13px;
-}
-th{
- background:#f7fafc;
- color:#4a5568;
-}
-.risk{
- display:inline-block;
- padding:5px 9px;
- border-radius:15px;
- font-weight:700;
- font-size:11px;
-}
-.risk.red{background:#fff5f5;color:#c53030}
-.risk.yellow{background:#fffff0;color:#b7791f}
-.risk.green{background:#f0fff4;color:#2f855a}
 
-.bar{
- height:8px;
- background:#edf2f7;
- border-radius:10px;
- overflow:hidden;
+th,td{
+padding:11px 9px;
+border-bottom:1px solid #edf2f7;
+font-size:13px;
+text-align:left;
 }
-.fill{
- height:100%;
- background:#3182ce;
- border-radius:10px;
+
+th{
+background:#f7fafc;
+color:#4a5568;
+}
+
+.risk{
+display:inline-block;
+padding:5px 9px;
+border-radius:15px;
+font-size:11px;
+font-weight:bold;
+}
+
+.risk.red{
+background:#fff5f5;
+color:#c53030;
+}
+
+.risk.yellow{
+background:#fffff0;
+color:#b7791f;
+}
+
+.risk.green{
+background:#f0fff4;
+color:#2f855a;
+}
+
+.risk.orange{
+background:#fffaf0;
+color:#c05621;
+}
+
+.message{
+margin-top:12px;
+padding:12px;
+border-radius:10px;
+display:none;
+font-size:13px;
+}
+
+.info{
+background:#ebf8ff;
+color:#2b6cb0;
+}
+
+.ai-box{
+display:grid;
+grid-template-columns:repeat(3,1fr);
+gap:12px;
+}
+
+.ai-item{
+background:#f7fafc;
+padding:15px;
+border-radius:12px;
+}
+
+.ai-item b{
+display:block;
+font-size:20px;
+margin-top:5px;
 }
 
 .footer{
- text-align:center;
- color:#718096;
- padding:25px;
- font-size:12px;
+text-align:center;
+padding:25px;
+color:#718096;
+font-size:12px;
 }
 
-@media(max-width:800px){
- .cards{grid-template-columns:repeat(2,1fr)}
- .container{padding:12px}
- table{min-width:850px}
- .table-wrap{overflow-x:auto}
+@media(max-width:900px){
+.cards{
+grid-template-columns:repeat(2,1fr);
 }
-@media(max-width:500px){
- .cards{grid-template-columns:1fr 1fr}
- h1{font-size:21px}
- .card .value{font-size:20px}
+
+.form-grid{
+grid-template-columns:repeat(2,1fr);
+}
+
+.ai-box{
+grid-template-columns:1fr;
+}
+}
+
+@media(max-width:550px){
+.container{
+padding:11px;
+}
+
+.cards{
+grid-template-columns:1fr 1fr;
+}
+
+.form-grid{
+grid-template-columns:1fr;
+}
+
+h1{
+font-size:21px;
+}
+
+.value{
+font-size:21px;
+}
 }
 </style>
 </head>
@@ -167,302 +308,794 @@ th{
 <body>
 
 <header>
- <div class="header">
-  <div class="logo">⚡ HUDUDGAZ TASHKENT • AI KPI</div>
-  <div class="status">● ONLINE</div>
- </div>
+<div class="header">
+<div class="logo">⚡ HUDUDGAZ TASHKENT • AI KPI 2.0</div>
+<div class="online">● ONLINE</div>
+</div>
 </header>
 
 <div class="container">
 
- <div class="hero">
-  <h1>AI Risk & KPI Control Dashboard</h1>
-  <div class="subtitle">
-   Тошкент вилояти газ таъминоти — 22 ҳудуд бўйича автоматик мониторинг
-  </div>
- </div>
+<div class="hero">
+<h1>AI Risk & KPI Control Dashboard</h1>
 
- <div class="cards">
+<div class="subtitle">
+Тошкент вилояти газ таъминоти — 22 ҳудуд бўйича автоматик мониторинг
+</div>
+</div>
 
-  <div class="card">
-   <div class="label">Ҳудудлар</div>
-   <div class="value blue" id="districtCount">22</div>
-  </div>
+<!-- SUMMARY -->
 
-  <div class="card">
-   <div class="label">Ўртача AI Risk</div>
-   <div class="value" id="avgRisk">0</div>
-  </div>
+<div class="cards">
 
-  <div class="card">
-   <div class="label">Қизил зона</div>
-   <div class="value red" id="redCount">0</div>
-  </div>
+<div class="card">
+<div class="label">Ҳудудлар</div>
+<div class="value blue" id="districtCount">22</div>
+</div>
 
-  <div class="card">
-   <div class="label">Яшил зона</div>
-   <div class="value green" id="greenCount">0</div>
-  </div>
+<div class="card">
+<div class="label">Ўртача AI Risk</div>
+<div class="value" id="avgRisk">0</div>
+</div>
 
- </div>
+<div class="card">
+<div class="label">Қизил зона</div>
+<div class="value red" id="redCount">0</div>
+</div>
 
- <div class="section">
-  <h2>🔎 Ҳудудлар мониторинги</h2>
+<div class="card">
+<div class="label">Сариқ зона</div>
+<div class="value yellow" id="yellowCount">0</div>
+</div>
 
-  <div class="toolbar">
-   <input id="search" placeholder="Ҳудуд номини қидириш...">
+<div class="card">
+<div class="label">Яшил зона</div>
+<div class="value green" id="greenCount">0</div>
+</div>
 
-   <select id="filter">
-    <option value="all">Барчаси</option>
-    <option value="red">🔴 Қизил</option>
-    <option value="yellow">🟡 Сариқ</option>
-    <option value="green">🟢 Яшил</option>
-   </select>
-  </div>
+</div>
 
-  <div class="table-wrap">
-   <table>
-    <thead>
-     <tr>
-      <th>#</th>
-      <th>Ҳудуд</th>
-      <th>Қарздорлик</th>
-      <th>Йўқотиш %</th>
-      <th>Дебаланс %</th>
-      <th>AI Risk</th>
-      <th>Ҳолат</th>
-     </tr>
-    </thead>
 
-    <tbody id="tableBody"></tbody>
+<!-- DATA ENTRY -->
 
-   </table>
-  </div>
- </div>
+<div class="section">
 
- <div class="section">
-  <h2>🏆 TOP / ANTITOP</h2>
+<h2>📝 Янги KPI маълумот киритиш</h2>
 
-  <div class="table-wrap">
-   <table>
-    <thead>
-     <tr>
-      <th>Рейтинг</th>
-      <th>Ҳудуд</th>
-      <th>AI Risk</th>
-      <th>Тавсия</th>
-     </tr>
-    </thead>
+<div class="form-grid">
 
-    <tbody id="ranking"></tbody>
-   </table>
-  </div>
- </div>
+<div class="field">
+<label>Ҳудуд</label>
 
- <div class="section">
-  <h2>🤖 AI Risk логикаси</h2>
+<select id="districtSelect"></select>
 
-  <p>
-   Risk даражаси қарздорлик, йўқотиш ва дебаланс кўрсаткичлари асосида
-   автоматик ҳисобланади.
-  </p>
+</div>
 
-  <div style="margin:15px 0">
-   <b>Қарздорлик таъсири — 40%</b>
-   <div class="bar"><div class="fill" style="width:40%"></div></div>
-  </div>
+<div class="field">
+<label>Сана</label>
 
-  <div style="margin:15px 0">
-   <b>Йўқотиш таъсири — 35%</b>
-   <div class="bar"><div class="fill" style="width:35%"></div></div>
-  </div>
+<input type="date" id="reportDate">
 
-  <div style="margin:15px 0">
-   <b>Дебаланс таъсири — 25%</b>
-   <div class="bar"><div class="fill" style="width:25%"></div></div>
-  </div>
+</div>
 
- </div>
+<div class="field">
+<label>Қарздорлик</label>
+
+<input type="number" id="debt"
+placeholder="масалан: 73"
+min="0"
+max="100">
+
+</div>
+
+<div class="field">
+<label>Йўқотиш %</label>
+
+<input type="number" id="loss"
+placeholder="масалан: 3.2"
+step="0.1"
+min="0">
+
+</div>
+
+<div class="field">
+<label>Дебаланс %</label>
+
+<input type="number" id="balance"
+placeholder="масалан: 3.5"
+step="0.1"
+min="0">
+
+</div>
+
+</div>
+
+<div class="actions">
+
+<button class="primary" onclick="saveData()">
+💾 Маълумотни сақлаш
+</button>
+
+<button class="danger" onclick="clearAll()">
+🗑 Барча маълумотни тозалаш
+</button>
+
+</div>
+
+<div id="message" class="message"></div>
+
+</div>
+
+
+<!-- AI LOGIC -->
+
+<div class="section">
+
+<h2>🤖 AI Risk логикаси</h2>
+
+<p>
+Risk даражаси ҳозирги версияда 3 та асосий кўрсаткич асосида ҳисобланади.
+</p>
+
+<div class="ai-box">
+
+<div class="ai-item">
+Қарздорлик таъсири
+<b>40%</b>
+</div>
+
+<div class="ai-item">
+Йўқотиш таъсири
+<b>35%</b>
+</div>
+
+<div class="ai-item">
+Дебаланс таъсири
+<b>25%</b>
+</div>
+
+</div>
+
+<p style="color:#718096;font-size:13px">
+Жами: 100%. Реал маълумот киритилганда Risk автоматик қайта ҳисобланади.
+</p>
+
+</div>
+
+
+<!-- MONITORING -->
+
+<div class="section">
+
+<h2>🔎 Ҳудудлар мониторинги</h2>
+
+<div class="toolbar">
+
+<input
+class="search"
+id="search"
+placeholder="Ҳудуд номини қидириш..."
+>
+
+<select id="filter">
+
+<option value="all">Барчаси</option>
+
+<option value="red">🔴 Қизил</option>
+
+<option value="yellow">🟡 Сариқ</option>
+
+<option value="green">🟢 Яшил</option>
+
+</select>
+
+</div>
+
+<div class="table-wrap">
+
+<table>
+
+<thead>
+
+<tr>
+
+<th>#</th>
+<th>Ҳудуд</th>
+<th>Қарздорлик</th>
+<th>Йўқотиш %</th>
+<th>Дебаланс %</th>
+<th>AI Risk</th>
+<th>Ҳолат</th>
+
+</tr>
+
+</thead>
+
+<tbody id="tableBody"></tbody>
+
+</table>
+
+</div>
+
+</div>
+
+
+<!-- TOP -->
+
+<div class="section">
+
+<h2>🏆 TOP / ANTITOP</h2>
+
+<div class="table-wrap">
+
+<table>
+
+<thead>
+
+<tr>
+<th>Рейтинг</th>
+<th>Ҳудуд</th>
+<th>AI Risk</th>
+<th>Тавсия</th>
+</tr>
+
+</thead>
+
+<tbody id="ranking"></tbody>
+
+</table>
+
+</div>
+
+</div>
 
 </div>
 
 <div class="footer">
- Hududgaz Tashkent • AI KPI Monitoring System • 2026
+Hududgaz Tashkent • AI KPI Monitoring System • 2026
 </div>
+
 
 <script>
 
-const districts = [
+/* =========================
+   22 ҲУДУД
+========================= */
 
-["Чирчиқ шаҳри",73,3.0,3.5],
-["Оҳангарон тумани",62,2.9,3.4],
-["Ангрен шаҳри",62,2.8,3.2],
-["Оққўрғон тумани",71,3.1,3.7],
-["Юқори Чирчиқ тумани",58,2.7,3.1],
-["Қуйи Чирчиқ тумани",64,3.2,3.6],
-["Зангиота тумани",85,3.8,4.2],
-["Қибрай тумани",76,3.4,3.8],
-["Бўстонлиқ тумани",48,2.1,2.4],
-["Паркент тумани",55,2.5,2.8],
-["Пскент тумани",59,2.6,3.0],
-["Бекобод шаҳри",67,3.0,3.3],
-["Бекобод тумани",61,2.7,3.1],
-["Олмалиқ шаҳри",70,3.3,3.5],
-["Янгийўл шаҳри",74,3.5,3.9],
-["Янгийўл тумани",69,3.1,3.6],
-["Чиноз тумани",57,2.4,2.9],
-["Тошкент тумани",82,3.7,4.1],
-["Ўрта Чирчиқ тумани",63,2.9,3.4],
-["Тошкент шаҳри",88,4.0,4.5],
-["Оҳангарон шаҳри",66,3.1,3.5],
-["Нурафшон шаҳри",72,3.2,3.7]
+const districtNames = [
+
+"Чирчиқ шаҳри",
+"Оҳангарон тумани",
+"Ангрен шаҳри",
+"Оққўрғон тумани",
+"Юқори Чирчиқ тумани",
+"Қуйи Чирчиқ тумани",
+"Зангиота тумани",
+"Қибрай тумани",
+"Бўстонлиқ тумани",
+"Паркент тумани",
+"Пскент тумани",
+"Бекобод шаҳри",
+"Бекобод тумани",
+"Олмалиқ шаҳри",
+"Янгийўл шаҳри",
+"Янгийўл тумани",
+"Чиноз тумани",
+"Тошкент тумани",
+"Ўрта Чирчиқ тумани",
+"Тошкент шаҳри",
+"Оҳангарон шаҳри",
+"Нурафшон шаҳри"
 
 ];
 
+
+/* =========================
+   БОШЛАНҒИЧ ТЕСТ МАЪЛУМОТ
+========================= */
+
+const defaultData = {
+
+"Чирчиқ шаҳри":[73,3.0,3.5],
+"Оҳангарон тумани":[62,2.9,3.4],
+"Ангрен шаҳри":[62,2.8,3.2],
+"Оққўрғон тумани":[71,3.1,3.7],
+"Юқори Чирчиқ тумани":[58,2.7,3.1],
+"Қуйи Чирчиқ тумани":[64,3.2,3.6],
+"Зангиота тумани":[85,3.8,4.2],
+"Қибрай тумани":[76,3.4,3.8],
+"Бўстонлиқ тумани":[48,2.1,2.4],
+"Паркент тумани":[55,2.5,2.8],
+"Пскент тумани":[59,2.6,3.0],
+"Бекобод шаҳри":[67,3.0,3.3],
+"Бекобод тумани":[61,2.7,3.1],
+"Олмалиқ шаҳри":[70,3.3,3.5],
+"Янгийўл шаҳри":[74,3.5,3.9],
+"Янгийўл тумани":[69,3.1,3.6],
+"Чиноз тумани":[57,2.4,2.9],
+"Тошкент тумани":[82,3.7,4.1],
+"Ўрта Чирчиқ тумани":[63,2.9,3.4],
+"Тошкент шаҳри":[88,4.0,4.5],
+"Оҳангарон шаҳри":[66,3.1,3.5],
+"Нурафшон шаҳри":[72,3.2,3.7]
+
+};
+
+
+/* =========================
+   LOCAL STORAGE
+========================= */
+
+let data;
+
+function loadData(){
+
+let saved=localStorage.getItem("hududgazKPI");
+
+if(saved){
+
+data=JSON.parse(saved);
+
+}else{
+
+data={...defaultData};
+
+localStorage.setItem(
+"hududgazKPI",
+JSON.stringify(data)
+);
+
+}
+
+}
+
+
+/* =========================
+   DISTRICT SELECT
+========================= */
+
+function loadDistricts(){
+
+let select=document.getElementById("districtSelect");
+
+select.innerHTML="";
+
+districtNames.forEach(name=>{
+
+let option=document.createElement("option");
+
+option.value=name;
+option.textContent=name;
+
+select.appendChild(option);
+
+});
+
+}
+
+
+/* =========================
+   AI RISK
+========================= */
+
 function riskCalc(debt,loss,balance){
 
- let debtScore=Math.min(debt,100);
- let lossScore=Math.min(loss*20,100);
- let balanceScore=Math.min(balance*20,100);
+let debtScore=Math.min(
+Math.max(debt,0),
+100
+);
 
- let risk=
-  debtScore*0.40+
-  lossScore*0.35+
-  balanceScore*0.25;
+let lossScore=Math.min(
+Math.max(loss*20,0),
+100
+);
 
- return Math.round(risk*10)/10;
+let balanceScore=Math.min(
+Math.max(balance*20,0),
+100
+);
+
+let risk=
+
+debtScore*0.40+
+lossScore*0.35+
+balanceScore*0.25;
+
+return Math.round(risk*10)/10;
+
 }
+
+
+/* =========================
+   RISK STATUS
+========================= */
 
 function riskInfo(risk){
 
- if(risk>=65){
-  return {
-   name:"ҚИЗИЛ",
-   cls:"red",
-   action:"Шошилинч чора"
-  };
- }
+if(risk>=65){
 
- if(risk>=45){
-  return {
-   name:"САРИҚ",
-   cls:"yellow",
-   action:"Назоратни кучайтириш"
-  };
- }
-
- return {
-  name:"ЯШИЛ",
-  cls:"green",
-  action:"Барқарор"
- };
-}
-
-function render(){
-
- let search=document.getElementById("search").value.toLowerCase();
- let filter=document.getElementById("filter").value;
-
- let rows=[];
-
- districts.forEach((d,i)=>{
-
-  let risk=riskCalc(d[1],d[2],d[3]);
-  let info=riskInfo(risk);
-
-  if(!d[0].toLowerCase().includes(search)) return;
-  if(filter!=="all" && filter!==info.cls) return;
-
-  rows.push({
-   index:i+1,
-   name:d[0],
-   debt:d[1],
-   loss:d[2],
-   balance:d[3],
-   risk:risk,
-   info:info
-  });
-
- });
-
- rows.sort((a,b)=>b.risk-a.risk);
-
- document.getElementById("tableBody").innerHTML=
- rows.map((r,i)=>`
-
- <tr>
-  <td>${i+1}</td>
-  <td><b>${r.name}</b></td>
-  <td>${r.debt}</td>
-  <td>${r.loss}%</td>
-  <td>${r.balance}%</td>
-  <td><b>${r.risk}</b></td>
-  <td>
-   <span class="risk ${r.info.cls}">
-    ${r.info.name}
-   </span>
-  </td>
- </tr>
-
- `).join("");
-
- let ranking=rows.slice(0,10);
-
- document.getElementById("ranking").innerHTML=
- ranking.map((r,i)=>`
-
- <tr>
-  <td><b>${i+1}</b></td>
-  <td>${r.name}</td>
-  <td><b>${r.risk}</b></td>
-  <td>${r.info.action}</td>
- </tr>
-
- `).join("");
+return{
+name:"ҚИЗИЛ",
+cls:"red",
+action:"Шошилинч чора"
+};
 
 }
+
+if(risk>=45){
+
+return{
+name:"САРИҚ",
+cls:"yellow",
+action:"Назоратни кучайтириш"
+};
+
+}
+
+return{
+
+name:"ЯШИЛ",
+cls:"green",
+action:"Барқарор"
+
+};
+
+}
+
+
+/* =========================
+   SAVE
+========================= */
+
+function saveData(){
+
+let district=
+document.getElementById("districtSelect").value;
+
+let debt=
+Number(document.getElementById("debt").value);
+
+let loss=
+Number(document.getElementById("loss").value);
+
+let balance=
+Number(document.getElementById("balance").value);
+
+if(
+!Number.isFinite(debt) ||
+!Number.isFinite(loss) ||
+!Number.isFinite(balance)
+){
+
+showMessage(
+"Барча майдонларни тўлдиринг.",
+"info"
+);
+
+return;
+
+}
+
+data[district]=[
+debt,
+loss,
+balance
+];
+
+localStorage.setItem(
+"hududgazKPI",
+JSON.stringify(data)
+);
+
+showMessage(
+"✅ Маълумот сақланди ва AI Risk қайта ҳисобланди.",
+"info"
+);
+
+render();
+updateSummary();
+
+}
+
+
+/* =========================
+   MESSAGE
+========================= */
+
+function showMessage(text,type){
+
+let box=document.getElementById("message");
+
+box.innerText=text;
+
+box.className=
+"message "+type;
+
+box.style.display="block";
+
+setTimeout(()=>{
+
+box.style.display="none";
+
+},3000);
+
+}
+
+
+/* =========================
+   SUMMARY
+========================= */
 
 function updateSummary(){
 
- let all=districts.map(d=>{
+let all=[];
 
-  let risk=riskCalc(d[1],d[2],d[3]);
+districtNames.forEach(name=>{
 
-  return {
-   risk:risk,
-   info:riskInfo(risk)
-  };
+let d=data[name];
 
- });
+if(!d)return;
 
- let avg=
- all.reduce((s,x)=>s+x.risk,0)/all.length;
+let risk=
+riskCalc(
+d[0],
+d[1],
+d[2]
+);
 
- let red=
- all.filter(x=>x.info.cls==="red").length;
+all.push({
+risk:risk,
+info:riskInfo(risk)
+});
 
- let green=
- all.filter(x=>x.info.cls==="green").length;
+});
 
- document.getElementById("avgRisk").innerText=
- Math.round(avg*10)/10;
+let avg=
+all.reduce(
+(sum,x)=>sum+x.risk,
+0
+)/all.length;
 
- document.getElementById("redCount").innerText=red;
+let red=
+all.filter(
+x=>x.info.cls==="red"
+).length;
 
- document.getElementById("greenCount").innerText=green;
+let yellow=
+all.filter(
+x=>x.info.cls==="yellow"
+).length;
 
- document.getElementById("districtCount").innerText=
- districts.length;
+let green=
+all.filter(
+x=>x.info.cls==="green"
+).length;
+
+
+document.getElementById(
+"avgRisk"
+).innerText=
+Math.round(avg*10)/10;
+
+document.getElementById(
+"redCount"
+).innerText=red;
+
+document.getElementById(
+"yellowCount"
+).innerText=yellow;
+
+document.getElementById(
+"greenCount"
+).innerText=green;
 
 }
 
-document.getElementById("search")
- .addEventListener("input",render);
 
-document.getElementById("filter")
- .addEventListener("change",render);
+/* =========================
+   RENDER TABLE
+========================= */
+
+function render(){
+
+let search=
+document.getElementById(
+"search"
+).value.toLowerCase();
+
+let filter=
+document.getElementById(
+"filter"
+).value;
+
+let rows=[];
+
+
+districtNames.forEach(
+(name,index)=>{
+
+let d=data[name];
+
+if(!d)return;
+
+let risk=
+riskCalc(
+d[0],
+d[1],
+d[2]
+);
+
+let info=
+riskInfo(risk);
+
+if(
+!name.toLowerCase()
+.includes(search)
+)return;
+
+if(
+filter!=="all" &&
+filter!==info.cls
+)return;
+
+rows.push({
+
+index:index+1,
+
+name:name,
+
+debt:d[0],
+
+loss:d[1],
+
+balance:d[2],
+
+risk:risk,
+
+info:info
+
+});
+
+});
+
+
+rows.sort(
+(a,b)=>b.risk-a.risk
+);
+
+
+document.getElementById(
+"tableBody"
+).innerHTML=
+
+rows.map((r,i)=>`
+
+<tr>
+
+<td>${i+1}</td>
+
+<td><b>${r.name}</b></td>
+
+<td>${r.debt}</td>
+
+<td>${r.loss}%</td>
+
+<td>${r.balance}%</td>
+
+<td><b>${r.risk}</b></td>
+
+<td>
+
+<span class="risk ${r.info.cls}">
+${r.info.name}
+</span>
+
+</td>
+
+</tr>
+
+`).join("");
+
+
+/* TOP 10 */
+
+let ranking=rows.slice(0,10);
+
+
+document.getElementById(
+"ranking"
+).innerHTML=
+
+ranking.map((r,i)=>`
+
+<tr>
+
+<td><b>${i+1}</b></td>
+
+<td>${r.name}</td>
+
+<td><b>${r.risk}</b></td>
+
+<td>${r.info.action}</td>
+
+</tr>
+
+`).join("");
+
+}
+
+
+/* =========================
+   CLEAR
+========================= */
+
+function clearAll(){
+
+if(
+!confirm(
+"Барча киритилган маълумотларни ўчиришни хоҳлайсизми?"
+)
+)return;
+
+localStorage.removeItem(
+"hududgazKPI"
+);
+
+data={...defaultData};
+
+localStorage.setItem(
+"hududgazKPI",
+JSON.stringify(data)
+);
+
+render();
 
 updateSummary();
+
+showMessage(
+"Маълумотлар тест ҳолатига қайтарилди.",
+"info"
+);
+
+}
+
+
+/* =========================
+   EVENTS
+========================= */
+
+document
+.getElementById("search")
+.addEventListener(
+"input",
+render
+);
+
+document
+.getElementById("filter")
+.addEventListener(
+"change",
+render
+);
+
+
+/* =========================
+   START
+========================= */
+
+loadData();
+
+loadDistricts();
+
+document.getElementById(
+"reportDate"
+).value=
+new Date()
+.toISOString()
+.substring(0,10);
+
+updateSummary();
+
 render();
 
 </script>

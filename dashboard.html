@@ -82,3 +82,19 @@
 <p>🟡 36–65 — НАЗОРАТ</p>
 <p>🔴 66–100 — ХАВФ</p>
 </div>
+<script>
+function calculateRisk(debt, imbalance, loss) {
+  let score =
+    (debt / 1000) * 45 +
+    imbalance * 10 +
+    loss * 10;
+
+  score = Math.min(100, Math.round(score));
+
+  if (score >= 66) return {score, zone:"🔴 ХАВФ"};
+  if (score >= 36) return {score, zone:"🟡 НАЗОРАТ"};
+  return {score, zone:"🟢 НОРМА"};
+}
+
+console.log("AI Risk Engine ишга тушди");
+</script>

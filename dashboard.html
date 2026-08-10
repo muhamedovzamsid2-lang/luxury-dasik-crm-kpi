@@ -98,3 +98,18 @@ function calculateRisk(debt, imbalance, loss) {
 
 console.log("AI Risk Engine ишга тушди");
 </script>
+<div class="section">⚡ AI Risk Engine — LIVE</div>
+<div class="card" id="risk-live">
+<p>AI ҳисоблаши ишлаяпти...</p>
+</div>
+
+<script>
+const testRisk = calculateRisk(73, 3.0, 3.5);
+
+document.getElementById("risk-live").innerHTML =
+  "<p>Чирчиқ шаҳри: <b>" +
+  testRisk.score +
+  "</b> — " +
+  testRisk.zone +
+  "</p>";
+</script>

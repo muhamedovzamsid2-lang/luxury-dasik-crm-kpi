@@ -2,8 +2,8 @@
 <html lang="uz">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>HUDUDGAZ TASHKENT — AI KPI 3.0</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>HUDUDGAZ TASHKENT • AI KPI 5.0</title>
 
 <style>
 *{box-sizing:border-box}
@@ -25,7 +25,7 @@ z-index:20
 }
 
 .head{
-max-width:1250px;
+max-width:1350px;
 margin:auto;
 display:flex;
 justify-content:space-between;
@@ -45,16 +45,19 @@ font-size:12px
 }
 
 .container{
-max-width:1250px;
+max-width:1350px;
 margin:auto;
 padding:18px
 }
 
-.hero{
+.hero,.section,.card{
 background:white;
+border-radius:17px;
+box-shadow:0 4px 16px #0000000c
+}
+
+.hero{
 padding:22px;
-border-radius:18px;
-box-shadow:0 5px 20px #0000000d;
 margin-bottom:18px
 }
 
@@ -69,16 +72,13 @@ color:#718096
 
 .cards{
 display:grid;
-grid-template-columns:repeat(5,1fr);
+grid-template-columns:repeat(6,1fr);
 gap:12px;
 margin-bottom:18px
 }
 
 .card{
-background:white;
-padding:17px;
-border-radius:16px;
-box-shadow:0 4px 15px #0000000c
+padding:16px
 }
 
 .label{
@@ -87,7 +87,7 @@ color:#718096
 }
 
 .value{
-font-size:25px;
+font-size:24px;
 font-weight:bold;
 margin-top:7px
 }
@@ -98,11 +98,8 @@ margin-top:7px
 .green{color:#38a169}
 
 .section{
-background:white;
-border-radius:17px;
 padding:18px;
-margin-bottom:18px;
-box-shadow:0 4px 15px #0000000c
+margin-bottom:18px
 }
 
 .section h2{
@@ -110,27 +107,9 @@ margin-top:0;
 font-size:19px
 }
 
-.alert{
-border-left:6px solid #e53e3e;
-background:#fff5f5;
-padding:16px;
-border-radius:12px;
-margin-bottom:12px
-}
-
-.alert b{
-font-size:17px
-}
-
-.grid2{
-display:grid;
-grid-template-columns:1fr 1fr;
-gap:15px
-}
-
 .form{
 display:grid;
-grid-template-columns:repeat(3,1fr);
+grid-template-columns:repeat(4,1fr);
 gap:12px
 }
 
@@ -147,17 +126,17 @@ color:#718096
 }
 
 input,select{
-padding:12px;
+padding:11px;
 border:1px solid #d9e2ec;
 border-radius:10px;
-background:white;
-font-size:14px
+font-size:14px;
+background:white
 }
 
 button{
-padding:12px 18px;
 border:0;
 border-radius:10px;
+padding:12px 18px;
 font-weight:bold;
 cursor:pointer
 }
@@ -165,6 +144,11 @@ cursor:pointer
 .primary{
 background:#102a43;
 color:white
+}
+
+.secondary{
+background:#edf2f7;
+color:#172033
 }
 
 .danger{
@@ -196,13 +180,13 @@ overflow-x:auto
 table{
 width:100%;
 border-collapse:collapse;
-min-width:850px
+min-width:1250px
 }
 
 th,td{
-padding:11px 9px;
+padding:10px 8px;
 border-bottom:1px solid #edf2f7;
-font-size:13px;
+font-size:12px;
 text-align:left
 }
 
@@ -234,9 +218,26 @@ background:#f0fff4;
 color:#2f855a
 }
 
-.reason{
-font-size:12px;
-color:#718096
+.grid2{
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:15px
+}
+
+.alert{
+border-left:6px solid #e53e3e;
+background:#fff5f5;
+padding:15px;
+border-radius:12px;
+margin-bottom:10px
+}
+
+.good{
+background:#f0fff4;
+border-left:6px solid #38a169;
+padding:15px;
+border-radius:12px;
+margin-bottom:10px
 }
 
 .ai{
@@ -244,16 +245,49 @@ font-weight:bold;
 font-size:17px
 }
 
+.small{
+font-size:11px;
+color:#718096
+}
+
+.progress{
+height:8px;
+background:#edf2f7;
+border-radius:10px;
+overflow:hidden;
+margin-top:5px
+}
+
+.bar{
+height:100%;
+background:#3182ce
+}
+
+.report{
+background:#f7fafc;
+padding:18px;
+border-radius:14px;
+line-height:1.7
+}
+
+.report strong{
+color:#102a43
+}
+
 .footer{
 text-align:center;
 padding:25px;
-color:#718096;
-font-size:12px
+font-size:12px;
+color:#718096
 }
 
-@media(max-width:950px){
+@media(max-width:1000px){
 
 .cards{
+grid-template-columns:repeat(3,1fr)
+}
+
+.form{
 grid-template-columns:repeat(2,1fr)
 }
 
@@ -261,41 +295,34 @@ grid-template-columns:repeat(2,1fr)
 grid-template-columns:1fr
 }
 
-.form{
-grid-template-columns:1fr 1fr
 }
 
-}
-
-@media(max-width:550px){
+@media(max-width:600px){
 
 .container{
-padding:11px
+padding:10px
 }
 
 .cards{
-grid-template-columns:1fr 1fr
+grid-template-columns:repeat(2,1fr)
 }
 
 .form{
 grid-template-columns:1fr
 }
 
-h1{
-font-size:21px
-}
-
-.value{
-font-size:21px
-}
-
 .toolbar{
 flex-direction:column
+}
+
+h1{
+font-size:21px
 }
 
 }
 </style>
 </head>
+
 
 <body>
 
@@ -304,7 +331,7 @@ flex-direction:column
 <div class="head">
 
 <div class="logo">
-⚡ HUDUDGAZ TASHKENT • AI KPI 3.0
+⚡ HUDUDGAZ TASHKENT • AI KPI 5.0
 </div>
 
 <div class="online">
@@ -322,11 +349,11 @@ flex-direction:column
 <div class="hero">
 
 <h1>
-AI Risk & KPI — РАҲБАР ПАНЕЛИ
+AI Risk & KPI Control Dashboard
 </h1>
 
 <div class="sub">
-Тошкент вилояти газ таъминоти — 22 ҳудуд бўйича автоматик мониторинг ва қарор қабул қилиш тизими
+Тошкент вилояти газ таъминоти — 22 ҳудуд бўйича автоматик мониторинг ва ҳисобот тизими
 </div>
 
 </div>
@@ -361,99 +388,154 @@ AI Risk & KPI — РАҲБАР ПАНЕЛИ
 <div class="value green" id="green">0</div>
 </div>
 
+<div class="card">
+<div class="label">📡 Онлайн</div>
+<div class="value blue" id="onlineAvg">0%</div>
 </div>
-
-
-<!-- DIRECTOR ALERT -->
-
-<div class="section">
-
-<h2>🚨 РАҲБАР УЧУН БИРИНЧИ НАВБАТДАГИ ЧОРА</h2>
-
-<div id="directorAlert"></div>
 
 </div>
 
 
-<!-- DATA ENTRY -->
+<!-- DIRECTOR -->
 
 <div class="section">
 
-<h2>📝 KPI маълумот киритиш</h2>
+<h2>
+🚨 РАҲБАР УЧУН БИРИНЧИ НАВБАТДАГИ ЧОРА
+</h2>
+
+<div id="director"></div>
+
+</div>
+
+
+<!-- DATA -->
+
+<div class="section">
+
+<h2>
+📝 KPI маълумот киритиш
+</h2>
 
 <div class="form">
 
 <div class="field">
-
 <label>Ҳудуд</label>
-
 <select id="district"></select>
-
 </div>
 
 <div class="field">
-
-<label>Қарздорлик</label>
-
-<input
-id="debt"
-type="number"
-placeholder="73"
-min="0"
-max="100">
-
+<label>Қарздорлик (млрд сўм)</label>
+<input id="debt" type="number" step="0.01">
 </div>
 
 <div class="field">
-
 <label>Йўқотиш %</label>
-
-<input
-id="loss"
-type="number"
-step="0.1"
-placeholder="3.2">
-
+<input id="loss" type="number" step="0.1">
 </div>
 
 <div class="field">
-
 <label>Дебаланс %</label>
+<input id="balance" type="number" step="0.1">
+</div>
 
-<input
-id="balance"
-type="number"
-step="0.1"
-placeholder="3.5">
+<div class="field">
+<label>Тушум режаси (млрд)</label>
+<input id="plan" type="number" step="0.01">
+</div>
 
+<div class="field">
+<label>Тушум факти (млрд)</label>
+<input id="fact" type="number" step="0.01">
+</div>
+
+<div class="field">
+<label>Ноқонуний уланиш</label>
+<input id="illegal" type="number">
+</div>
+
+<div class="field">
+<label>Онлайн ҳисоблагич %</label>
+<input id="online" type="number">
+</div>
+
+<div class="field">
+<label>Ходим KPI %</label>
+<input id="staff" type="number">
 </div>
 
 </div>
+
 
 <div class="actions">
 
 <button class="primary" onclick="saveKPI()">
-💾 Сақлаш ва қайта ҳисоблаш
+💾 Сақлаш
+</button>
+
+<button class="secondary" onclick="fillDemo()">
+🧪 Тест
+</button>
+
+<button class="secondary" onclick="exportCSV()">
+📥 CSV экспорт
+</button>
+
+<button class="secondary" onclick="exportJSON()">
+📦 JSON экспорт
 </button>
 
 <button class="danger" onclick="resetData()">
-↩ Тест маълумотга қайтариш
+↩ Тиклаш
 </button>
 
 </div>
 
-<p id="message"></p>
+<div id="message"></div>
 
 </div>
 
 
-<!-- TOP ANTITOP -->
+<!-- REPORT -->
+
+<div class="section">
+
+<h2>
+📊 РАҲБАР ҲИСОБОТИ
+</h2>
+
+<div class="actions">
+
+<button class="primary" onclick="generateReport()">
+📊 Ҳисоботни янгилаш
+</button>
+
+<button class="secondary" onclick="copyReport()">
+📋 Ҳисоботни нусхалаш
+</button>
+
+</div>
+
+<div id="report" class="report">
+
+Ҳисобот тайёрлаш учун
+<strong>«Ҳисоботни янгилаш»</strong>
+тугмасини босинг.
+
+</div>
+
+</div>
+
+
+<!-- TOP -->
 
 <div class="grid2">
 
 <div class="section">
 
-<h2>🏆 TOP — ЭНГ ХАВФЛИ 5</h2>
+<h2>
+🏆 TOP-5 ХАВФЛИ
+</h2>
 
 <div id="top5"></div>
 
@@ -462,20 +544,24 @@ placeholder="3.5">
 
 <div class="section">
 
-<h2>🟢 ANTITOP — ЭНГ ЯХШИ 5</h2>
+<h2>
+🟢 ЭНГ ЯХШИ 5
+</h2>
 
-<div id="anti5"></div>
+<div id="best5"></div>
 
 </div>
 
 </div>
 
 
-<!-- MONITORING -->
+<!-- TABLE -->
 
 <div class="section">
 
-<h2>🔎 БАТАФСИЛ МОНИТОРИНГ</h2>
+<h2>
+🔎 22 ҲУДУД БЎЙИЧА KPI
+</h2>
 
 <div class="toolbar">
 
@@ -486,13 +572,21 @@ placeholder="Ҳудудни қидириш...">
 
 <select id="filter">
 
-<option value="all">Барчаси</option>
+<option value="all">
+Барчаси
+</option>
 
-<option value="red">🔴 Қизил</option>
+<option value="red">
+🔴 Қизил
+</option>
 
-<option value="yellow">🟡 Сариқ</option>
+<option value="yellow">
+🟡 Сариқ
+</option>
 
-<option value="green">🟢 Яшил</option>
+<option value="green">
+🟢 Яшил
+</option>
 
 </select>
 
@@ -506,15 +600,23 @@ placeholder="Ҳудудни қидириш...">
 <thead>
 
 <tr>
+
 <th>#</th>
 <th>Ҳудуд</th>
 <th>Қарздорлик</th>
 <th>Йўқотиш</th>
 <th>Дебаланс</th>
+<th>Режа</th>
+<th>Факт</th>
+<th>Ижро</th>
+<th>Ноқонуний</th>
+<th>Онлайн</th>
+<th>Ходим KPI</th>
 <th>AI Risk</th>
 <th>Ҳолат</th>
-<th>Асосий хавф</th>
+<th>Хавф</th>
 <th>Тавсия</th>
+
 </tr>
 
 </thead>
@@ -532,19 +634,40 @@ placeholder="Ҳудудни қидириш...">
 
 <div class="section">
 
-<h2>🤖 AI Risk формуласи</h2>
+<h2>
+🤖 AI Risk логикаси
+</h2>
 
 <p>
-<strong>Қарздорлик — 40%</strong> |
-<strong>Йўқотиш — 35%</strong> |
+
+<strong>Қарздорлик — 40%</strong>
+|
+<strong>Йўқотиш — 35%</strong>
+|
 <strong>Дебаланс — 25%</strong>
+
 </p>
 
-<p class="reason">
-AI Risk 65 ва ундан юқори бўлса — 🔴 ҚИЗИЛ.
-45–64.9 — 🟡 САРИҚ.
-45 дан паст — 🟢 ЯШИЛ.
+<p class="small">
+
+65+ = 🔴 ҚИЗИЛ |
+45–64.9 = 🟡 САРИҚ |
+0–44.9 = 🟢 ЯШИЛ
+
 </p>
+
+</div>
+
+
+<!-- KPI -->
+
+<div class="section">
+
+<h2>
+📈 Тизим KPI
+</h2>
+
+<div id="indicators"></div>
 
 </div>
 
@@ -553,7 +676,9 @@ AI Risk 65 ва ундан юқори бўлса — 🔴 ҚИЗИЛ.
 
 
 <div class="footer">
-HUDUDGAZ TASHKENT • AI KPI Monitoring • 2026
+
+HUDUDGAZ TASHKENT • AI KPI Control System • 2026
+
 </div>
 
 
@@ -590,28 +715,28 @@ const names=[
 
 const defaults={
 
-"Чирчиқ шаҳри":[73,3.0,3.5],
-"Оҳангарон тумани":[62,2.9,3.4],
-"Ангрен шаҳри":[62,2.8,3.2],
-"Оққўрғон тумани":[71,3.1,3.7],
-"Юқори Чирчиқ тумани":[58,2.7,3.1],
-"Қуйи Чирчиқ тумани":[64,3.2,3.6],
-"Зангиота тумани":[85,3.8,4.2],
-"Қибрай тумани":[76,3.4,3.8],
-"Бўстонлиқ тумани":[48,2.1,2.4],
-"Паркент тумани":[55,2.5,2.8],
-"Пскент тумани":[59,2.6,3.0],
-"Бекобод шаҳри":[67,3.0,3.3],
-"Бекобод тумани":[61,2.7,3.1],
-"Олмалиқ шаҳри":[70,3.3,3.5],
-"Янгийўл шаҳри":[74,3.5,3.9],
-"Янгийўл тумани":[69,3.1,3.6],
-"Чиноз тумани":[57,2.4,2.9],
-"Тошкент тумани":[82,3.7,4.1],
-"Ўрта Чирчиқ тумани":[63,2.9,3.4],
-"Тошкент шаҳри":[88,4.0,4.5],
-"Оҳангарон шаҳри":[66,3.1,3.5],
-"Нурафшон шаҳри":[72,3.2,3.7]
+"Чирчиқ шаҳри":[73,3,3.5,100,95,1,92,90],
+"Оҳангарон тумани":[62,2.9,3.4,100,94,1,93,91],
+"Ангрен шаҳри":[62,2.8,3.2,100,96,0,95,92],
+"Оққўрғон тумани":[71,3.1,3.7,100,92,2,90,88],
+"Юқори Чирчиқ тумани":[58,2.7,3.1,100,97,0,96,94],
+"Қуйи Чирчиқ тумани":[64,3.2,3.6,100,93,1,91,89],
+"Зангиота тумани":[85,3.8,4.2,100,90,4,88,86],
+"Қибрай тумани":[76,3.4,3.8,100,91,3,89,87],
+"Бўстонлиқ тумани":[48,2.1,2.4,100,98,0,97,95],
+"Паркент тумани":[55,2.5,2.8,100,96,1,95,93],
+"Пскент тумани":[59,2.6,3,100,95,0,94,92],
+"Бекобод шаҳри":[67,3,3.3,100,94,1,92,90],
+"Бекобод тумани":[61,2.7,3.1,100,96,0,95,91],
+"Олмалиқ шаҳри":[70,3.3,3.5,100,93,2,91,89],
+"Янгийўл шаҳри":[74,3.5,3.9,100,91,3,89,87],
+"Янгийўл тумани":[69,3.1,3.6,100,93,1,92,89],
+"Чиноз тумани":[57,2.4,2.9,100,97,0,96,94],
+"Тошкент тумани":[82,3.7,4.1,100,90,3,88,85],
+"Ўрта Чирчиқ тумани":[63,2.9,3.4,100,95,1,94,91],
+"Тошкент шаҳри":[88,4,4.5,100,89,5,86,84],
+"Оҳангарон шаҳри":[66,3.1,3.5,100,94,2,92,89],
+"Нурафшон шаҳри":[72,3.2,3.7,100,92,2,90,88]
 
 };
 
@@ -622,7 +747,7 @@ let data;
 function load(){
 
 let saved=
-localStorage.getItem("HG_AI_KPI_3");
+localStorage.getItem("HG_AI_KPI_5");
 
 data=saved
 ?JSON.parse(saved)
@@ -640,17 +765,15 @@ let loss=Math.min(Math.max(l*20,0),100);
 let bal=Math.min(Math.max(b*20,0),100);
 
 return Math.round(
-(
-debt*.40+
+(debt*.40+
 loss*.35+
-bal*.25
-)*10
+bal*.25)*10
 )/10;
 
 }
 
 
-function info(r){
+function status(r){
 
 if(r>=65)
 
@@ -677,31 +800,38 @@ action:"Барқарор"
 }
 
 
-function reason(d,l,b){
-
-let scores=[
-["Қарздорлик",d],
-["Йўқотиш",l*20],
-["Дебаланс",b*20]
-];
-
-scores.sort((a,b)=>b[1]-a[1]);
-
-return scores[0][0];
-
-}
-
-
-function getRows(){
+function rows(){
 
 return names.map((name,index)=>{
 
 let d=data[name];
 
-let r=riskCalc(
+let risk=
+riskCalc(
 d[0],
 d[1],
 d[2]
+);
+
+let st=status(risk);
+
+let execution=
+d[3]>0
+?Math.round(d[4]/d[3]*100)
+:0;
+
+let reasons=[
+
+["Қарздорлик",d[0]],
+
+["Йўқотиш",d[1]*20],
+
+["Дебаланс",d[2]*20]
+
+];
+
+reasons.sort(
+(a,b)=>b[1]-a[1]
 );
 
 return{
@@ -711,9 +841,15 @@ name:name,
 debt:d[0],
 loss:d[1],
 balance:d[2],
-risk:r,
-info:info(r),
-reason:reason(d[0],d[1],d[2])
+plan:d[3],
+fact:d[4],
+execution:execution,
+illegal:d[5],
+online:d[6],
+staff:d[7],
+risk:risk,
+status:st,
+reason:reasons[0][0]
 
 };
 
@@ -722,27 +858,30 @@ reason:reason(d[0],d[1],d[2])
 }
 
 
-function updateSummary(rows){
+function render(){
+
+let r=rows();
 
 let avg=
-rows.reduce((s,x)=>s+x.risk,0)
-/
-rows.length;
+r.reduce((a,b)=>a+b.risk,0)/r.length;
 
 let red=
-rows.filter(x=>x.info.cls==="red").length;
+r.filter(x=>x.status.cls==="red").length;
 
 let yellow=
-rows.filter(x=>x.info.cls==="yellow").length;
+r.filter(x=>x.status.cls==="yellow").length;
 
 let green=
-rows.filter(x=>x.info.cls==="green").length;
+r.filter(x=>x.status.cls==="green").length;
+
+let online=
+r.reduce((a,b)=>a+b.online,0)/r.length;
 
 document.getElementById("count")
-.innerText=rows.length;
+.innerText=r.length;
 
 document.getElementById("avg")
-.innerText=Math.round(avg*10)/10;
+.innerText=avg.toFixed(1);
 
 document.getElementById("red")
 .innerText=red;
@@ -753,38 +892,63 @@ document.getElementById("yellow")
 document.getElementById("green")
 .innerText=green;
 
+document.getElementById("onlineAvg")
+.innerText=Math.round(online)+"%";
+
+director(r);
+
+top(r);
+
+table(r);
+
+indicators(r);
+
 }
 
 
-function director(rows){
+function director(r){
 
-let top=[...rows]
-.sort((a,b)=>b.risk-a.risk)[0];
+let x=
+[...r].sort(
+(a,b)=>b.risk-a.risk
+)[0];
 
-let box=document.getElementById(
-"directorAlert"
-);
-
-box.innerHTML=`
+document.getElementById("director")
+.innerHTML=`
 
 <div class="alert">
 
-<b>🔴 ${top.name}</b>
+<b>🔴 ${x.name}</b>
 
 <br><br>
 
 AI Risk:
-<strong>${top.risk}</strong>
+<strong>${x.risk}</strong>
 
 <br>
 
 Асосий хавф:
-<strong>${top.reason}</strong>
+<strong>${x.reason}</strong>
+
+<br>
+
+Қарздорлик:
+<strong>${x.debt} млрд сўм</strong>
+
+<br>
+
+Йўқотиш:
+<strong>${x.loss}%</strong>
+
+<br>
+
+Дебаланс:
+<strong>${x.balance}%</strong>
 
 <br><br>
 
 Тавсия:
-<strong>${top.info.action}</strong>
+<strong>${x.status.action}</strong>
 
 </div>
 
@@ -793,32 +957,32 @@ AI Risk:
 }
 
 
-function renderTop(rows){
+function top(r){
 
-let sorted=
-[...rows].sort(
+let s=
+[...r].sort(
 (a,b)=>b.risk-a.risk
 );
 
-
 document.getElementById("top5")
 .innerHTML=
-sorted.slice(0,5).map(
-(r,i)=>`
+s.slice(0,5)
+.map(
+(x,i)=>`
 
 <div class="alert">
 
-<b>${i+1}. ${r.name}</b>
+<b>${i+1}. ${x.name}</b>
 
 <br>
 
 AI Risk:
-<strong>${r.risk}</strong>
+<strong>${x.risk}</strong>
 
 <br>
 
 Асосий хавф:
-${r.reason}
+${x.reason}
 
 </div>
 
@@ -826,36 +990,30 @@ ${r.reason}
 ).join("");
 
 
-let anti=
-[...rows].sort(
+let best=
+[...r].sort(
 (a,b)=>a.risk-b.risk
 );
 
-
-document.getElementById("anti5")
+document.getElementById("best5")
 .innerHTML=
-anti.slice(0,5).map(
-(r,i)=>`
+best.slice(0,5)
+.map(
+(x,i)=>`
 
-<div style="
-background:#f0fff4;
-padding:12px;
-border-radius:10px;
-margin-bottom:9px">
+<div class="good">
 
-<b>${i+1}. ${r.name}</b>
+<b>${i+1}. ${x.name}</b>
 
 <br>
 
 AI Risk:
-<strong>${r.risk}</strong>
+<strong>${x.risk}</strong>
 
 <br>
 
-Ҳолат:
-<span class="badge green">
-${r.info.name}
-</span>
+Онлайн:
+<strong>${x.online}%</strong>
 
 </div>
 
@@ -865,94 +1023,136 @@ ${r.info.name}
 }
 
 
-function renderTable(){
-
-let rows=getRows();
+function table(r){
 
 let search=
-document.getElementById(
-"search"
-).value.toLowerCase();
+document.getElementById("search")
+.value.toLowerCase();
 
 let filter=
-document.getElementById(
-"filter"
-).value;
+document.getElementById("filter")
+.value;
 
+let list=
+r.filter(x=>{
 
-let filtered=
-rows.filter(r=>{
+if(!x.name.toLowerCase()
+.includes(search))
+return false;
 
-if(
-!r.name.toLowerCase()
-.includes(search)
-)return false;
-
-if(
-filter!=="all" &&
-r.info.cls!==filter
-)return false;
+if(filter!=="all" &&
+x.status.cls!==filter)
+return false;
 
 return true;
 
 });
 
-
-filtered.sort(
+list.sort(
 (a,b)=>b.risk-a.risk
 );
 
-
-document.getElementById(
-"table"
-).innerHTML=
-
-filtered.map(
-(r,i)=>`
+document.getElementById("table")
+.innerHTML=
+list.map(
+(x,i)=>`
 
 <tr>
 
 <td>${i+1}</td>
 
-<td><b>${r.name}</b></td>
+<td><b>${x.name}</b></td>
 
-<td>${r.debt}</td>
+<td>${x.debt}</td>
 
-<td>${r.loss}%</td>
+<td>${x.loss}%</td>
 
-<td>${r.balance}%</td>
+<td>${x.balance}%</td>
 
-<td class="ai">
-${r.risk}
-</td>
+<td>${x.plan}</td>
+
+<td>${x.fact}</td>
+
+<td>${x.execution}%</td>
+
+<td>${x.illegal}</td>
+
+<td>${x.online}%</td>
+
+<td>${x.staff}%</td>
+
+<td class="ai">${x.risk}</td>
 
 <td>
 
-<span class="badge ${r.info.cls}">
-${r.info.name}
+<span class="badge ${x.status.cls}">
+${x.status.name}
 </span>
 
 </td>
 
-<td>
-${r.reason}
-</td>
+<td>${x.reason}</td>
 
-<td>
-${r.info.action}
-</td>
+<td>${x.status.action}</td>
 
 </tr>
 
 `
 ).join("");
 
+}
 
-updateSummary(rows);
 
-director(rows);
+function indicators(r){
 
-renderTop(rows);
+let debt=
+r.reduce((a,b)=>a+b.debt,0);
+
+let illegal=
+r.reduce((a,b)=>a+b.illegal,0);
+
+let staff=
+r.reduce((a,b)=>a+b.staff,0)/r.length;
+
+let execution=
+r.reduce((a,b)=>a+b.execution,0)/r.length;
+
+document.getElementById("indicators")
+.innerHTML=`
+
+<div class="grid2">
+
+<div>
+<b>💰 Жами қарздорлик</b>
+<div class="value">
+${debt.toFixed(1)} млрд сўм
+</div>
+</div>
+
+<div>
+<b>💵 Ўртача тушум ижроси</b>
+<div class="value">
+${Math.round(execution)}%
+</div>
+</div>
+
+<div>
+<b>🚨 Ноқонуний уланишлар</b>
+<div class="value">
+${illegal} та
+</div>
+</div>
+
+<div>
+<b>👥 Ўртача ходим KPI</b>
+<div class="value">
+${Math.round(staff)}%
+</div>
+</div>
+
+</div>
+
+`;
 
 }
 
@@ -960,72 +1160,74 @@ renderTop(rows);
 function saveKPI(){
 
 let name=
-document.getElementById(
-"district"
-).value;
+document.getElementById("district")
+.value;
 
-let debt=
-Number(
-document.getElementById("debt").value
-);
+let values=[
 
-let loss=
-Number(
-document.getElementById("loss").value
-);
+Number(document.getElementById("debt").value),
 
-let balance=
-Number(
-document.getElementById("balance").value
-);
+Number(document.getElementById("loss").value),
 
+Number(document.getElementById("balance").value),
 
-if(
-!Number.isFinite(debt) ||
-!Number.isFinite(loss) ||
-!Number.isFinite(balance)
-){
+Number(document.getElementById("plan").value),
 
-document.getElementById(
-"message"
-).innerText=
-"❗ Барча рақамларни киритинг.";
+Number(document.getElementById("fact").value),
+
+Number(document.getElementById("illegal").value),
+
+Number(document.getElementById("online").value),
+
+Number(document.getElementById("staff").value)
+
+];
+
+if(values.some(x=>!Number.isFinite(x))){
+
+document.getElementById("message")
+.innerText=
+"❗ Барча майдонларни тўлдиринг.";
 
 return;
 
 }
 
-
-data[name]=[
-debt,
-loss,
-balance
-];
-
+data[name]=values;
 
 localStorage.setItem(
-"HG_AI_KPI_3",
+"HG_AI_KPI_5",
 JSON.stringify(data)
 );
 
+document.getElementById("message")
+.innerText=
+"✅ Маълумот сақланди.";
 
-document.getElementById(
-"message"
-).innerText=
-"✅ Маълумот сақланди. AI Risk қайта ҳисобланди.";
+render();
 
-renderTable();
+}
+
+
+function fillDemo(){
+
+document.getElementById("debt").value=70;
+document.getElementById("loss").value=3.2;
+document.getElementById("balance").value=3.5;
+document.getElementById("plan").value=100;
+document.getElementById("fact").value=96;
+document.getElementById("illegal").value=1;
+document.getElementById("online").value=95;
+document.getElementById("staff").value=92;
 
 }
 
 
 function resetData(){
 
-if(
-!confirm(
-"Тест маълумотларига қайтаришни хоҳлайсизми?"
-)
-)return;
+if(!confirm(
+"Бошланғич тест маълумотларига қайтариш керакми?"
+))return;
 
 data=
 JSON.parse(
@@ -1033,11 +1235,241 @@ JSON.stringify(defaults)
 );
 
 localStorage.setItem(
-"HG_AI_KPI_3",
+"HG_AI_KPI_5",
 JSON.stringify(data)
 );
 
-renderTable();
+render();
+
+}
+
+
+function exportCSV(){
+
+let r=rows();
+
+let csv=
+"№,Ҳудуд,Қарздорлик,Йўқотиш %,Дебаланс %,Режа,Факт,Ижро %,Ноқонуний,Онлайн %,Ходим KPI %,AI Risk,Ҳолат,Асосий хавф\n";
+
+r.forEach(x=>{
+
+csv+=
+[
+x.index,
+`"${x.name}"`,
+x.debt,
+x.loss,
+x.balance,
+x.plan,
+x.fact,
+x.execution,
+x.illegal,
+x.online,
+x.staff,
+x.risk,
+x.status.name,
+`"${x.reason}"`
+].join(",")+"\n";
+
+});
+
+downloadFile(
+csv,
+"hududgaz_kpi.csv",
+"text/csv;charset=utf-8"
+);
+
+}
+
+
+function exportJSON(){
+
+let output={
+
+date:new Date().toISOString(),
+
+system:"HUDUDGAZ TASHKENT AI KPI 5.0",
+
+data:data
+
+};
+
+downloadFile(
+JSON.stringify(output,null,2),
+"hududgaz_kpi.json",
+"application/json"
+);
+
+}
+
+
+function downloadFile(content,name,type){
+
+let blob=
+new Blob([content],{type:type});
+
+let url=
+URL.createObjectURL(blob);
+
+let a=
+document.createElement("a");
+
+a.href=url;
+a.download=name;
+
+document.body.appendChild(a);
+
+a.click();
+
+a.remove();
+
+URL.revokeObjectURL(url);
+
+}
+
+
+function generateReport(){
+
+let r=rows();
+
+let sorted=
+[...r].sort(
+(a,b)=>b.risk-a.risk
+);
+
+let avg=
+r.reduce((a,b)=>a+b.risk,0)/r.length;
+
+let red=
+r.filter(x=>x.status.cls==="red").length;
+
+let yellow=
+r.filter(x=>x.status.cls==="yellow").length;
+
+let green=
+r.filter(x=>x.status.cls==="green").length;
+
+let debt=
+r.reduce((a,b)=>a+b.debt,0);
+
+let illegal=
+r.reduce((a,b)=>a+b.illegal,0);
+
+let online=
+r.reduce((a,b)=>a+b.online,0)/r.length;
+
+let date=
+new Date().toLocaleString("uz-UZ");
+
+document.getElementById("report")
+.innerHTML=`
+
+<b>HUDUDGAZ TASHKENT — AI KPI ҲИСОБОТИ</b>
+
+<br>
+
+Сана:
+<strong>${date}</strong>
+
+<hr>
+
+Жами ҳудуд:
+<strong>${r.length}</strong>
+
+<br>
+
+Ўртача AI Risk:
+<strong>${avg.toFixed(1)}</strong>
+
+<br>
+
+🔴 Қизил зона:
+<strong>${red}</strong>
+
+<br>
+
+🟡 Сариқ зона:
+<strong>${yellow}</strong>
+
+<br>
+
+🟢 Яшил зона:
+<strong>${green}</strong>
+
+<hr>
+
+💰 Жами қарздорлик:
+<strong>${debt.toFixed(1)} млрд сўм</strong>
+
+<br>
+
+🚨 Ноқонуний уланиш:
+<strong>${illegal} та</strong>
+
+<br>
+
+📡 Ўртача онлайн:
+<strong>${Math.round(online)}%</strong>
+
+<hr>
+
+<b>РАҲБАР ЭЪТИБОРИ:</b>
+
+<br><br>
+
+1. <strong>${sorted[0].name}</strong>
+— AI Risk ${sorted[0].risk}
+— ${sorted[0].reason}
+
+<br>
+
+2. <strong>${sorted[1].name}</strong>
+— AI Risk ${sorted[1].risk}
+— ${sorted[1].reason}
+
+<br>
+
+3. <strong>${sorted[2].name}</strong>
+— AI Risk ${sorted[2].risk}
+— ${sorted[2].reason}
+
+<br><br>
+
+<b>Тавсия:</b>
+
+Қизил зонадаги ҳудудлар бўйича
+қарздорлик, йўқотиш ва дебалансни
+биринчи навбатда назорат қилиш.
+
+`;
+
+}
+
+
+function copyReport(){
+
+let text=
+document.getElementById("report")
+.innerText;
+
+if(!text.trim())return;
+
+navigator.clipboard
+.writeText(text)
+.then(()=>{
+
+document.getElementById("message")
+.innerText=
+"📋 Ҳисобот нусхаланди.";
+
+})
+.catch(()=>{
+
+alert(
+"Ҳисоботни нусхалаш имкони бўлмади."
+);
+
+});
 
 }
 
@@ -1045,7 +1477,6 @@ renderTable();
 function init(){
 
 load();
-
 
 let select=
 document.getElementById("district");
@@ -1062,24 +1493,21 @@ select.appendChild(option);
 
 });
 
-
-document.getElementById(
-"search"
-).addEventListener(
+document.getElementById("search")
+.addEventListener(
 "input",
-renderTable
+render
 );
 
-
-document.getElementById(
-"filter"
-).addEventListener(
+document.getElementById("filter")
+.addEventListener(
 "change",
-renderTable
+render
 );
 
+render();
 
-renderTable();
+generateReport();
 
 }
 

@@ -336,7 +336,349 @@ body{
 
 </div>
 
+<!-- =====================================================
+     ИЖРО НАЗОРАТИ — EXECUTION CONTROL
+===================================================== -->
 
+<div class="section">
+
+  <h2>📋 ИЖРО НАЗОРАТИ</h2>
+
+  <p style="color:#667085;">
+    Ҳудудлар бўйича вазифа, масъул, муддат ва бажарилиш ҳолати.
+  </p>
+
+  <!-- EXECUTION SUMMARY -->
+
+  <div class="grid" style="margin-bottom:18px;">
+
+    <div class="card">
+      <span>📌 Жами вазифалар</span>
+      <strong id="task-total">0</strong>
+    </div>
+
+    <div class="card green">
+      <span>🟢 Бажарилган</span>
+      <strong id="task-done">0</strong>
+    </div>
+
+    <div class="card yellow">
+      <span>🟡 Бажарилмоқда</span>
+      <strong id="task-progress">0</strong>
+    </div>
+
+    <div class="card red">
+      <span>🔴 Кечиккан</span>
+      <strong id="task-late">0</strong>
+    </div>
+
+  </div>
+
+
+  <!-- TASK LIST -->
+
+  <div id="execution-list"></div>
+
+</div>
+
+
+<script>
+
+/* =====================================================
+   EXECUTION DATA
+===================================================== */
+
+const executionTasks = [
+
+  {
+    district:"Оққўрғон тумани",
+    responsible:"Туман раҳбари",
+    task:"Қарздорликни камайтириш",
+    deadline:"15.08.2026",
+    progress:42,
+    status:"Кечикмоқда"
+  },
+
+  {
+    district:"Чирчиқ шаҳри",
+    responsible:"Шаҳар раҳбари",
+    task:"Йўқотишларни камайтириш",
+    deadline:"18.08.2026",
+    progress:58,
+    status:"Бажарилмоқда"
+  },
+
+  {
+    district:"Оҳангарон тумани",
+    responsible:"Туман раҳбари",
+    task:"Дебаланс сабабларини аниқлаш",
+    deadline:"16.08.2026",
+    progress:51,
+    status:"Бажарилмоқда"
+  },
+
+  {
+    district:"Ангрен шаҳри",
+    responsible:"Шаҳар раҳбари",
+    task:"Онлайн ҳисоблагичларни тиклаш",
+    deadline:"20.08.2026",
+    progress:64,
+    status:"Бажарилмоқда"
+  },
+
+  {
+    district:"Бўстонлиқ тумани",
+    responsible:"Туман раҳбари",
+    task:"Куз-қиш тайёргарлиги",
+    deadline:"25.08.2026",
+    progress:73,
+    status:"Бажарилмоқда"
+  },
+
+  {
+    district:"Юқори Чирчиқ тумани",
+    responsible:"Туман раҳбари",
+    task:"Дебалансни камайтириш",
+    deadline:"19.08.2026",
+    progress:80,
+    status:"Бажарилмоқда"
+  },
+
+  {
+    district:"Олмалиқ шаҳри",
+    responsible:"Шаҳар раҳбари",
+    task:"Йўқотишлар таҳлили",
+    deadline:"22.08.2026",
+    progress:67,
+    status:"Бажарилмоқда"
+  },
+
+  {
+    district:"Оҳангарон шаҳри",
+    responsible:"Шаҳар раҳбари",
+    task:"Қарздорлик назорати",
+    deadline:"21.08.2026",
+    progress:70,
+    status:"Бажарилмоқда"
+  },
+
+  {
+    district:"Ўрта Чирчиқ тумани",
+    responsible:"Туман раҳбари",
+    task:"Онлайн тизимни яхшилаш",
+    deadline:"23.08.2026",
+    progress:88,
+    status:"Бажарилмоқда"
+  },
+
+  {
+    district:"Тошкент тумани",
+    responsible:"Туман раҳбари",
+    task:"Профилактик назорат",
+    deadline:"26.08.2026",
+    progress:100,
+    status:"Бажарилган"
+  }
+
+];
+
+
+/* =====================================================
+   TASK COUNTERS
+===================================================== */
+
+const taskTotal =
+  executionTasks.length;
+
+const taskDone =
+  executionTasks.filter(
+    x => x.progress >= 100
+  ).length;
+
+const taskLate =
+  executionTasks.filter(
+    x => x.status === "Кечикмоқда"
+  ).length;
+
+const taskProgress =
+  taskTotal -
+  taskDone -
+  taskLate;
+
+
+document.getElementById(
+  "task-total"
+).innerText = taskTotal;
+
+
+document.getElementById(
+  "task-done"
+).innerText = taskDone;
+
+
+document.getElementById(
+  "task-progress"
+).innerText = taskProgress;
+
+
+document.getElementById(
+  "task-late"
+).innerText = taskLate;
+
+
+/* =====================================================
+   TASK DISPLAY
+===================================================== */
+
+document.getElementById(
+  "execution-list"
+).innerHTML =
+
+executionTasks.map(function(t,index){
+
+  let border = "#98a2b3";
+
+  let background = "#f8fafc";
+
+  let statusIcon = "🟡";
+
+
+  if(t.status === "Кечикмоқда"){
+
+    border = "#d32f2f";
+
+    background = "#ffe5e5";
+
+    statusIcon = "🔴";
+
+  }
+
+
+  if(t.status === "Бажарилган"){
+
+    border = "#2e7d32";
+
+    background = "#e5f7e9";
+
+    statusIcon = "🟢";
+
+  }
+
+
+  return `
+
+  <div style="
+    padding:16px;
+    margin:10px 0;
+    border-radius:14px;
+    background:${background};
+    border-left:6px solid ${border};
+  ">
+
+    <div style="
+      display:flex;
+      justify-content:space-between;
+      gap:10px;
+      flex-wrap:wrap;
+    ">
+
+      <div>
+
+        <b style="font-size:17px;">
+          ${index+1}. ${t.district}
+        </b>
+
+        <div style="
+          margin-top:6px;
+          color:#667085;
+        ">
+
+          👤 Масъул:
+          <b>${t.responsible}</b>
+
+        </div>
+
+      </div>
+
+
+      <div style="
+        font-weight:bold;
+        font-size:16px;
+      ">
+
+        ${statusIcon}
+        ${t.status}
+
+      </div>
+
+    </div>
+
+
+    <div style="
+      margin-top:12px;
+      background:white;
+      padding:12px;
+      border-radius:10px;
+    ">
+
+      🎯 <b>Вазифа:</b>
+      ${t.task}
+
+      <br><br>
+
+      📅 <b>Муддат:</b>
+      ${t.deadline}
+
+    </div>
+
+
+    <div style="
+      margin-top:12px;
+    ">
+
+      <div style="
+        display:flex;
+        justify-content:space-between;
+        margin-bottom:5px;
+      ">
+
+        <span>
+          Бажарилиш
+        </span>
+
+        <b>
+          ${t.progress}%
+        </b>
+
+      </div>
+
+
+      <div style="
+        width:100%;
+        height:10px;
+        background:#e5e7eb;
+        border-radius:10px;
+        overflow:hidden;
+      ">
+
+        <div style="
+          width:${t.progress}%;
+          height:100%;
+          background:${border};
+          border-radius:10px;
+        "></div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+  `;
+
+}).join("");
+
+</script>
 <div class="footer">
 
   Hududgaz Toshkent • AI KPI Dashboard

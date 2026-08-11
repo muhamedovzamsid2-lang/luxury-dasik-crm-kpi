@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>Hududgaz Toshkent — AI KPI Dashboard</title>
+<title>Hududgaz Toshkent — AI KPI Dashboard v5.0</title>
 
 <style>
 *{box-sizing:border-box}
@@ -14,13 +14,13 @@ body{margin:0;font-family:Arial,sans-serif;background:#f2f4f7;color:#17202a}
 .header p{margin:0;opacity:.8}
 .live{float:right;background:#e5f7e9;color:#176b36;padding:7px 12px;border-radius:20px;font-weight:bold}
 .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px}
-.card{background:#fff;border-radius:16px;padding:18px;box-shadow:0 4px 18px rgba(0,0,0,.06)}
+.card,.section{background:#fff;border-radius:16px;padding:18px;box-shadow:0 4px 18px rgba(0,0,0,.06)}
 .card span{display:block;color:#667085;font-size:14px}
 .card strong{display:block;font-size:28px;margin-top:8px}
 .red{background:#ffe5e5}
 .yellow{background:#fff4cc}
 .green{background:#e5f7e9}
-.section{background:#fff;border-radius:16px;padding:18px;margin-top:16px;box-shadow:0 4px 18px rgba(0,0,0,.06)}
+.section{margin-top:16px}
 .section h2{margin-top:0}
 .map{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:12px}
 .map-card{padding:16px;border-radius:14px;cursor:pointer;transition:.2s}
@@ -39,83 +39,26 @@ body{margin:0;font-family:Arial,sans-serif;background:#f2f4f7;color:#17202a}
 .detail-item{background:#fff;padding:12px;border-radius:10px}
 .detail-item small{display:block;color:#667085}
 .detail-item strong{display:block;font-size:18px;margin-top:5px}
-.action{padding:13px;margin:7px 0;border-radius:10px;background:#f8fafc}
-.signal{padding:14px;margin:8px 0;border-radius:12px;background:#ffe5e5;border-left:6px solid #d32f2f}
+.action,.signal{padding:13px;margin:7px 0;border-radius:10px;background:#f8fafc}
+.signal{background:#ffe5e5;border-left:6px solid #d32f2f}
 .progress{width:100%;height:10px;background:#e5e7eb;border-radius:10px;overflow:hidden}
 .progress div{height:100%;border-radius:10px}
-.system{position:fixed;right:15px;bottom:15px;z-index:9999;max-width:360px;background:#fff;border-radius:15px;padding:16px;box-shadow:0 8px 30px rgba(0,0,0,.18);font-size:14px}
+.system{position:fixed;right:15px;bottom:15px;z-index:9999;max-width:370px;background:#fff;border-radius:15px;padding:16px;box-shadow:0 8px 30px rgba(0,0,0,.18);font-size:14px}
 .footer{text-align:center;color:#667085;font-size:12px;padding:25px}
-
-.executor-box{
- background:#fff;
- border:1px solid #d0d5dd;
- border-radius:12px;
- padding:14px;
- margin-top:12px
-}
-
-.executor-title{
- color:#667085;
- font-size:13px;
- margin-bottom:6px
-}
-
-.executor-name{
- font-size:17px;
- font-weight:bold
-}
-
-.locked{
- color:#667085;
- font-size:13px;
- margin-top:5px
-}
-
-.edit-btn{
- margin-top:10px;
- background:#175cd3;
- color:#fff;
- padding:10px 14px;
- border:0;
- border-radius:9px;
- font-weight:bold;
- cursor:pointer
-}
-
-.edit-btn:hover{
- background:#124ea8
-}
-
-.save-btn{
- background:#176b36;
- color:#fff;
- padding:10px 14px;
- border:0;
- border-radius:9px;
- font-weight:bold;
- cursor:pointer;
- margin-left:6px
-}
-
-.cancel-btn{
- background:#667085;
- color:#fff;
- padding:10px 14px;
- border:0;
- border-radius:9px;
- font-weight:bold;
- cursor:pointer;
- margin-left:6px
-}
-
-.executor-input{
- width:100%;
- padding:11px;
- border:1px solid #d0d5dd;
- border-radius:9px;
- font-size:15px;
- margin-top:8px
-}
+.executor-box{background:#fff;border:1px solid #d0d5dd;border-radius:12px;padding:14px;margin-top:12px}
+.executor-title{color:#667085;font-size:13px;margin-bottom:6px}
+.executor-name{font-size:17px;font-weight:bold}
+.locked{color:#667085;font-size:13px;margin-top:5px}
+button{border:0;border-radius:9px;padding:10px 14px;font-weight:bold;cursor:pointer}
+.edit-btn{margin-top:10px;background:#175cd3;color:#fff}
+.save-btn{background:#176b36;color:#fff;margin-left:6px}
+.cancel-btn{background:#667085;color:#fff;margin-left:6px}
+.executor-input{width:100%;padding:11px;border:1px solid #d0d5dd;border-radius:9px;font-size:15px;margin-top:8px}
+.config{background:#eef4ff;border:1px solid #b2ccff;padding:14px;border-radius:12px;margin-top:12px}
+.config input{width:100%;padding:10px;border:1px solid #d0d5dd;border-radius:8px;margin:7px 0}
+.small{font-size:12px;color:#667085}
+.audit{max-height:260px;overflow:auto}
+.audit-item{padding:10px;border-bottom:1px solid #e5e7eb;font-size:13px}
 </style>
 </head>
 
@@ -124,7 +67,7 @@ body{margin:0;font-family:Arial,sans-serif;background:#f2f4f7;color:#17202a}
 <div class="container">
 
 <div class="header">
-<span class="live">🟢 LIVE</span>
+<span class="live">🟢 LIVE v5.0</span>
 <h1>🎯 ДИРЕКТОР НАЗОРАТ ПАНЕЛИ</h1>
 <p>Hududgaz Toshkent — AI KPI & Risk Dashboard</p>
 </div>
@@ -212,7 +155,7 @@ body{margin:0;font-family:Arial,sans-serif;background:#f2f4f7;color:#17202a}
 
 <p style="color:#667085">
 🔒 Раҳбар маълумоти қулфланган.
-Фақат ижрочини ўзгартириш мумкин.
+Фақат ижрочи ўзгариши мумкин.
 </p>
 
 <div class="grid">
@@ -263,10 +206,50 @@ AI Risk ва ижро назорати асосида зудлик билан э
 🔄 Google Sheets текширилмоқда...
 </div>
 
+<div class="config">
+
+<b>🔗 Google Apps Script Web App</b>
+
+<div class="small">
+Бир марта URL киритинг.
+Кейин ижрочи ўзгаришлари Google Sheets'га ёзилади.
+</div>
+
+<input
+id="apiUrl"
+placeholder="https://script.google.com/macros/s/....../exec"
+>
+
+<button
+class="edit-btn"
+onclick="saveApiUrl()"
+>
+💾 URL ни сақлаш
+</button>
+
+<button
+class="cancel-btn"
+onclick="testApi()"
+>
+🔎 Текшириш
+</button>
+
+</div>
+
+</div>
+
+<div class="section">
+
+<h2>📝 ИЖРОЧИ ЎЗГАРТИРИШ ЖУРНАЛИ</h2>
+
+<div id="audit" class="audit"></div>
+
 </div>
 
 <div class="footer">
-Hududgaz Toshkent • AI KPI Dashboard • v4.0
+
+Hududgaz Toshkent • AI KPI Dashboard • v5.0
+
 </div>
 
 </div>
@@ -275,7 +258,10 @@ Hududgaz Toshkent • AI KPI Dashboard • v4.0
 
 <b>🛠 DASHBOARD SYSTEM CHECK</b>
 
-<div id="check-results" style="margin-top:10px">
+<div
+id="check-results"
+style="margin-top:10px"
+>
 Текширилмоқда...
 </div>
 
@@ -283,127 +269,130 @@ Hududgaz Toshkent • AI KPI Dashboard • v4.0
 
 <script>
 
-/* ================================
-   GOOGLE SHEETS
-================================ */
-
 const GOOGLE_SHEET_ID =
 "1thlAce8LlTnbn5jlpL8j2_xPqvg1-Teo60F_73cU1N8";
 
 const GOOGLE_SHEET_CSV =
 "https://docs.google.com/spreadsheets/d/"
-+ GOOGLE_SHEET_ID
-+ "/export?format=csv";
++
+GOOGLE_SHEET_ID
++
+"/export?format=csv";
 
-async function checkGoogleSheet(){
+const API_KEY =
+"hududgaz_executor_v5";
 
-try{
-
-const response =
-await fetch(GOOGLE_SHEET_CSV);
-
-if(!response.ok)
-throw new Error("Google Sheets error");
-
-await response.text();
+let API_URL =
+localStorage.getItem(
+"hududgaz_api_url"
+)||"";
 
 document.getElementById(
-"sheet-status"
-).innerHTML =
-"🟢 Google Sheets уланиши тайёр";
-
-}catch(error){
-
-document.getElementById(
-"sheet-status"
-).innerHTML =
-"🟡 Google Sheets маълумоти ҳозирча ўқилмади";
-
-}
-
-}
-
-checkGoogleSheet();
+"apiUrl"
+).value=API_URL;
 
 
-/* ================================
+/* =========================
    22 HUDUD KPI
-================================ */
+========================= */
 
 const districtKPI=[
 
 ["Чирчиқ шаҳри",73,3.0,3.5,12,82,90],
+
 ["Оҳангарон тумани",62,2.9,3.4,9,78,86],
+
 ["Ангрен шаҳри",62,2.8,3.2,8,81,88],
+
 ["Оққўрғон тумани",71,3.1,3.7,13,74,84],
+
 ["Юқори Чирчиқ тумани",58,2.6,3.1,7,83,91],
+
 ["Бекобод шаҳри",51,2.1,2.6,6,86,93],
+
 ["Янгийўл шаҳри",42,2.2,2.5,5,88,94],
+
 ["Бўстонлиқ тумани",66,2.4,2.8,8,79,89],
+
 ["Бўка тумани",49,2.1,2.5,5,85,92],
+
 ["Нурафшон шаҳри",31,1.5,1.8,3,94,97],
+
 ["Зангиота тумани",34,1.7,2.1,4,91,95],
+
 ["Қибрай тумани",31,1.6,1.9,3,93,96],
+
 ["Бекобод тумани",48,2.0,2.4,5,87,92],
+
 ["Оҳангарон шаҳри",55,2.3,2.7,7,82,89],
+
 ["Олмалиқ шаҳри",57,2.5,2.9,7,80,88],
+
 ["Паркент тумани",46,2.0,2.3,4,89,94],
+
 ["Пискент тумани",44,1.9,2.2,4,90,94],
+
 ["Тошкент тумани",52,2.2,2.6,6,84,91],
+
 ["Чиноз тумани",47,2.0,2.4,5,87,93],
+
 ["Ўрта Чирчиқ тумани",54,2.3,2.8,6,83,90],
+
 ["Янгийўл тумани",50,2.1,2.5,5,86,92],
+
 ["Қуйи Чирчиқ тумани",45,1.9,2.3,4,89,94]
 
 ];
 
 
-/* ================================
+/* =========================
    RISK ENGINE
-================================ */
+========================= */
 
 function calculateRisk(d){
 
-const debtRisk=d[1];
-
-const lossRisk=d[2]*20;
-
-const imbalanceRisk=d[3]*20;
-
-const illegalRisk=d[4]*5;
-
-const onlineRisk=100-d[5];
-
-const winterRisk=100-d[6];
-
 const score=
 
-debtRisk*.30+
-lossRisk*.20+
-imbalanceRisk*.15+
-illegalRisk*.15+
-onlineRisk*.10+
-winterRisk*.10;
+Math.round(
 
-const finalScore=
-Math.round(score*10)/10;
+(
+
+d[1]*.30+
+
+d[2]*20*.20+
+
+d[3]*20*.15+
+
+d[4]*5*.15+
+
+(100-d[5])*.10+
+
+(100-d[6])*.10
+
+)*10
+
+)/10;
 
 let zone;
+
 let level;
 
-if(finalScore>=70){
+if(score>=70){
 
 zone="🔴";
+
 level="ЮҚОРИ ХАВФ";
 
-}else if(finalScore>=40){
+}else if(score>=40){
 
 zone="🟡";
+
 level="ЎРТА ХАВФ";
 
 }else{
 
 zone="🟢";
+
 level="ПАСТ ХАВФ";
 
 }
@@ -411,104 +400,158 @@ level="ПАСТ ХАВФ";
 return{
 
 name:d[0],
+
 debt:d[1],
+
 loss:d[2],
+
 imbalance:d[3],
+
 illegal:d[4],
+
 online:d[5],
+
 winter:d[6],
-score:finalScore,
-zone,
-level
+
+score:score,
+
+zone:zone,
+
+level:level
 
 };
 
 }
 
 const results=
+
 districtKPI
+
 .map(calculateRisk)
-.sort((a,b)=>b.score-a.score);
+
+.sort(
+(a,b)=>b.score-a.score
+);
 
 
-/* ================================
+/* =========================
    SUMMARY
-================================ */
+========================= */
 
 function renderSummary(){
 
 const red=
-results.filter(r=>r.score>=70).length;
+
+results.filter(
+r=>r.score>=70
+).length;
 
 const yellow=
+
 results.filter(
-r=>r.score>=40&&r.score<70
+r=>r.score>=40 &&
+r.score<70
 ).length;
 
 const green=
-results.filter(r=>r.score<40).length;
+
+results.filter(
+r=>r.score<40
+).length;
 
 const average=
+
 (
 results.reduce(
-(sum,r)=>sum+r.score,0
+(s,r)=>s+r.score,
+0
 )/results.length
 ).toFixed(1);
 
-document.getElementById("total").innerText=
+document.getElementById(
+"total"
+).innerText=
 results.length;
 
-document.getElementById("red").innerText=
+document.getElementById(
+"red"
+).innerText=
 red;
 
-document.getElementById("yellow").innerText=
+document.getElementById(
+"yellow"
+).innerText=
 yellow;
 
-document.getElementById("green").innerText=
+document.getElementById(
+"green"
+).innerText=
 green;
 
-document.getElementById("avg").innerText=
+document.getElementById(
+"avg"
+).innerText=
 average;
 
 }
 
 
-/* ================================
-   TOP 5
-================================ */
+/* =========================
+   ZONE
+========================= */
 
-function renderTop5(){
+function zoneClass(r){
 
-document.getElementById("top5").innerHTML=
-
-results.slice(0,5).map((r,i)=>`
-
-<div class="
-row
-${r.score>=70
+return r.score>=70
 ?"row-red"
 :r.score>=40
 ?"row-yellow"
-:"row-green"}
-">
+:"row-green";
 
-<b>${i+1}. ${r.name}</b>
+}
 
- — ${r.zone}
 
-<strong>${r.score}</strong>
+/* =========================
+   TOP 5
+========================= */
+
+function renderTop5(){
+
+document.getElementById(
+"top5"
+).innerHTML=
+
+results
+
+.slice(0,5)
+
+.map(
+(r,i)=>`
+
+<div class="row ${zoneClass(r)}">
+
+<b>
+${i+1}. ${r.name}
+</b>
+
+—
+${r.zone}
+
+<strong>
+${r.score}
+</strong>
 
 <span class="meta">
 
 Қарздорлик:
 ${r.debt} млрд
 
-&nbsp;|&nbsp;
+|
 
 Йўқотиш:
 ${r.loss}%
 
-&nbsp;|&nbsp;
+|
 
 Дебаланс:
 ${r.imbalance}%
@@ -517,34 +560,47 @@ ${r.imbalance}%
 
 </div>
 
-`).join("");
+`
+)
+
+.join("");
 
 }
 
 
-/* ================================
+/* =========================
    MAP
-================================ */
+========================= */
 
 function renderMap(){
 
-document.getElementById("map").innerHTML=
+document.getElementById(
+"map"
+).innerHTML=
 
-results.map((r,i)=>`
+results
+
+.map(
+(r,i)=>`
 
 <div
-class="
-map-card
-${r.score>=70
+
+class="map-card
+${
+r.score>=70
 ?"map-red"
 :r.score>=40
 ?"map-yellow"
-:"map-green"}
-"
+:"map-green"
+}"
+
 onclick="showDistrict(${i})"
+
 >
 
-<b>${r.name}</b>
+<b>
+${r.name}
+</b>
 
 <div class="score">
 
@@ -554,75 +610,94 @@ ${r.score}
 </div>
 
 <small>
+
 ${r.level}
+
 </small>
 
 </div>
 
-`).join("");
+`
+)
+
+.join("");
 
 }
 
 
-/* ================================
+/* =========================
    DETAIL
-================================ */
+========================= */
 
 window.showDistrict=
-function(index){
 
-const r=results[index];
+function(i){
+
+const r=results[i];
 
 document.getElementById(
 "detail"
-).innerHTML=`
+).innerHTML=
+
+`
 
 <h3>
+
 ${r.zone}
 ${r.name}
+
 </h3>
 
 <div class="detail-grid">
 
-<div class="detail-item">
-<small>AI Risk</small>
-<strong>${r.score}</strong>
-</div>
+${[
+
+["AI Risk",r.score],
+
+["Қарздорлик",
+r.debt+" млрд"],
+
+["Йўқотиш",
+r.loss+"%"],
+
+["Дебаланс",
+r.imbalance+"%"],
+
+["Ноқонуний уланиш",
+r.illegal],
+
+["Онлайн ҳисоблагич",
+r.online+"%"],
+
+["Қишга тайёргарлик",
+r.winter+"%"],
+
+["Ҳолат",
+r.level]
+
+]
+
+.map(
+
+x=>`
 
 <div class="detail-item">
-<small>Қарздорлик</small>
-<strong>${r.debt} млрд</strong>
+
+<small>
+${x[0]}
+</small>
+
+<strong>
+${x[1]}
+</strong>
+
 </div>
 
-<div class="detail-item">
-<small>Йўқотиш</small>
-<strong>${r.loss}%</strong>
-</div>
+`
 
-<div class="detail-item">
-<small>Дебаланс</small>
-<strong>${r.imbalance}%</strong>
-</div>
+)
 
-<div class="detail-item">
-<small>Ноқонуний уланиш</small>
-<strong>${r.illegal}</strong>
-</div>
-
-<div class="detail-item">
-<small>Онлайн ҳисоблагич</small>
-<strong>${r.online}%</strong>
-</div>
-
-<div class="detail-item">
-<small>Қишга тайёргарлик</small>
-<strong>${r.winter}%</strong>
-</div>
-
-<div class="detail-item">
-<small>Ҳолат</small>
-<strong>${r.level}</strong>
-</div>
+.join("")}
 
 </div>
 
@@ -631,125 +706,156 @@ ${r.name}
 };
 
 
-/* ================================
+/* =========================
    AI ACTIONS
-================================ */
+========================= */
 
 function renderActions(){
 
-let actions=[];
+let a=[];
 
-results.slice(0,8).forEach(r=>{
+results
+
+.slice(0,8)
+
+.forEach(
+r=>{
 
 if(r.debt>=60)
 
-actions.push(`
-<div class="action">
-💰 <b>${r.name}</b> —
-қарздорликни зудлик билан назорат қилиш.
-</div>
-`);
+a.push(
+
+`💰 <b>${r.name}</b> —
+қарздорликни зудлик билан назорат қилиш.`
+
+);
 
 if(r.loss>=2.8)
 
-actions.push(`
-<div class="action">
-🔧 <b>${r.name}</b> —
-йўқотишларни таҳлил қилиш.
-</div>
-`);
+a.push(
+
+`🔧 <b>${r.name}</b> —
+йўқотишларни таҳлил қилиш.`
+
+);
 
 if(r.imbalance>=3.2)
 
-actions.push(`
-<div class="action">
-⚖️ <b>${r.name}</b> —
-дебаланс сабабларини аниқлаш.
-</div>
-`);
+a.push(
+
+`⚖️ <b>${r.name}</b> —
+дебаланс сабабларини аниқлаш.`
+
+);
 
 if(r.online<80)
 
-actions.push(`
-<div class="action">
-📡 <b>${r.name}</b> —
-онлайн ҳисоблагичларни тиклаш.
-</div>
-`);
+a.push(
+
+`📡 <b>${r.name}</b> —
+онлайн ҳисоблагичларни тиклаш.`
+
+);
 
 if(r.winter<85)
 
-actions.push(`
-<div class="action">
-❄️ <b>${r.name}</b> —
-куз-қиш тайёргарлигини кучайтириш.
-</div>
-`);
+a.push(
 
-});
+`❄️ <b>${r.name}</b> —
+куз-қиш тайёргарлигини кучайтириш.`
+
+);
+
+}
+
+);
+
+if(!a.length){
+
+a=[
+"🟢 Критик сигнал аниқланмади."
+];
+
+}
 
 document.getElementById(
 "actions"
 ).innerHTML=
 
-actions.length
-?actions.slice(0,10).join("")
-:`<div class="action">
-🟢 Критик сигнал аниқланмади.
-</div>`;
+a
+
+.slice(0,10)
+
+.map(
+x=>`
+
+<div class="action">
+
+${x}
+
+</div>
+
+`
+)
+
+.join("");
 
 }
 
 
-/* ================================
+/* =========================
    RANKING
-================================ */
+========================= */
 
 function renderRanking(){
 
-document.getElementById("ranking").innerHTML=
+document.getElementById(
+"ranking"
+).innerHTML=
 
-results.map((r,i)=>`
+results
 
-<div class="
-row
-${r.score>=70
-?"row-red"
-:r.score>=40
-?"row-yellow"
-:"row-green"}
-">
+.map(
+(r,i)=>`
+
+<div class="row ${zoneClass(r)}">
 
 <b>
-${i+1}. ${r.name}
+
+${i+1}.
+${r.name}
+
 </b>
 
- — ${r.zone}
+—
+${r.zone}
 
 <strong>
+
 ${r.score}
+
 </strong>
 
 <span class="meta">
 
 ${r.level}
 
-&nbsp;|&nbsp;
+|
 
 Қарз:
 ${r.debt} млрд
 
-&nbsp;|&nbsp;
+|
 
 Йўқотиш:
 ${r.loss}%
 
-&nbsp;|&nbsp;
+|
 
 Дебаланс:
 ${r.imbalance}%
 
-&nbsp;|&nbsp;
+|
 
 Онлайн:
 ${r.online}%
@@ -758,292 +864,302 @@ ${r.online}%
 
 </div>
 
-`).join("");
+`
+)
+
+.join("");
 
 }
 
 
-/* ================================
-   ИЖРО НАЗОРАТИ
-   РАҲБАР ЎЗГАРМАЙДИ
-   ИЖРОЧИ ЎЗГАРАДИ
-================================ */
+/* =========================
+   EXECUTION TASKS
+========================= */
 
 const executionTasks=[
 
-{
-district:"Оққўрғон тумани",
-responsible:"Туман раҳбари",
-executor:"Ижрочи 1",
-task:"Қарздорликни камайтириш",
-deadline:"15.08.2026",
-progress:42,
-status:"Кечикмоқда"
-},
+[
+"Оққўрғон тумани",
+"Туман раҳбари",
+"Ижрочи 1",
+"Қарздорликни камайтириш",
+"15.08.2026",
+42,
+"Кечикмоқда"
+],
 
-{
-district:"Чирчиқ шаҳри",
-responsible:"Шаҳар раҳбари",
-executor:"Ижрочи 2",
-task:"Йўқотишларни камайтириш",
-deadline:"18.08.2026",
-progress:58,
-status:"Бажарилмоқда"
-},
+[
+"Чирчиқ шаҳри",
+"Шаҳар раҳбари",
+"Ижрочи 2",
+"Йўқотишларни камайтириш",
+"18.08.2026",
+58,
+"Бажарилмоқда"
+],
 
-{
-district:"Оҳангарон тумани",
-responsible:"Туман раҳбари",
-executor:"Ижрочи 3",
-task:"Дебаланс сабабларини аниқлаш",
-deadline:"16.08.2026",
-progress:51,
-status:"Бажарилмоқда"
-},
+[
+"Оҳангарон тумани",
+"Туман раҳбари",
+"Ижрочи 3",
+"Дебаланс сабабларини аниқлаш",
+"16.08.2026",
+51,
+"Бажарилмоқда"
+],
 
-{
-district:"Ангрен шаҳри",
-responsible:"Шаҳар раҳбари",
-executor:"Ижрочи 4",
-task:"Онлайн ҳисоблагичларни тиклаш",
-deadline:"20.08.2026",
-progress:64,
-status:"Бажарилмоқда"
-},
+[
+"Ангрен шаҳри",
+"Шаҳар раҳбари",
+"Ижрочи 4",
+"Онлайн ҳисоблагичларни тиклаш",
+"20.08.2026",
+64,
+"Бажарилмоқда"
+],
 
-{
-district:"Бўстонлиқ тумани",
-responsible:"Туман раҳбари",
-executor:"Ижрочи 5",
-task:"Куз-қиш тайёргарлиги",
-deadline:"25.08.2026",
-progress:73,
-status:"Бажарилмоқда"
-},
+[
+"Бўстонлиқ тумани",
+"Туман раҳбари",
+"Ижрочи 5",
+"Куз-қиш тайёргарлиги",
+"25.08.2026",
+73,
+"Бажарилмоқда"
+],
 
-{
-district:"Юқори Чирчиқ тумани",
-responsible:"Туман раҳбари",
-executor:"Ижрочи 6",
-task:"Дебалансни камайтириш",
-deadline:"19.08.2026",
-progress:80,
-status:"Бажарилмоқда"
-},
+[
+"Юқори Чирчиқ тумани",
+"Туман раҳбари",
+"Ижрочи 6",
+"Дебалансни камайтириш",
+"19.08.2026",
+80,
+"Бажарилмоқда"
+],
 
-{
-district:"Олмалиқ шаҳри",
-responsible:"Шаҳар раҳбари",
-executor:"Ижрочи 7",
-task:"Йўқотишлар таҳлили",
-deadline:"22.08.2026",
-progress:67,
-status:"Бажарилмоқда"
-},
+[
+"Олмалиқ шаҳри",
+"Шаҳар раҳбари",
+"Ижрочи 7",
+"Йўқотишлар таҳлили",
+"22.08.2026",
+67,
+"Бажарилмоқда"
+],
 
-{
-district:"Оҳангарон шаҳри",
-responsible:"Шаҳар раҳбари",
-executor:"Ижрочи 8",
-task:"Қарздорлик назорати",
-deadline:"21.08.2026",
-progress:70,
-status:"Бажарилмоқда"
-},
+[
+"Оҳангарон шаҳри",
+"Шаҳар раҳбари",
+"Ижрочи 8",
+"Қарздорлик назорати",
+"21.08.2026",
+70,
+"Бажарилмоқда"
+],
 
-{
-district:"Ўрта Чирчиқ тумани",
-responsible:"Туман раҳбари",
-executor:"Ижрочи 9",
-task:"Онлайн тизимни яхшилаш",
-deadline:"23.08.2026",
-progress:88,
-status:"Бажарилмоқда"
-},
+[
+"Ўрта Чирчиқ тумани",
+"Туман раҳбари",
+"Ижрочи 9",
+"Онлайн тизимни яхшилаш",
+"23.08.2026",
+88,
+"Бажарилмоқда"
+],
 
-{
-district:"Тошкент тумани",
-responsible:"Туман раҳбари",
-executor:"Ижрочи 10",
-task:"Профилактик назорат",
-deadline:"26.08.2026",
-progress:100,
-status:"Бажарилган"
-}
+[
+"Тошкент тумани",
+"Туман раҳбари",
+"Ижрочи 10",
+"Профилактик назорат",
+"26.08.2026",
+100,
+"Бажарилган"
+]
 
-];
+]
+
+.map(
+x=>({
+
+district:x[0],
+responsible:x[1],
+executor:x[2],
+task:x[3],
+deadline:x[4],
+progress:x[5],
+status:x[6]
+
+})
+);
 
 
-/* ================================
+/* =========================
    LOCAL STORAGE
-================================ */
+========================= */
 
-let savedExecutors=
+let saved=
+
 JSON.parse(
+
 localStorage.getItem(
-"hududgaz_executors"
+"hududgaz_executors_v5"
 )||"{}"
+
 );
 
-executionTasks.forEach((task,index)=>{
+executionTasks.forEach(
+(t,i)=>{
 
-if(savedExecutors[index]){
-task.executor=
-savedExecutors[index];
-}
+if(saved[i]){
 
-});
-
-
-/* ================================
-   ИЖРОЧИНИ ЎЗГАРТИРИШ
-================================ */
-
-window.changeExecutor=
-function(index){
-
-const task=
-executionTasks[index];
-
-const newExecutor=
-prompt(
-"Янги ижрочи номини киритинг:",
-task.executor
-);
-
-if(newExecutor===null){
-return;
-}
-
-const name=
-newExecutor.trim();
-
-if(!name){
-
-alert(
-"Ижрочи номи бўш қолмаслиги керак."
-);
-
-return;
+t.executor=
+saved[i];
 
 }
 
-task.executor=name;
-
-savedExecutors[index]=name;
-
-localStorage.setItem(
-"hududgaz_executors",
-JSON.stringify(savedExecutors)
+}
 );
 
-renderExecution();
+let auditLog=
 
-renderSignals();
+JSON.parse(
 
-};
+localStorage.getItem(
+"hududgaz_audit_v5"
+)||"[]"
+
+);
 
 
-/* ================================
+/* =========================
    EXECUTION RENDER
-================================ */
+========================= */
 
 function renderExecution(){
 
-const taskTotal=
-executionTasks.length;
+const done=
 
-const taskDone=
 executionTasks.filter(
-x=>x.progress>=100
+t=>t.progress>=100
 ).length;
 
-const taskLate=
-executionTasks.filter(
-x=>x.status==="Кечикмоқда"
-).length;
+const late=
 
-const taskProgress=
-taskTotal-taskDone-taskLate;
+executionTasks.filter(
+t=>t.status==="Кечикмоқда"
+).length;
 
 document.getElementById(
 "task-total"
 ).innerText=
-taskTotal;
+executionTasks.length;
 
 document.getElementById(
 "task-done"
 ).innerText=
-taskDone;
+done;
 
 document.getElementById(
 "task-progress"
 ).innerText=
-taskProgress;
+
+executionTasks.length-
+done-
+late;
 
 document.getElementById(
 "task-late"
 ).innerText=
-taskLate;
+late;
 
 
 document.getElementById(
 "execution-list"
 ).innerHTML=
 
-executionTasks.map(
-(t,index)=>{
+executionTasks
 
-let border="#f9a825";
+.map(
+(t,i)=>{
 
-let background="#fff4cc";
+let border;
 
-let icon="🟡";
+let bg;
 
-if(t.status==="Кечикмоқда"){
+let icon;
+
+if(
+t.status==="Кечикмоқда"
+){
 
 border="#d32f2f";
-background="#ffe5e5";
+bg="#ffe5e5";
 icon="🔴";
 
-}
-
-if(t.status==="Бажарилган"){
+}else if(
+t.status==="Бажарилган"
+){
 
 border="#2e7d32";
-background="#e5f7e9";
+bg="#e5f7e9";
 icon="🟢";
 
-}
+}else{
 
+border="#f9a825";
+bg="#fff4cc";
+icon="🟡";
+
+}
 
 return `
 
-<div style="
+<div
+
+style="
+
 padding:16px;
 margin:10px 0;
 border-radius:14px;
-background:${background};
+background:${bg};
 border-left:6px solid ${border};
-">
 
-<div style="
+"
+
+>
+
+<div
+
+style="
+
 display:flex;
 justify-content:space-between;
 gap:10px;
 flex-wrap:wrap;
-">
+
+"
+
+>
 
 <div>
 
 <b style="font-size:17px">
-${index+1}. ${t.district}
+
+${i+1}.
+${t.district}
+
 </b>
 
-<div style="
+<div
+
+style="
 margin-top:6px;
 color:#667085
-">
+"
+
+>
 
 👔 Раҳбар:
 
@@ -1058,8 +1174,10 @@ ${t.responsible}
 </div>
 
 <b>
+
 ${icon}
 ${t.status}
+
 </b>
 
 </div>
@@ -1068,72 +1186,107 @@ ${t.status}
 <div class="executor-box">
 
 <div class="executor-title">
+
 👤 ИЖРОЧИ
+
 </div>
 
-<div class="executor-name">
+<div
+class="executor-name"
+id="exname-${i}"
+>
+
 ${t.executor}
+
 </div>
 
 <div class="locked">
+
 🔒 Раҳбар ўзгартирилмайди.
+
 Фақат ижрочи ўзгариши мумкин.
+
 </div>
 
 <button
+
 class="edit-btn"
-onclick="changeExecutor(${index})"
+
+onclick="editExecutor(${i})"
+
 >
+
 ✏️ Ижрочини ўзгартириш
+
 </button>
 
 </div>
 
 
-<div style="
+<div
+
+style="
 margin-top:12px;
 background:white;
 padding:12px;
-border-radius:10px;
-">
+border-radius:10px
+"
 
-🎯 <b>Вазифа:</b>
+>
+
+🎯
+
+<b>Вазифа:</b>
+
 ${t.task}
 
 <br><br>
 
-📅 <b>Муддат:</b>
+📅
+
+<b>Муддат:</b>
+
 ${t.deadline}
 
 </div>
 
 
-<div style="
-margin-top:12px
-">
+<div style="margin-top:12px">
 
-<div style="
+<div
+
+style="
 display:flex;
 justify-content:space-between;
 margin-bottom:5px
-">
+"
+
+>
 
 <span>
+
 Бажарилиш
+
 </span>
 
 <b>
+
 ${t.progress}%
+
 </b>
 
 </div>
 
 <div class="progress">
 
-<div style="
+<div
+
+style="
 width:${t.progress}%;
 background:${border}
-"></div>
+"
+
+></div>
 
 </div>
 
@@ -1144,34 +1297,282 @@ background:${border}
 `;
 
 }
-).join("");
+
+)
+
+.join("");
 
 }
 
 
-/* ================================
+/* =========================
+   EDIT EXECUTOR
+========================= */
+
+window.editExecutor=
+
+i=>{
+
+const t=
+executionTasks[i];
+
+const box=
+document.getElementById(
+"exname-"+i
+);
+
+box.innerHTML=
+
+`
+
+<input
+
+class="executor-input"
+
+id="executor-input-${i}"
+
+value="${escapeHtml(t.executor)}"
+
+>
+
+<div style="margin-top:8px">
+
+<button
+
+class="save-btn"
+
+onclick="saveExecutor(${i})"
+
+>
+
+💾 Сақлаш
+
+</button>
+
+<button
+
+class="cancel-btn"
+
+onclick="renderExecution()"
+
+>
+
+Бекор қилиш
+
+</button>
+
+</div>
+
+`;
+
+document.getElementById(
+"executor-input-"+i
+).focus();
+
+};
+
+
+/* =========================
+   SAVE EXECUTOR
+========================= */
+
+window.saveExecutor=
+
+async i=>{
+
+const input=
+
+document.getElementById(
+"executor-input-"+i
+);
+
+const name=
+input.value.trim();
+
+if(!name){
+
+alert(
+"Ижрочи номи бўш қолмаслиги керак."
+);
+
+return;
+
+}
+
+const old=
+executionTasks[i].executor;
+
+if(old===name){
+
+renderExecution();
+
+return;
+
+}
+
+executionTasks[i].executor=
+name;
+
+saved[i]=name;
+
+localStorage.setItem(
+
+"hududgaz_executors_v5",
+
+JSON.stringify(saved)
+
+);
+
+const entry={
+
+time:
+new Date().toLocaleString(
+"uz-UZ"
+),
+
+district:
+executionTasks[i].district,
+
+leader:
+executionTasks[i].responsible,
+
+oldExecutor:
+old,
+
+newExecutor:
+name,
+
+task:
+executionTasks[i].task
+
+};
+
+auditLog.unshift(entry);
+
+auditLog=
+auditLog.slice(0,100);
+
+localStorage.setItem(
+
+"hududgaz_audit_v5",
+
+JSON.stringify(auditLog)
+
+);
+
+renderExecution();
+
+renderSignals();
+
+renderAudit();
+
+await sendToSheets({
+
+action:
+"updateExecutor",
+
+...entry
+
+});
+
+};
+
+
+/* =========================
+   AUDIT
+========================= */
+
+function renderAudit(){
+
+document.getElementById(
+"audit"
+).innerHTML=
+
+auditLog.length
+
+?
+
+auditLog
+
+.map(
+x=>`
+
+<div class="audit-item">
+
+🕒
+
+<b>
+${x.time}
+</b>
+
+<br>
+
+📍
+${x.district}
+
+|
+
+👔
+${x.leader}
+
+<br>
+
+👤
+${x.oldExecutor}
+
+→
+
+<b>
+${x.newExecutor}
+</b>
+
+<br>
+
+🎯
+${x.task}
+
+</div>
+
+`
+)
+
+.join("")
+
+:
+
+"Ҳозирча ўзгартишлар йўқ.";
+
+}
+
+
+/* =========================
    RED SIGNALS
-================================ */
+========================= */
 
 function renderSignals(){
 
-let signals=[];
+let s=[];
 
-
-/* DELAY */
 
 executionTasks
+
 .filter(
 t=>t.status==="Кечикмоқда"
 )
-.forEach(t=>{
 
-signals.push(`
+.forEach(
+t=>{
+
+s.push(
+
+`
 
 <div class="signal">
 
+⏰
+
 <b>
-⏰ ИЖРО КЕЧИКМОҚДА
+ИЖРО КЕЧИКМОҚДА
 </b>
 
 <br><br>
@@ -1184,11 +1585,12 @@ ${t.district}
 
 ${t.task}
 —
-${t.progress}%.
+${t.progress}%
 
 <br>
 
 👤 Ижрочи:
+
 <b>
 ${t.executor}
 </b>
@@ -1201,22 +1603,31 @@ ${t.executor}
 
 </div>
 
-`);
+`
 
-});
+);
 
+}
+);
 
-/* DEBT */
 
 results
-.filter(r=>r.debt>=60)
-.forEach(r=>{
 
-signals.push(`
+.filter(
+r=>r.debt>=60
+)
+
+.forEach(
+r=>{
+
+s.push(
+
+`
 
 <div class="signal">
 
 💰
+
 <b>
 ЮҚОРИ ҚАРЗДОРЛИК
 </b>
@@ -1229,8 +1640,11 @@ ${r.name}
 
 <br>
 
-Қарздорлик кўрсаткичи:
-${r.debt}.
+Қарздорлик:
+
+${r.debt}
+
+млрд
 
 <br><br>
 
@@ -1240,22 +1654,31 @@ ${r.debt}.
 
 </div>
 
-`);
+`
 
-});
+);
 
+}
+);
 
-/* LOSS */
 
 results
-.filter(r=>r.loss>=2.8)
-.forEach(r=>{
 
-signals.push(`
+.filter(
+r=>r.loss>=2.8
+)
+
+.forEach(
+r=>{
+
+s.push(
+
+`
 
 <div class="signal">
 
 🔧
+
 <b>
 ЮҚОРИ ЙЎҚОТИШ
 </b>
@@ -1269,7 +1692,8 @@ ${r.name}
 <br>
 
 Йўқотиш:
-${r.loss}%.
+
+${r.loss}%
 
 <br><br>
 
@@ -1279,22 +1703,31 @@ ${r.loss}%.
 
 </div>
 
-`);
+`
 
-});
+);
 
+}
+);
 
-/* IMBALANCE */
 
 results
-.filter(r=>r.imbalance>=3.2)
-.forEach(r=>{
 
-signals.push(`
+.filter(
+r=>r.imbalance>=3.2
+)
+
+.forEach(
+r=>{
+
+s.push(
+
+`
 
 <div class="signal">
 
 ⚖️
+
 <b>
 ЮҚОРИ ДЕБАЛАНС
 </b>
@@ -1308,7 +1741,8 @@ ${r.name}
 <br>
 
 Дебаланс:
-${r.imbalance}%.
+
+${r.imbalance}%
 
 <br><br>
 
@@ -1318,22 +1752,31 @@ ${r.imbalance}%.
 
 </div>
 
-`);
+`
 
-});
+);
 
+}
+);
 
-/* ONLINE */
 
 results
-.filter(r=>r.online<80)
-.forEach(r=>{
 
-signals.push(`
+.filter(
+r=>r.online<80
+)
+
+.forEach(
+r=>{
+
+s.push(
+
+`
 
 <div class="signal">
 
 📡
+
 <b>
 ОНЛАЙН ТИЗИМ ПАСТ
 </b>
@@ -1346,8 +1789,9 @@ ${r.name}
 
 <br>
 
-Онлайн ҳисоблагичлар:
-${r.online}%.
+Онлайн:
+
+${r.online}%
 
 <br><br>
 
@@ -1357,66 +1801,251 @@ ${r.online}%.
 
 </div>
 
-`);
+`
 
-});
+);
 
-
-/* WINTER */
-
-results
-.filter(r=>r.winter<85)
-.forEach(r=>{
-
-signals.push(`
-
-<div class="signal">
-
-❄️
-<b>
-ҚИШГА ТАЙЁРГАРЛИК
-</b>
-
-<br><br>
-
-<b>
-${r.name}
-</b>
-
-<br>
-
-Тайёргарлик:
-${r.winter}%.
-
-<br><br>
-
-<b>
-ДИРЕКТОР ЭЪТИБОРИ КЕРАК
-</b>
-
-</div>
-
-`);
-
-});
+}
+);
 
 
 document.getElementById(
 "signals"
 ).innerHTML=
 
-signals.length
-?signals.join("")
-:`<div class="action">
+s.length
+
+?s.join("")
+
+:
+
+`
+
+<div class="action">
+
 🟢 Критик сигнал аниқланмади.
-</div>`;
+
+</div>
+
+`;
 
 }
 
 
-/* ================================
+/* =========================
+   GOOGLE SHEETS
+========================= */
+
+async function checkGoogleSheet(){
+
+try{
+
+const r=
+await fetch(
+GOOGLE_SHEET_CSV,
+{
+cache:"no-store"
+}
+);
+
+if(!r.ok)
+throw 0;
+
+await r.text();
+
+sheetStatusText(
+"🟢 Google Sheets ўқиш уланиши тайёр"
+);
+
+}
+
+catch(e){
+
+sheetStatusText(
+"🟡 Google Sheets ўқиш имкони бор, лекин ҳозир текширувдан ўтмади"
+);
+
+}
+
+}
+
+
+function sheetStatusText(t){
+
+document.getElementById(
+"sheet-status"
+).innerHTML=t;
+
+}
+
+
+/* =========================
+   SAVE API URL
+========================= */
+
+function saveApiUrl(){
+
+API_URL=
+
+document.getElementById(
+"apiUrl"
+).value.trim();
+
+localStorage.setItem(
+"hududgaz_api_url",
+API_URL
+);
+
+alert(
+"Google Apps Script URL сақланди."
+);
+
+}
+
+
+/* =========================
+   TEST API
+========================= */
+
+async function testApi(){
+
+if(!API_URL){
+
+alert(
+"Аввало Apps Script Web App URL киритинг."
+);
+
+return;
+
+}
+
+try{
+
+const r=
+
+await fetch(
+API_URL+
+"?action=ping",
+{
+method:"GET"
+}
+);
+
+const t=
+await r.text();
+
+alert(
+"Уланиш жавоби: "+t
+);
+
+}
+
+catch(e){
+
+alert(
+
+"Уланиш текширувида браузер CORS чеклови бўлиши мумкин. Apps Script deployment 'Anyone' бўлиши керак."
+
+);
+
+}
+
+}
+
+
+/* =========================
+   SEND TO SHEETS
+========================= */
+
+async function sendToSheets(data){
+
+if(!API_URL)
+return;
+
+try{
+
+await fetch(
+
+API_URL,
+
+{
+
+method:"POST",
+
+mode:"no-cors",
+
+headers:{
+"Content-Type":
+"text/plain;charset=utf-8"
+},
+
+body:
+
+JSON.stringify({
+
+key:API_KEY,
+
+...data
+
+})
+
+}
+
+);
+
+sheetStatusText(
+
+"🟢 Google Sheets'га сақлаш сўрови юборилди"
+
+);
+
+}
+
+catch(e){
+
+sheetStatusText(
+
+"🟡 Локал сақланди; Google Sheets'га юборишда хатолик"
+
+);
+
+}
+
+}
+
+
+/* =========================
+   ESCAPE HTML
+========================= */
+
+function escapeHtml(s){
+
+return String(s).replace(
+
+/[&<>"']/g,
+
+m=>({
+
+"&":"&amp;",
+
+"<":"&lt;",
+
+">":"&gt;",
+
+'"':"&quot;",
+
+"'":"&#039;"
+
+}[m])
+
+);
+
+}
+
+
+/* =========================
    SYSTEM CHECK
-================================ */
+========================= */
 
 function systemCheck(){
 
@@ -1439,47 +2068,52 @@ results.length===22
 
 [
 "TOP-5",
-document.getElementById("top5")!==null
+!!document.getElementById("top5")
 ],
 
 [
 "AI Risk Map",
-document.getElementById("map")!==null
+!!document.getElementById("map")
 ],
 
 [
 "Ҳудуд маълумоти",
-document.getElementById("detail")!==null
+!!document.getElementById("detail")
 ],
 
 [
 "AI тавсиялар",
-document.getElementById("actions")!==null
+!!document.getElementById("actions")
 ],
 
 [
 "22 та рейтинг",
-document.getElementById("ranking")!==null
+!!document.getElementById("ranking")
 ],
 
 [
 "Ижро назорати",
-document.getElementById("execution-list")!==null
+!!document.getElementById("execution-list")
 ],
 
 [
 "Ижрочини ўзгартириш",
-typeof changeExecutor==="function"
+typeof saveExecutor==="function"
 ],
 
 [
 "Қизил сигналлар",
-document.getElementById("signals")!==null
+!!document.getElementById("signals")
 ],
 
 [
 "Summary KPI",
-document.getElementById("total")!==null
+!!document.getElementById("total")
+],
+
+[
+"Audit журнал",
+!!document.getElementById("audit")
 ]
 
 ];
@@ -1491,67 +2125,72 @@ document.getElementById(
 
 box.innerHTML=
 
-checks.map(c=>`
+checks
 
-<div style="
+.map(
+c=>`
+
+<div
+
+style="
 padding:4px 0;
 color:${c[1]?"#176b36":"#b42318"}
-">
+"
+
+>
 
 ${c[1]?"✅":"❌"}
+
 ${c[0]}
 
 </div>
 
-`).join("");
+`
+)
+
+.join("");
 
 const failed=
-checks.filter(c=>!c[1]).length;
+
+checks.filter(
+c=>!c[1]
+).length;
 
 box.innerHTML+=`
 
-<div style="
+<div
+
+style="
 margin-top:10px;
 padding:9px;
 border-radius:9px;
 font-weight:bold;
 background:
-${failed===0
-?"#e5f7e9"
-:"#ffe5e5"};
-
+${failed?"#ffe5e5":"#e5f7e9"};
 color:
-${failed===0
-?"#176b36"
-:"#b42318"};
-">
+${failed?"#b42318":"#176b36"};
+"
 
-${failed===0
-?"🟢 SYSTEM OK — Dashboard тайёр"
-:"🔴 "+failed+" та муаммо аниқланди"}
+>
+
+${
+failed
+?
+"🔴 "+failed+" та муаммо аниқланди"
+:
+"🟢 SYSTEM OK — Dashboard тайёр"
+}
 
 </div>
 
 `;
 
-setTimeout(()=>{
-
-const panel=
-document.querySelector(
-".system"
-);
-
-if(panel)
-panel.style.opacity=".25";
-
-},10000);
-
 }
 
 
-/* ================================
+/* =========================
    START
-================================ */
+========================= */
 
 renderSummary();
 
@@ -1567,7 +2206,11 @@ renderExecution();
 
 renderSignals();
 
+renderAudit();
+
 systemCheck();
+
+checkGoogleSheet();
 
 </script>
 

@@ -3,93 +3,93 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>HUDUDGAZ TASHKENT • AI KPI 6.0</title>
+<title>HUDUDGAZ TASHKENT • AI KPI 5.0</title>
 
 <style>
 *{box-sizing:border-box}
 
 body{
-  margin:0;
-  font-family:Arial,sans-serif;
-  background:#f3f6fa;
-  color:#172033;
+margin:0;
+font-family:Arial,sans-serif;
+background:#f3f6fa;
+color:#172033
 }
 
 header{
-  background:#102a43;
-  color:#fff;
-  padding:15px;
-  position:sticky;
-  top:0;
-  z-index:100;
+background:#102a43;
+color:white;
+padding:16px;
+position:sticky;
+top:0;
+z-index:20
 }
 
 .head{
-  max-width:1400px;
-  margin:auto;
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
+max-width:1350px;
+margin:auto;
+display:flex;
+justify-content:space-between;
+align-items:center
 }
 
 .logo{
-  font-size:18px;
-  font-weight:bold;
+font-size:19px;
+font-weight:bold
 }
 
 .online{
-  background:#20a05a;
-  padding:7px 12px;
-  border-radius:20px;
-  font-size:12px;
+background:#20a05a;
+padding:7px 12px;
+border-radius:20px;
+font-size:12px
 }
 
 .container{
-  max-width:1400px;
-  margin:auto;
-  padding:18px;
+max-width:1350px;
+margin:auto;
+padding:18px
 }
 
 .hero,.section,.card{
-  background:#fff;
-  border-radius:16px;
-  box-shadow:0 4px 18px rgba(0,0,0,.07);
+background:white;
+border-radius:17px;
+box-shadow:0 4px 16px #0000000c
 }
 
 .hero{
-  padding:22px;
-  margin-bottom:18px;
+padding:22px;
+margin-bottom:18px
 }
 
 h1{
-  margin:0 0 8px;
-  font-size:25px;
+margin:0 0 7px;
+font-size:25px
 }
 
 .sub{
-  color:#718096;
+color:#718096
 }
 
 .cards{
-  display:grid;
-  grid-template-columns:repeat(6,1fr);
-  gap:12px;
-  margin-bottom:18px;
+display:grid;
+grid-template-columns:repeat(6,1fr);
+gap:12px;
+margin-bottom:18px
 }
 
 .card{
-  padding:16px;
+padding:16px
 }
 
 .label{
-  font-size:12px;
-  color:#718096;
+font-size:12px;
+color:#718096
 }
 
 .value{
-  font-size:25px;
-  font-weight:bold;
-  margin-top:7px;
+font-size:24px;
+font-weight:bold;
+margin-top:7px
 }
 
 .blue{color:#3182ce}
@@ -98,241 +98,215 @@ h1{
 .green{color:#38a169}
 
 .section{
-  padding:18px;
-  margin-bottom:18px;
+padding:18px;
+margin-bottom:18px
 }
 
 .section h2{
-  margin-top:0;
-  font-size:18px;
+margin-top:0;
+font-size:19px
 }
 
 .form{
-  display:grid;
-  grid-template-columns:repeat(4,1fr);
-  gap:12px;
+display:grid;
+grid-template-columns:repeat(4,1fr);
+gap:12px
 }
 
 .field{
-  display:flex;
-  flex-direction:column;
-  gap:6px;
+display:flex;
+flex-direction:column;
+gap:6px
 }
 
 .field label{
-  font-size:12px;
-  font-weight:bold;
-  color:#718096;
+font-size:12px;
+font-weight:bold;
+color:#718096
 }
 
 input,select{
-  width:100%;
-  padding:11px;
-  border:1px solid #d9e2ec;
-  border-radius:10px;
-  font-size:14px;
-  background:#fff;
+padding:11px;
+border:1px solid #d9e2ec;
+border-radius:10px;
+font-size:14px;
+background:white
 }
 
 button{
-  border:0;
-  border-radius:10px;
-  padding:12px 17px;
-  font-weight:bold;
-  cursor:pointer;
+border:0;
+border-radius:10px;
+padding:12px 18px;
+font-weight:bold;
+cursor:pointer
 }
 
 .primary{
-  background:#102a43;
-  color:#fff;
+background:#102a43;
+color:white
 }
 
 .secondary{
-  background:#edf2f7;
-  color:#172033;
+background:#edf2f7;
+color:#172033
 }
 
 .danger{
-  background:#fff5f5;
-  color:#c53030;
+background:#fff5f5;
+color:#c53030
 }
 
 .actions{
-  display:flex;
-  gap:10px;
-  margin-top:15px;
-  flex-wrap:wrap;
-}
-
-.message{
-  margin-top:12px;
-  font-weight:bold;
+display:flex;
+gap:10px;
+margin-top:15px;
+flex-wrap:wrap
 }
 
 .toolbar{
-  display:flex;
-  gap:10px;
-  margin-bottom:14px;
+display:flex;
+gap:10px;
+margin-bottom:14px
 }
 
 .search{
-  flex:1;
+flex:1
 }
 
 .tablewrap{
-  overflow-x:auto;
+overflow-x:auto
 }
 
 table{
-  width:100%;
-  border-collapse:collapse;
-  min-width:1300px;
+width:100%;
+border-collapse:collapse;
+min-width:1250px
 }
 
 th,td{
-  padding:10px 8px;
-  border-bottom:1px solid #edf2f7;
-  font-size:12px;
-  text-align:left;
+padding:10px 8px;
+border-bottom:1px solid #edf2f7;
+font-size:12px;
+text-align:left
 }
 
 th{
-  background:#f7fafc;
-  color:#4a5568;
-  position:sticky;
-  top:60px;
+background:#f7fafc;
+color:#4a5568
 }
 
 .badge{
-  display:inline-block;
-  padding:5px 9px;
-  border-radius:15px;
-  font-size:11px;
-  font-weight:bold;
+display:inline-block;
+padding:5px 9px;
+border-radius:15px;
+font-size:11px;
+font-weight:bold
 }
 
 .badge.red{
-  background:#fff5f5;
-  color:#c53030;
+background:#fff5f5;
+color:#c53030
 }
 
 .badge.yellow{
-  background:#fffff0;
-  color:#b7791f;
+background:#fffff0;
+color:#b7791f
 }
 
 .badge.green{
-  background:#f0fff4;
-  color:#2f855a;
+background:#f0fff4;
+color:#2f855a
 }
 
 .grid2{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:15px;
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:15px
 }
 
 .alert{
-  border-left:6px solid #e53e3e;
-  background:#fff5f5;
-  padding:15px;
-  border-radius:12px;
-  margin-bottom:10px;
-}
-
-.warning{
-  border-left:6px solid #d69e2e;
-  background:#fffff0;
-  padding:15px;
-  border-radius:12px;
-  margin-bottom:10px;
+border-left:6px solid #e53e3e;
+background:#fff5f5;
+padding:15px;
+border-radius:12px;
+margin-bottom:10px
 }
 
 .good{
-  background:#f0fff4;
-  border-left:6px solid #38a169;
-  padding:15px;
-  border-radius:12px;
-  margin-bottom:10px;
+background:#f0fff4;
+border-left:6px solid #38a169;
+padding:15px;
+border-radius:12px;
+margin-bottom:10px
 }
 
 .ai{
-  font-weight:bold;
-  font-size:16px;
+font-weight:bold;
+font-size:17px
+}
+
+.small{
+font-size:11px;
+color:#718096
 }
 
 .report{
-  background:#f7fafc;
-  padding:18px;
-  border-radius:14px;
-  line-height:1.8;
+background:#f7fafc;
+padding:18px;
+border-radius:14px;
+line-height:1.7
 }
 
-.kpi-grid{
-  display:grid;
-  grid-template-columns:repeat(4,1fr);
-  gap:12px;
+.report strong{
+color:#102a43
 }
 
-.kpi-box{
-  padding:15px;
-  background:#f7fafc;
-  border-radius:12px;
+.message{
+margin-top:12px;
+font-weight:bold
 }
 
 .footer{
-  text-align:center;
-  padding:25px;
-  font-size:12px;
-  color:#718096;
+text-align:center;
+padding:25px;
+font-size:12px;
+color:#718096
 }
 
 @media(max-width:1000px){
-  .cards{
-    grid-template-columns:repeat(3,1fr);
-  }
+.cards{
+grid-template-columns:repeat(3,1fr)
+}
 
-  .form{
-    grid-template-columns:repeat(2,1fr);
-  }
+.form{
+grid-template-columns:repeat(2,1fr)
+}
 
-  .grid2{
-    grid-template-columns:1fr;
-  }
-
-  .kpi-grid{
-    grid-template-columns:repeat(2,1fr);
-  }
+.grid2{
+grid-template-columns:1fr
+}
 }
 
 @media(max-width:600px){
-  .container{
-    padding:10px;
-  }
+.container{
+padding:10px
+}
 
-  .cards{
-    grid-template-columns:repeat(2,1fr);
-  }
+.cards{
+grid-template-columns:repeat(2,1fr)
+}
 
-  .form{
-    grid-template-columns:1fr;
-  }
+.form{
+grid-template-columns:1fr
+}
 
-  .toolbar{
-    flex-direction:column;
-  }
+.toolbar{
+flex-direction:column
+}
 
-  .kpi-grid{
-    grid-template-columns:1fr;
-  }
-
-  h1{
-    font-size:21px;
-  }
-
-  .logo{
-    font-size:14px;
-  }
+h1{
+font-size:21px
+}
 }
 </style>
 </head>
@@ -340,69 +314,69 @@ th{
 <body>
 
 <header>
-  <div class="head">
-    <div class="logo">⚡ HUDUDGAZ TASHKENT • AI KPI 6.0</div>
-    <div class="online">● ONLINE</div>
-  </div>
+<div class="head">
+<div class="logo">⚡ HUDUDGAZ TASHKENT • AI KPI 5.0</div>
+<div class="online">● ONLINE</div>
+</div>
 </header>
 
 <div class="container">
 
 <div class="hero">
-  <h1>AI Risk & KPI Control Dashboard</h1>
-  <div class="sub">
-    Тошкент вилояти газ таъминоти — 22 ҳудуд бўйича автоматик мониторинг ва ҳисобот тизими
-  </div>
+<h1>Панель управления рисками и KPI с использованием ИИ</h1>
+<div class="sub">
+Тошкент вилояти газ таъминоти — 22 ҳудуд бўйича автоматик мониторинг ва ҳисобот тизими
+</div>
 </div>
 
 <!-- SUMMARY -->
 
 <div class="cards">
 
-  <div class="card">
-    <div class="label">Ҳудудлар</div>
-    <div class="value blue" id="count">22</div>
-  </div>
+<div class="card">
+<div class="label">Ҳудудлар</div>
+<div class="value blue" id="count">22</div>
+</div>
 
-  <div class="card">
-    <div class="label">Ўртача AI Risk</div>
-    <div class="value" id="avg">0</div>
-  </div>
+<div class="card">
+<div class="label">Ўртача AI Risk</div>
+<div class="value" id="avg">0</div>
+</div>
 
-  <div class="card">
-    <div class="label">🔴 Қизил</div>
-    <div class="value red" id="red">0</div>
-  </div>
+<div class="card">
+<div class="label">🔴 Қизил</div>
+<div class="value red" id="red">0</div>
+</div>
 
-  <div class="card">
-    <div class="label">🟡 Сариқ</div>
-    <div class="value yellow" id="yellow">0</div>
-  </div>
+<div class="card">
+<div class="label">🟡 Сариқ</div>
+<div class="value yellow" id="yellow">0</div>
+</div>
 
-  <div class="card">
-    <div class="label">🟢 Яшил</div>
-    <div class="value green" id="green">0</div>
-  </div>
+<div class="card">
+<div class="label">🟢 Яшил</div>
+<div class="value green" id="green">0</div>
+</div>
 
-  <div class="card">
-    <div class="label">📡 Онлайн</div>
-    <div class="value blue" id="onlineAvg">0%</div>
-  </div>
+<div class="card">
+<div class="label">📡 Онлайн</div>
+<div class="value blue" id="onlineAvg">0%</div>
+</div>
 
 </div>
 
 <!-- DIRECTOR -->
 
 <div class="section">
-  <h2>🚨 РАҲБАР УЧУН БИРИНЧИ НАВБАТДАГИ ЧОРА</h2>
-  <div id="director"></div>
+<h2>🚨 РАҲБАР УЧУН БИРИНЧИ НАВБАТДАГИ ЧОРА</h2>
+<div id="director"></div>
 </div>
 
 <!-- INPUT -->
 
 <div class="section">
 
-<h2>📝 KPI МАЪЛУМОТ КИРИТИШ</h2>
+<h2>📝 KPI маълумот киритиш</h2>
 
 <div class="form">
 
@@ -455,19 +429,29 @@ th{
 
 <div class="actions">
 
-<button class="primary" onclick="saveKPI()">💾 Сақлаш</button>
+<button class="primary" onclick="saveKPI()">
+💾 Сақлаш
+</button>
 
-<button class="secondary" onclick="fillDemo()">🧪 Тест</button>
+<button class="secondary" onclick="fillDemo()">
+🧪 Тест
+</button>
 
-<button class="secondary" onclick="exportCSV()">📥 CSV экспорт</button>
+<button class="secondary" onclick="exportCSV()">
+📥 CSV экспорт
+</button>
 
-<button class="secondary" onclick="exportJSON()">📦 JSON экспорт</button>
+<button class="secondary" onclick="exportJSON()">
+📦 JSON экспорт
+</button>
 
-<button class="danger" onclick="resetData()">↩ Тиклаш</button>
+<button class="danger" onclick="resetData()">
+↩ Тиклаш
+</button>
 
 </div>
 
-<div class="message" id="message"></div>
+<div id="message" class="message"></div>
 
 </div>
 
@@ -490,7 +474,9 @@ th{
 </div>
 
 <div id="report" class="report">
-Ҳисобот тайёрланмоқда...
+Ҳисобот тайёрлаш учун
+<strong>«Ҳисоботни янгилаш»</strong>
+тугмасини босинг.
 </div>
 
 </div>
@@ -500,7 +486,7 @@ th{
 <div class="grid2">
 
 <div class="section">
-<h2>🏆 TOP-5 ХАВФЛИ</h2>
+<h2>🏆 ТОП-5 ХАВФЛИ</h2>
 <div id="top5"></div>
 </div>
 
@@ -567,14 +553,13 @@ placeholder="Ҳудудни қидириш..."
 </table>
 
 </div>
-
 </div>
 
-<!-- AI LOGIC -->
+<!-- FORMULA -->
 
 <div class="section">
 
-<h2>🤖 AI RISK ЛОГИКАСИ</h2>
+<h2>🤖 AI Risk логикаси</h2>
 
 <p>
 <strong>Қарздорлик — 40%</strong> |
@@ -590,30 +575,27 @@ placeholder="Ҳудудни қидириш..."
 
 </div>
 
-<!-- SYSTEM KPI -->
+<!-- KPI -->
 
 <div class="section">
 
-<h2>📈 ТИЗИМ KPI</h2>
+<h2>📈 Тизим KPI</h2>
 
-<div class="kpi-grid" id="indicators"></div>
+<div id="indicators"></div>
 
 </div>
 
 </div>
 
 <div class="footer">
-ХУДУДГАЗ ТАШКЕНТ • AI KPI CONTROL SYSTEM • 2026
+ХУДУДГАЗ ТАШКЕНТ • AI KPI 5.0 • 2026
 </div>
 
 
 <script>
 
-/* =========================
-   22 ҲУДУД
-========================= */
-
 const names = [
+
 "Чирчиқ шаҳри",
 "Оҳангарон тумани",
 "Ангрен шаҳри",
@@ -636,1072 +618,871 @@ const names = [
 "Тошкент шаҳри",
 "Оҳангарон шаҳри",
 "Нурафшон шаҳри"
+
 ];
 
 
-/* =========================
-   БОШЛАНҒИЧ МАЪЛУМОТ
-========================= */
-
 const defaults = {
 
-"Чирчиқ шаҳри":[73,3.0,3.5,100,95,1,92,90],
-
+"Чирчиқ шаҳри":[73,3,3.5,100,95,1,92,90],
 "Оҳангарон тумани":[62,2.9,3.4,100,94,1,93,91],
-
 "Ангрен шаҳри":[62,2.8,3.2,100,96,0,95,92],
-
 "Оққўрғон тумани":[71,3.1,3.7,100,92,2,90,88],
-
 "Юқори Чирчиқ тумани":[58,2.7,3.1,100,97,0,96,94],
-
 "Қуйи Чирчиқ тумани":[64,3.2,3.6,100,93,1,91,89],
-
 "Зангиота тумани":[85,3.8,4.2,100,90,4,88,86],
-
 "Қибрай тумани":[76,3.4,3.8,100,91,3,89,87],
-
 "Бўстонлиқ тумани":[48,2.1,2.4,100,98,0,97,95],
-
 "Паркент тумани":[55,2.5,2.8,100,96,1,95,93],
-
-"Пскент тумани":[59,2.6,3.0,100,95,0,94,92],
-
-"Бекобод шаҳри":[67,3.0,3.3,100,94,1,92,90],
-
+"Пскент тумани":[59,2.6,3,100,95,0,94,92],
+"Бекобод шаҳри":[67,3,3.3,100,94,1,92,90],
 "Бекобод тумани":[61,2.7,3.1,100,96,0,95,91],
-
 "Олмалиқ шаҳри":[70,3.3,3.5,100,93,2,91,89],
-
 "Янгийўл шаҳри":[74,3.5,3.9,100,91,3,89,87],
-
 "Янгийўл тумани":[69,3.1,3.6,100,93,1,92,89],
-
 "Чиноз тумани":[57,2.4,2.9,100,97,0,96,94],
-
 "Тошкент тумани":[82,3.7,4.1,100,90,3,88,85],
-
 "Ўрта Чирчиқ тумани":[63,2.9,3.4,100,95,1,94,91],
-
-"Тошкент шаҳри":[88,4.0,4.5,100,89,5,86,84],
-
+"Тошкент шаҳри":[88,4,4.5,100,89,5,86,84],
 "Оҳангарон шаҳри":[66,3.1,3.5,100,94,2,92,89],
-
 "Нурафшон шаҳри":[72,3.2,3.7,100,92,2,90,88]
 
 };
 
 
-/* =========================
-   DATA
-========================= */
-
 let data = {};
 
 
-/* =========================
-   LOAD
-========================= */
+function load(){
 
-function loadData(){
+const saved = localStorage.getItem("HG_AI_KPI_5");
 
-  const saved = localStorage.getItem("HG_AI_KPI_6");
+if(saved){
 
-  if(saved){
+try{
 
-    try{
-      data = JSON.parse(saved);
-    }catch(e){
-      data = JSON.parse(JSON.stringify(defaults));
-    }
+data = JSON.parse(saved);
 
-  }else{
+}catch(e){
 
-    data = JSON.parse(JSON.stringify(defaults));
-
-  }
+data = JSON.parse(JSON.stringify(defaults));
 
 }
 
+}else{
 
-/* =========================
-   AI RISK
-========================= */
+data = JSON.parse(JSON.stringify(defaults));
+
+}
+
+}
+
 
 function riskCalc(debt,loss,balance){
 
-  const debtScore =
-    Math.min(Math.max(Number(debt),0),100);
+const debtScore =
+Math.min(Math.max(debt,0),100);
 
-  const lossScore =
-    Math.min(Math.max(Number(loss)*20,0),100);
+const lossScore =
+Math.min(Math.max(loss * 20,0),100);
 
-  const balanceScore =
-    Math.min(Math.max(Number(balance)*20,0),100);
+const balanceScore =
+Math.min(Math.max(balance * 20,0),100);
 
-  const risk =
-    debtScore * 0.40 +
-    lossScore * 0.35 +
-    balanceScore * 0.25;
-
-  return Math.round(risk * 10) / 10;
-}
-
-
-/* =========================
-   STATUS
-========================= */
-
-function getStatus(risk){
-
-  if(risk >= 65){
-
-    return {
-      name:"ҚИЗИЛ",
-      cls:"red",
-      action:"Шошилинч чора"
-    };
-
-  }
-
-  if(risk >= 45){
-
-    return {
-      name:"САРИҚ",
-      cls:"yellow",
-      action:"Назоратни кучайтириш"
-    };
-
-  }
-
-  return {
-    name:"ЯШИЛ",
-    cls:"green",
-    action:"Барқарор"
-  };
+return Math.round(
+(
+debtScore * 0.40 +
+lossScore * 0.35 +
+balanceScore * 0.25
+) * 10
+) / 10;
 
 }
 
 
-/* =========================
-   ROWS
-========================= */
+function status(risk){
 
-function getRows(){
+if(risk >= 65){
 
-  return names.map(function(name,index){
+return {
+name:"ҚИЗИЛ",
+cls:"red",
+action:"Шошилинч чора"
+};
 
-    const d = data[name];
+}
 
-    const debt = Number(d[0]) || 0;
-    const loss = Number(d[1]) || 0;
-    const balance = Number(d[2]) || 0;
-    const plan = Number(d[3]) || 0;
-    const fact = Number(d[4]) || 0;
-    const illegal = Number(d[5]) || 0;
-    const online = Number(d[6]) || 0;
-    const staff = Number(d[7]) || 0;
+if(risk >= 45){
 
-    const risk =
-      riskCalc(debt,loss,balance);
+return {
+name:"САРИҚ",
+cls:"yellow",
+action:"Назоратни кучайтириш"
+};
 
-    const status =
-      getStatus(risk);
+}
 
-    const execution =
-      plan > 0
-      ? Math.round((fact / plan) * 100)
-      : 0;
-
-    const reasons = [
-
-      {
-        name:"Қарздорлик",
-        value:debt
-      },
-
-      {
-        name:"Йўқотиш",
-        value:loss * 20
-      },
-
-      {
-        name:"Дебаланс",
-        value:balance * 20
-      }
-
-    ];
-
-    reasons.sort(function(a,b){
-      return b.value - a.value;
-    });
-
-    return {
-
-      index:index + 1,
-      name:name,
-      debt:debt,
-      loss:loss,
-      balance:balance,
-      plan:plan,
-      fact:fact,
-      execution:execution,
-      illegal:illegal,
-      online:online,
-      staff:staff,
-      risk:risk,
-      status:status,
-      reason:reasons[0].name
-
-    };
-
-  });
+return {
+name:"ЯШИЛ",
+cls:"green",
+action:"Барқарор"
+};
 
 }
 
 
-/* =========================
-   RENDER
-========================= */
+function rows(){
+
+return names.map((name,index)=>{
+
+const d = data[name];
+
+const risk =
+riskCalc(d[0],d[1],d[2]);
+
+const st =
+status(risk);
+
+const execution =
+d[3] > 0
+? Math.round((d[4]/d[3])*100)
+:0;
+
+const reasons = [
+
+["Қарздорлик",d[0]],
+
+["Йўқотиш",d[1]*20],
+
+["Дебаланс",d[2]*20]
+
+];
+
+reasons.sort((a,b)=>b[1]-a[1]);
+
+return {
+
+index:index+1,
+name:name,
+debt:d[0],
+loss:d[1],
+balance:d[2],
+plan:d[3],
+fact:d[4],
+execution:execution,
+illegal:d[5],
+online:d[6],
+staff:d[7],
+risk:risk,
+status:st,
+reason:reasons[0][0]
+
+};
+
+});
+
+}
+
 
 function render(){
 
-  const rows = getRows();
+const r = rows();
 
-  const avg =
-    rows.reduce(function(a,b){
-      return a + b.risk;
-    },0) / rows.length;
+if(!r.length) return;
 
-  const red =
-    rows.filter(function(x){
-      return x.status.cls === "red";
-    }).length;
+const avg =
+r.reduce((a,b)=>a+b.risk,0)/r.length;
 
-  const yellow =
-    rows.filter(function(x){
-      return x.status.cls === "yellow";
-    }).length;
+const red =
+r.filter(x=>x.status.cls==="red").length;
 
-  const green =
-    rows.filter(function(x){
-      return x.status.cls === "green";
-    }).length;
+const yellow =
+r.filter(x=>x.status.cls==="yellow").length;
 
-  const online =
-    rows.reduce(function(a,b){
-      return a + b.online;
-    },0) / rows.length;
+const green =
+r.filter(x=>x.status.cls==="green").length;
+
+const online =
+r.reduce((a,b)=>a+b.online,0)/r.length;
 
 
-  document.getElementById("count").innerText =
-    rows.length;
+document.getElementById("count").innerText =
+r.length;
 
-  document.getElementById("avg").innerText =
-    avg.toFixed(1);
+document.getElementById("avg").innerText =
+avg.toFixed(1);
 
-  document.getElementById("red").innerText =
-    red;
+document.getElementById("red").innerText =
+red;
 
-  document.getElementById("yellow").innerText =
-    yellow;
+document.getElementById("yellow").innerText =
+yellow;
 
-  document.getElementById("green").innerText =
-    green;
+document.getElementById("green").innerText =
+green;
 
-  document.getElementById("onlineAvg").innerText =
-    Math.round(online) + "%";
+document.getElementById("onlineAvg").innerText =
+Math.round(online)+"%";
 
 
-  renderDirector(rows);
-  renderTop(rows);
-  renderTable(rows);
-  renderIndicators(rows);
+director(r);
+
+top(r);
+
+table(r);
+
+indicators(r);
 
 }
 
 
-/* =========================
-   DIRECTOR
-========================= */
+function director(r){
 
-function renderDirector(rows){
+const x =
+[...r].sort((a,b)=>b.risk-a.risk)[0];
 
-  const sorted =
-    [...rows].sort(function(a,b){
-      return b.risk - a.risk;
-    });
+document.getElementById("director").innerHTML = `
 
-  const x = sorted[0];
+<div class="alert">
 
-  document.getElementById("director").innerHTML = `
+<b>🔴 ${x.name}</b>
 
-    <div class="alert">
+<br><br>
 
-      <b>🔴 ${x.name}</b>
+Риск ИИ:
+<strong>${x.risk}</strong>
 
-      <br><br>
+<br>
 
-      AI Risk:
-      <strong>${x.risk}</strong>
+Асосий хавф:
+<strong>${x.reason}</strong>
 
-      <br>
+<br>
 
-      Асосий хавф:
-      <strong>${x.reason}</strong>
+Қарздорлик:
+<strong>${x.debt} млрд сўм</strong>
 
-      <br>
+<br>
 
-      Қарздорлик:
-      <strong>${x.debt} млрд сўм</strong>
+Йўқотиш:
+<strong>${x.loss}%</strong>
 
-      <br>
+<br>
 
-      Йўқотиш:
-      <strong>${x.loss}%</strong>
+Дебаланс:
+<strong>${x.balance}%</strong>
 
-      <br>
+<br><br>
 
-      Дебаланс:
-      <strong>${x.balance}%</strong>
+Тавсия:
+<strong>${x.status.action}</strong>
 
-      <br>
+</div>
 
-      Онлайн:
-      <strong>${x.online}%</strong>
-
-      <br><br>
-
-      Тавсия:
-      <strong>${x.status.action}</strong>
-
-    </div>
-
-  `;
+`;
 
 }
 
 
-/* =========================
-   TOP / BEST
-========================= */
+function top(r){
 
-function renderTop(rows){
+const sorted =
+[...r].sort((a,b)=>b.risk-a.risk);
 
-  const sorted =
-    [...rows].sort(function(a,b){
-      return b.risk - a.risk;
-    });
+document.getElementById("top5").innerHTML =
 
-  document.getElementById("top5").innerHTML =
+sorted.slice(0,5).map((x,i)=>`
 
-    sorted.slice(0,5).map(function(x,i){
+<div class="alert">
 
-      return `
+<b>${i+1}. ${x.name}</b>
 
-        <div class="alert">
+<br>
 
-          <b>${i+1}. ${x.name}</b>
+Риск ИИ:
+<strong>${x.risk}</strong>
 
-          <br>
+<br>
 
-          AI Risk:
-          <strong>${x.risk}</strong>
+Асосий хавф:
+${x.reason}
 
-          <br>
+</div>
 
-          Асосий хавф:
-          ${x.reason}
-
-          <br>
-
-          Тавсия:
-          ${x.status.action}
-
-        </div>
-
-      `;
-
-    }).join("");
+`).join("");
 
 
-  const best =
-    [...rows].sort(function(a,b){
-      return a.risk - b.risk;
-    });
+const best =
+[...r].sort((a,b)=>a.risk-b.risk);
 
+document.getElementById("best5").innerHTML =
 
-  document.getElementById("best5").innerHTML =
+best.slice(0,5).map((x,i)=>`
 
-    best.slice(0,5).map(function(x,i){
+<div class="good">
 
-      return `
+<b>${i+1}. ${x.name}</b>
 
-        <div class="good">
+<br>
 
-          <b>${i+1}. ${x.name}</b>
+Риск ИИ:
+<strong>${x.risk}</strong>
 
-          <br>
+<br>
 
-          AI Risk:
-          <strong>${x.risk}</strong>
+Онлайн:
+<strong>${x.online}%</strong>
 
-          <br>
+</div>
 
-          Онлайн:
-          <strong>${x.online}%</strong>
-
-          <br>
-
-          Ходим KPI:
-          <strong>${x.staff}%</strong>
-
-        </div>
-
-      `;
-
-    }).join("");
+`).join("");
 
 }
 
 
-/* =========================
-   TABLE
-========================= */
+function table(r){
 
-function renderTable(rows){
+const search =
+document.getElementById("search")
+.value
+.toLowerCase();
 
-  const search =
-    document.getElementById("search").value
-    .toLowerCase()
-    .trim();
-
-  const filter =
-    document.getElementById("filter").value;
+const filter =
+document.getElementById("filter")
+.value;
 
 
-  const list = rows.filter(function(x){
+let list =
+r.filter(x=>{
 
-    if(
-      search &&
-      !x.name.toLowerCase().includes(search)
-    ){
-      return false;
-    }
+if(
+!x.name.toLowerCase().includes(search)
+)return false;
 
-    if(
-      filter !== "all" &&
-      x.status.cls !== filter
-    ){
-      return false;
-    }
+if(
+filter !== "all" &&
+x.status.cls !== filter
+)return false;
 
-    return true;
+return true;
 
-  });
+});
 
 
-  list.sort(function(a,b){
-    return b.risk - a.risk;
-  });
+list.sort((a,b)=>b.risk-a.risk);
 
 
-  document.getElementById("table").innerHTML =
+document.getElementById("table").innerHTML =
 
-    list.map(function(x,i){
+list.map((x,i)=>`
 
-      return `
+<tr>
 
-        <tr>
+<td>${i+1}</td>
 
-          <td>${i+1}</td>
+<td><b>${x.name}</b></td>
 
-          <td>
-            <b>${x.name}</b>
-          </td>
+<td>${x.debt}</td>
 
-          <td>${x.debt}</td>
+<td>${x.loss}%</td>
 
-          <td>${x.loss}%</td>
+<td>${x.balance}%</td>
 
-          <td>${x.balance}%</td>
+<td>${x.plan}</td>
 
-          <td>${x.plan}</td>
+<td>${x.fact}</td>
 
-          <td>${x.fact}</td>
+<td>${x.execution}%</td>
 
-          <td>${x.execution}%</td>
+<td>${x.illegal}</td>
 
-          <td>${x.illegal}</td>
+<td>${x.online}%</td>
 
-          <td>${x.online}%</td>
+<td>${x.staff}%</td>
 
-          <td>${x.staff}%</td>
+<td class="ai">${x.risk}</td>
 
-          <td class="ai">
-            ${x.risk}
-          </td>
+<td>
 
-          <td>
-            <span class="badge ${x.status.cls}">
-              ${x.status.name}
-            </span>
-          </td>
+<span class="badge ${x.status.cls}">
 
-          <td>${x.reason}</td>
+${x.status.name}
 
-          <td>${x.status.action}</td>
+</span>
 
-        </tr>
+</td>
 
-      `;
+<td>${x.reason}</td>
 
-    }).join("");
+<td>${x.status.action}</td>
+
+</tr>
+
+`).join("");
 
 }
 
 
-/* =========================
-   INDICATORS
-========================= */
+function indicators(r){
 
-function renderIndicators(rows){
+const debt =
+r.reduce((a,b)=>a+b.debt,0);
 
-  const debt =
-    rows.reduce(function(a,b){
-      return a + b.debt;
-    },0);
+const illegal =
+r.reduce((a,b)=>a+b.illegal,0);
 
-  const illegal =
-    rows.reduce(function(a,b){
-      return a + b.illegal;
-    },0);
+const staff =
+r.reduce((a,b)=>a+b.staff,0)/r.length;
 
-  const staff =
-    rows.reduce(function(a,b){
-      return a + b.staff;
-    },0) / rows.length;
-
-  const execution =
-    rows.reduce(function(a,b){
-      return a + b.execution;
-    },0) / rows.length;
+const execution =
+r.reduce((a,b)=>a+b.execution,0)/r.length;
 
 
-  document.getElementById("indicators").innerHTML = `
+document.getElementById("indicators").innerHTML = `
 
-    <div class="kpi-box">
+<div class="grid2">
 
-      <b>💰 Жами қарздорлик</b>
+<div>
 
-      <div class="value">
-        ${debt.toFixed(1)}
-      </div>
+<b>💰 Жами қарздорлик</b>
 
-      млрд сўм
+<div class="value">
+${debt.toFixed(1)} млрд сўм
+</div>
 
-    </div>
+</div>
 
+<div>
 
-    <div class="kpi-box">
+<b>💵 Ўртача тушум ижроси</b>
 
-      <b>💵 Ўртача тушум ижроси</b>
+<div class="value">
+${Math.round(execution)}%
+</div>
 
-      <div class="value">
-        ${Math.round(execution)}%
-      </div>
+</div>
 
-    </div>
+<div>
 
+<b>🚨 Ноқонуний уланишлар</b>
 
-    <div class="kpi-box">
+<div class="value">
+${illegal} та
+</div>
 
-      <b>🚨 Ноқонуний уланишлар</b>
+</div>
 
-      <div class="value">
-        ${illegal}
-      </div>
+<div>
 
-      та
+<b>👥 Ўртача ходим KPI</b>
 
-    </div>
+<div class="value">
+${Math.round(staff)}%
+</div>
 
+</div>
 
-    <div class="kpi-box">
+</div>
 
-      <b>👥 Ўртача ходим KPI</b>
-
-      <div class="value">
-        ${Math.round(staff)}%
-      </div>
-
-    </div>
-
-  `;
+`;
 
 }
 
-
-/* =========================
-   SAVE
-========================= */
 
 function saveKPI(){
 
-  const name =
-    document.getElementById("district").value;
-
-  const values = [
-
-    Number(document.getElementById("debt").value),
-
-    Number(document.getElementById("loss").value),
-
-    Number(document.getElementById("balance").value),
-
-    Number(document.getElementById("plan").value),
-
-    Number(document.getElementById("fact").value),
-
-    Number(document.getElementById("illegal").value),
-
-    Number(document.getElementById("online").value),
-
-    Number(document.getElementById("staff").value)
-
-  ];
+const name =
+document.getElementById("district").value;
 
 
-  if(values.some(function(x){
-    return !Number.isFinite(x);
-  })){
+const values = [
 
-    document.getElementById("message").innerText =
-      "❗ Барча майдонларни тўлдиринг.";
+Number(document.getElementById("debt").value),
 
-    return;
+Number(document.getElementById("loss").value),
 
-  }
+Number(document.getElementById("balance").value),
+
+Number(document.getElementById("plan").value),
+
+Number(document.getElementById("fact").value),
+
+Number(document.getElementById("illegal").value),
+
+Number(document.getElementById("online").value),
+
+Number(document.getElementById("staff").value)
+
+];
 
 
-  data[name] = values;
+if(values.some(x=>!Number.isFinite(x))){
 
-  localStorage.setItem(
-    "HG_AI_KPI_6",
-    JSON.stringify(data)
-  );
+document.getElementById("message").innerText =
+"❗ Барча майдонларни тўлдиринг.";
 
-
-  document.getElementById("message").innerText =
-    "✅ " + name + " маълумотлари сақланди.";
-
-  render();
-
-  generateReport();
+return;
 
 }
 
 
-/* =========================
-   TEST
-========================= */
+data[name] = values;
+
+
+localStorage.setItem(
+"HG_AI_KPI_5",
+JSON.stringify(data)
+);
+
+
+document.getElementById("message").innerText =
+"✅ Маълумот сақланди.";
+
+
+render();
+
+}
+
 
 function fillDemo(){
 
-  document.getElementById("debt").value = 70;
-  document.getElementById("loss").value = 3.2;
-  document.getElementById("balance").value = 3.5;
-  document.getElementById("plan").value = 100;
-  document.getElementById("fact").value = 96;
-  document.getElementById("illegal").value = 1;
-  document.getElementById("online").value = 95;
-  document.getElementById("staff").value = 92;
+document.getElementById("debt").value=70;
 
-  document.getElementById("message").innerText =
-    "🧪 Тест маълумотлари киритилди.";
+document.getElementById("loss").value=3.2;
+
+document.getElementById("balance").value=3.5;
+
+document.getElementById("plan").value=100;
+
+document.getElementById("fact").value=96;
+
+document.getElementById("illegal").value=1;
+
+document.getElementById("online").value=95;
+
+document.getElementById("staff").value=92;
 
 }
 
-
-/* =========================
-   RESET
-========================= */
 
 function resetData(){
 
-  const ok =
-    confirm(
-      "Барча маълумотни бошланғич тест ҳолатига қайтариш керакми?"
-    );
-
-  if(!ok){
-    return;
-  }
+if(!confirm(
+"Бошланғич тест маълумотларига қайтариш керакми?"
+)) return;
 
 
-  data =
-    JSON.parse(JSON.stringify(defaults));
+data =
+JSON.parse(JSON.stringify(defaults));
 
 
-  localStorage.setItem(
-    "HG_AI_KPI_6",
-    JSON.stringify(data)
-  );
+localStorage.setItem(
+"HG_AI_KPI_5",
+JSON.stringify(data)
+);
 
 
-  document.getElementById("message").innerText =
-    "↩ Маълумотлар тикланди.";
+document.getElementById("message").innerText =
+"↩ Маълумотлар тикланди.";
 
-  render();
+render();
 
-  generateReport();
+generateReport();
 
 }
 
-
-/* =========================
-   CSV
-========================= */
 
 function exportCSV(){
 
-  const rows = getRows();
+const r = rows();
 
-  let csv =
-    "№,Ҳудуд,Қарздорлик,Йўқотиш %,Дебаланс %,Режа,Факт,Ижро %,Ноқонуний,Онлайн %,Ходим KPI %,AI Risk,Ҳолат,Асосий хавф\n";
-
-
-  rows.forEach(function(x){
-
-    csv += [
-
-      x.index,
-      '"' + x.name + '"',
-      x.debt,
-      x.loss,
-      x.balance,
-      x.plan,
-      x.fact,
-      x.execution,
-      x.illegal,
-      x.online,
-      x.staff,
-      x.risk,
-      '"' + x.status.name + '"',
-      '"' + x.reason + '"'
-
-    ].join(",") + "\n";
-
-  });
+let csv =
+"№,Ҳудуд,Қарздорлик,Йўқотиш %,Дебаланс %,Режа,Факт,Ижро %,Ноқонуний,Онлайн %,Ходим KPI %,AI Risk,Ҳолат,Асосий хавф\n";
 
 
-  downloadFile(
-    "\uFEFF" + csv,
-    "hududgaz_kpi.csv",
-    "text/csv;charset=utf-8"
-  );
+r.forEach(x=>{
+
+csv += [
+
+x.index,
+`"${x.name}"`,
+x.debt,
+x.loss,
+x.balance,
+x.plan,
+x.fact,
+x.execution,
+x.illegal,
+x.online,
+x.staff,
+x.risk,
+`"${x.status.name}"`,
+`"${x.reason}"`
+
+].join(",")+"\n";
+
+});
+
+
+downloadFile(
+csv,
+"hududgaz_kpi.csv",
+"text/csv;charset=utf-8"
+);
 
 }
 
-
-/* =========================
-   JSON
-========================= */
 
 function exportJSON(){
 
-  const output = {
+const output = {
 
-    system:"HUDUDGAZ TASHKENT AI KPI 6.0",
+date:new Date().toISOString(),
 
-    date:new Date().toISOString(),
+system:
+"HUDUDGAZ TASHKENT AI KPI 5.0",
 
-    data:data
+data:data
 
-  };
+};
 
 
-  downloadFile(
+downloadFile(
 
-    JSON.stringify(output,null,2),
+JSON.stringify(output,null,2),
 
-    "hududgaz_kpi.json",
+"hududgaz_kpi.json",
 
-    "application/json"
+"application/json"
 
-  );
+);
 
 }
 
-
-/* =========================
-   DOWNLOAD
-========================= */
 
 function downloadFile(content,name,type){
 
-  const blob =
-    new Blob([content],{type:type});
+const blob =
+new Blob([content],{type:type});
 
-  const url =
-    URL.createObjectURL(blob);
+const url =
+URL.createObjectURL(blob);
 
-  const a =
-    document.createElement("a");
+const a =
+document.createElement("a");
 
-  a.href = url;
+a.href=url;
 
-  a.download = name;
+a.download=name;
 
-  document.body.appendChild(a);
+document.body.appendChild(a);
 
-  a.click();
+a.click();
 
-  a.remove();
+a.remove();
 
-  URL.revokeObjectURL(url);
+URL.revokeObjectURL(url);
 
 }
 
-
-/* =========================
-   REPORT
-========================= */
 
 function generateReport(){
 
-  const rows = getRows();
+const r = rows();
 
-  const sorted =
-    [...rows].sort(function(a,b){
-      return b.risk - a.risk;
-    });
+const sorted =
+[...r].sort((a,b)=>b.risk-a.risk);
 
+const avg =
+r.reduce((a,b)=>a+b.risk,0)/r.length;
 
-  const avg =
-    rows.reduce(function(a,b){
-      return a + b.risk;
-    },0) / rows.length;
+const red =
+r.filter(x=>x.status.cls==="red").length;
 
+const yellow =
+r.filter(x=>x.status.cls==="yellow").length;
 
-  const red =
-    rows.filter(function(x){
-      return x.status.cls === "red";
-    }).length;
+const green =
+r.filter(x=>x.status.cls==="green").length;
 
+const debt =
+r.reduce((a,b)=>a+b.debt,0);
 
-  const yellow =
-    rows.filter(function(x){
-      return x.status.cls === "yellow";
-    }).length;
+const illegal =
+r.reduce((a,b)=>a+b.illegal,0);
 
+const online =
+r.reduce((a,b)=>a+b.online,0)/r.length;
 
-  const green =
-    rows.filter(function(x){
-      return x.status.cls === "green";
-    }).length;
+const date =
+new Date().toLocaleString("uz-UZ");
 
 
-  const debt =
-    rows.reduce(function(a,b){
-      return a + b.debt;
-    },0);
+document.getElementById("report").innerHTML = `
 
+<b>ХУДУДГАЗ ТАШКЕНТ — AI KPI ҲИСОБОТИ</b>
 
-  const illegal =
-    rows.reduce(function(a,b){
-      return a + b.illegal;
-    },0);
+<br>
 
+Сана:
+<strong>${date}</strong>
 
-  const online =
-    rows.reduce(function(a,b){
-      return a + b.online;
-    },0) / rows.length;
+<hr>
 
+Жами ҳудуд:
+<strong>${r.length}</strong>
 
-  const date =
-    new Date().toLocaleString("uz-UZ");
+<br>
 
+Ўртача AI Risk:
+<strong>${avg.toFixed(1)}</strong>
 
-  document.getElementById("report").innerHTML = `
+<br>
 
-    <b>ХУДУДГАЗ ТАШКЕНТ — AI KPI ҲИСОБОТИ</b>
+🔴 Қизил зона:
+<strong>${red}</strong>
 
-    <br>
+<br>
 
-    Сана:
-    <strong>${date}</strong>
+🟡 Сариқ зона:
+<strong>${yellow}</strong>
 
-    <hr>
+<br>
 
-    Жами ҳудуд:
-    <strong>${rows.length}</strong>
+🟢 Яшил зона:
+<strong>${green}</strong>
 
-    <br>
+<hr>
 
-    Ўртача AI Risk:
-    <strong>${avg.toFixed(1)}</strong>
+💰 Жами қарздорлик:
+<strong>${debt.toFixed(1)} млрд сўм</strong>
 
-    <br>
+<br>
 
-    🔴 Қизил зона:
-    <strong>${red}</strong>
+🚨 Ноқонуний уланиш:
+<strong>${illegal} та</strong>
 
-    <br>
+<br>
 
-    🟡 Сариқ зона:
-    <strong>${yellow}</strong>
+📡 Ўртача онлайн:
+<strong>${Math.round(online)}%</strong>
 
-    <br>
+<hr>
 
-    🟢 Яшил зона:
-    <strong>${green}</strong>
+<b>РАҲБАР ЭЪТИБОРИ:</b>
 
-    <hr>
+<br><br>
 
-    💰 Жами қарздорлик:
-    <strong>${debt.toFixed(1)} млрд сўм</strong>
+1.
+<strong>${sorted[0].name}</strong>
+— AI Risk ${sorted[0].risk}
+— ${sorted[0].reason}
 
-    <br>
+<br>
 
-    🚨 Ноқонуний уланиш:
-    <strong>${illegal} та</strong>
+2.
+<strong>${sorted[1].name}</strong>
+— AI Risk ${sorted[1].risk}
+— ${sorted[1].reason}
 
-    <br>
+<br>
 
-    📡 Ўртача онлайн:
-    <strong>${Math.round(online)}%</strong>
+3.
+<strong>${sorted[2].name}</strong>
+— AI Risk ${sorted[2].risk}
+— ${sorted[2].reason}
 
-    <hr>
+<br><br>
 
-    <b>РАҲБАР ЭЪТИБОРИ:</b>
+<b>Тавсия:</b>
 
-    <br><br>
+Қизил зонадаги ҳудудлар бўйича
+қарздорлик, йўқотиш ва дебалансни
+биринчи навбатда назорат қилиш.
 
-    1.
-    <strong>${sorted[0].name}</strong>
-    — AI Risk ${sorted[0].risk}
-    — ${sorted[0].reason}
-
-    <br>
-
-    2.
-    <strong>${sorted[1].name}</strong>
-    — AI Risk ${sorted[1].risk}
-    — ${sorted[1].reason}
-
-    <br>
-
-    3.
-    <strong>${sorted[2].name}</strong>
-    — AI Risk ${sorted[2].risk}
-    — ${sorted[2].reason}
-
-    <br><br>
-
-    <b>Тавсия:</b>
-
-    Қизил зонадаги ҳудудлар бўйича
-    қарздорлик, йўқотиш ва дебалансни
-    биринчи навбатда назорат қилиш.
-
-  `;
+`;
 
 }
 
-
-/* =========================
-   COPY
-========================= */
 
 function copyReport(){
 
-  const text =
-    document.getElementById("report").innerText;
+const text =
+document.getElementById("report").innerText;
 
 
-  if(!text.trim()){
-    return;
-  }
+if(!text.trim()) return;
 
 
-  if(navigator.clipboard){
+if(navigator.clipboard){
 
-    navigator.clipboard.writeText(text)
+navigator.clipboard.writeText(text)
+.then(()=>{
 
-    .then(function(){
+document.getElementById("message").innerText =
+"📋 Ҳисобот нусхаланди.";
 
-      document.getElementById("message").innerText =
-        "📋 Ҳисобот нусхаланди.";
+})
+.catch(()=>{
 
-    })
+alert(
+"Ҳисоботни нусхалаш имкони бўлмади."
+);
 
-    .catch(function(){
+});
 
-      fallbackCopy(text);
+}else{
 
-    });
-
-  }else{
-
-    fallbackCopy(text);
-
-  }
+alert(
+"Телефон браузери нусхалашни қўллаб-қувватламади."
+);
 
 }
 
-
-/* =========================
-   COPY FALLBACK
-========================= */
-
-function fallbackCopy(text){
-
-  const area =
-    document.createElement("textarea");
-
-  area.value = text;
-
-  document.body.appendChild(area);
-
-  area.select();
-
-  document.execCommand("copy");
-
-  area.remove();
-
-  document.getElementById("message").innerText =
-    "📋 Ҳисобот нусхаланди.";
-
 }
 
-
-/* =========================
-   INIT
-========================= */
 
 function init(){
 
-  loadData();
+load();
 
 
-  const select =
-    document.getElementById("district");
+const select =
+document.getElementById("district");
 
 
-  names.forEach(function(name){
+names.forEach(name=>{
 
-    const option =
-      document.createElement("option");
+const option =
+document.createElement("option");
 
-    option.value = name;
+option.value=name;
 
-    option.textContent = name;
+option.textContent=name;
 
-    select.appendChild(option);
+select.appendChild(option);
 
-  });
+});
 
 
-  document.getElementById("
+document.getElementById("search")
+.addEventListener("input",render);
+
+
+document.getElementById("filter")
+.addEventListener("change",render);
+
+
+render();
+
+generateReport();
+
+}
+
+
+init();
+
+</script>
+
+</body>
+</html>

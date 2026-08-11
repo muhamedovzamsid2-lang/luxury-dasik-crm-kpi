@@ -3,74 +3,135 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>Hududgaz Toshkent — AI KPI Management</title>
+
+<title>Hududgaz Toshkent — AI KPI Dashboard</title>
 
 <style>
 *{box-sizing:border-box}
-body{margin:0;font-family:Arial,sans-serif;background:#eef2f6;color:#17202a}
-.container{max-width:1400px;margin:auto;padding:15px}
-.header{background:#102a43;color:#fff;border-radius:18px;padding:20px;margin-bottom:12px}
-.header h1{margin:0 0 7px}
-.live{float:right;background:#d9f7df;color:#176b36;padding:7px 12px;border-radius:20px;font-weight:bold}
 
-.nav{
-background:white;
-padding:10px;
-border-radius:15px;
-margin-bottom:15px;
-box-shadow:0 4px 18px #00000010;
-display:flex;
-flex-wrap:wrap;
-gap:5px;
+body{
+ margin:0;
+ font-family:Arial,sans-serif;
+ background:#f2f4f7;
+ color:#17202a
 }
 
-.nav button{
-margin:0;
-flex:1;
-min-width:130px;
+.container{
+ max-width:1200px;
+ margin:auto;
+ padding:16px
 }
 
-.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:12px}
-.card,.section{background:white;border-radius:16px;padding:17px;box-shadow:0 4px 18px #00000010}
-.section{margin-top:15px}
-.card span{color:#667085;font-size:14px}
-.card strong{display:block;font-size:28px;margin-top:7px}
-.red{background:#ffe5e5}.yellow{background:#fff4cc}.green{background:#e5f7e9}
-
-button{
-border:0;
-border-radius:10px;
-padding:10px 14px;
-cursor:pointer;
-font-weight:bold;
-margin:3px
+.header{
+ background:#102a43;
+ color:white;
+ border-radius:18px;
+ padding:22px;
+ margin-bottom:16px
 }
 
-.btn{background:#102a43;color:#fff}
-.btn-green{background:#198754;color:#fff}
-.btn-red{background:#d32f2f;color:#fff}
-.btn-yellow{background:#f9a825;color:#111}
-
-input,select{
-width:100%;
-padding:11px;
-border:1px solid #d0d5dd;
-border-radius:9px;
-margin:5px 0
+.header h1{
+ margin:0 0 6px;
+ font-size:25px
 }
 
-.form-grid{
-display:grid;
-grid-template-columns:repeat(auto-fit,minmax(170px,1fr));
-gap:8px
+.header p{
+ margin:0;
+ opacity:.8
+}
+
+.live{
+ float:right;
+ background:#e5f7e9;
+ color:#176b36;
+ padding:7px 12px;
+ border-radius:20px;
+ font-weight:bold
+}
+
+.grid{
+ display:grid;
+ grid-template-columns:repeat(auto-fit,minmax(150px,1fr));
+ gap:12px
+}
+
+.card{
+ background:white;
+ border-radius:16px;
+ padding:18px;
+ box-shadow:0 4px 18px rgba(0,0,0,.06)
+}
+
+.card span{
+ display:block;
+ color:#667085;
+ font-size:14px
+}
+
+.card strong{
+ display:block;
+ font-size:28px;
+ margin-top:8px
+}
+
+.red{background:#ffe5e5}
+.yellow{background:#fff4cc}
+.green{background:#e5f7e9}
+
+.section{
+ background:white;
+ border-radius:16px;
+ padding:18px;
+ margin-top:16px;
+ box-shadow:0 4px 18px rgba(0,0,0,.06)
+}
+
+.section h2{margin-top:0}
+
+.map{
+ display:grid;
+ grid-template-columns:repeat(auto-fit,minmax(190px,1fr));
+ gap:12px
+}
+
+.map-card{
+ padding:16px;
+ border-radius:14px;
+ cursor:pointer;
+ transition:.2s
+}
+
+.map-card:hover{
+ transform:translateY(-3px)
+}
+
+.map-red{
+ background:#ffe5e5;
+ border:2px solid #d32f2f
+}
+
+.map-yellow{
+ background:#fff4cc;
+ border:2px solid #f9a825
+}
+
+.map-green{
+ background:#e5f7e9;
+ border:2px solid #2e7d32
+}
+
+.score{
+ font-size:25px;
+ font-weight:800;
+ margin:8px 0
 }
 
 .row{
-background:#f8fafc;
-border-left:6px solid #98a2b3;
-padding:14px;
-margin:8px 0;
-border-radius:12px
+ padding:14px;
+ margin:8px 0;
+ border-radius:12px;
+ background:#f8fafc;
+ border-left:5px solid #98a2b3
 }
 
 .row-red{border-color:#d32f2f}
@@ -78,69 +139,88 @@ border-radius:12px
 .row-green{border-color:#2e7d32}
 
 .meta{
-display:block;
-color:#667085;
-font-size:13px;
-margin-top:6px
+ display:block;
+ margin-top:6px;
+ color:#667085;
+ font-size:13px
+}
+
+.detail{
+ margin-top:15px;
+ padding:18px;
+ border-radius:14px;
+ background:#f8fafc
+}
+
+.detail-grid{
+ display:grid;
+ grid-template-columns:repeat(auto-fit,minmax(140px,1fr));
+ gap:10px
+}
+
+.detail-item{
+ background:white;
+ padding:12px;
+ border-radius:10px
+}
+
+.detail-item small{
+ display:block;
+ color:#667085
+}
+
+.detail-item strong{
+ display:block;
+ font-size:18px;
+ margin-top:5px
+}
+
+.action{
+ padding:13px;
+ margin:7px 0;
+ border-radius:10px;
+ background:#f8fafc
+}
+
+.signal{
+ padding:14px;
+ margin:8px 0;
+ border-radius:12px;
+ background:#ffe5e5;
+ border-left:6px solid #d32f2f
 }
 
 .progress{
-height:10px;
-background:#e5e7eb;
-border-radius:10px;
-overflow:hidden;
-margin-top:7px
+ width:100%;
+ height:10px;
+ background:#e5e7eb;
+ border-radius:10px;
+ overflow:hidden
 }
 
 .progress div{
-height:100%;
-background:#198754
+ height:100%;
+ border-radius:10px
 }
-
-.hidden{display:none}
-
-.table-wrap{overflow:auto}
-
-table{
-width:100%;
-border-collapse:collapse;
-min-width:850px
-}
-
-th,td{
-padding:10px;
-border-bottom:1px solid #e5e7eb;
-text-align:left
-}
-
-th{background:#f1f5f9}
 
 .system{
-position:fixed;
-right:15px;
-bottom:15px;
-background:white;
-padding:12px 16px;
-border-radius:14px;
-box-shadow:0 5px 25px #0003;
-font-size:13px;
-z-index:100
+ position:fixed;
+ right:15px;
+ bottom:15px;
+ z-index:9999;
+ max-width:360px;
+ background:white;
+ border-radius:15px;
+ padding:16px;
+ box-shadow:0 8px 30px rgba(0,0,0,.18);
+ font-size:14px
 }
 
-.mobile-menu{
-background:#102a43;
-color:white;
-padding:12px;
-border-radius:14px;
-margin-bottom:15px;
-}
-
-@media(max-width:600px){
-.container{padding:8px}
-.header{padding:15px}
-.header h1{font-size:21px}
-.nav button{min-width:45%;font-size:12px;padding:9px 6px}
-.card strong{font-size:24px}
+.footer{
+ text-align:center;
+ color:#667085;
+ font-size:12px;
+ padding:25px
 }
 </style>
 </head>
@@ -149,44 +229,15 @@ margin-bottom:15px;
 
 <div class="container">
 
-<!-- HEADER -->
 <div class="header">
-<span class="live">🟢 ONLINE</span>
+<span class="live">🟢 LIVE</span>
 <h1>🎯 ДИРЕКТОР НАЗОРАТ ПАНЕЛИ</h1>
-<div>Hududgaz Toshkent — AI KPI & Management Dashboard</div>
-</div>
-
-
-<!-- =====================================================
-     MAIN NAVIGATION
-===================================================== -->
-
-<div class="nav">
-
-<button class="btn" onclick="goHome()">
-🏠 Бош саҳифа
-</button>
-
-<button class="btn" onclick="openDashboard()">
-📊 KPI Dashboard
-</button>
-
-<button class="btn" onclick="openPanelAndScroll('districtPanel')">
-🏢 Ҳудудлар
-</button>
-
-<button class="btn" onclick="openPanelAndScroll('taskPanel')">
-📋 Ижро
-</button>
-
-<button class="btn-red" onclick="scrollToSignals()">
-🚨 Қизил сигналлар
-</button>
-
+<p>Hududgaz Toshkent — AI KPI & Risk Dashboard</p>
 </div>
 
 
 <!-- SUMMARY -->
+
 <div class="grid">
 
 <div class="card">
@@ -217,90 +268,8 @@ margin-bottom:15px;
 </div>
 
 
-<!-- ADMIN -->
-<div class="section">
-
-<h2>⚙️ БОШҚАРУВ ПАНЕЛИ</h2>
-
-<button class="btn" onclick="showPanel('districtPanel')">
-🏢 Ҳудудлар
-</button>
-
-<button class="btn" onclick="showPanel('taskPanel')">
-📋 Вазифалар
-</button>
-
-<button class="btn" onclick="exportData()">
-💾 Backup
-</button>
-
-<button class="btn-green"
-onclick="document.getElementById('importFile').click()">
-📥 Import
-</button>
-
-<input
-id="importFile"
-type="file"
-accept=".json"
-class="hidden"
-onchange="importData(event)"
->
-
-</div>
-
-
-<!-- DISTRICT MANAGEMENT -->
-<div class="section hidden" id="districtPanel">
-
-<h2>🏢 ҲУДУДНИ БОШҚАРИШ</h2>
-
-<div class="form-grid">
-
-<input id="dName" placeholder="Ҳудуд номи">
-<input id="dDebt" type="number" placeholder="Қарздорлик млрд">
-<input id="dLoss" type="number" step="0.1" placeholder="Йўқотиш %">
-<input id="dImbalance" type="number" step="0.1" placeholder="Дебаланс %">
-<input id="dIllegal" type="number" placeholder="Ноқонуний уланиш">
-<input id="dOnline" type="number" placeholder="Онлайн %">
-<input id="dWinter" type="number" placeholder="Қишга тайёргарлик %">
-
-</div>
-
-<button class="btn-green" onclick="addDistrict()">
-➕ Ҳудуд қўшиш
-</button>
-
-<div id="districtAdmin"></div>
-
-</div>
-
-
-<!-- TASK MANAGEMENT -->
-<div class="section hidden" id="taskPanel">
-
-<h2>📋 ИЖРО НАЗОРАТИНИ БОШҚАРИШ</h2>
-
-<div class="form-grid">
-
-<input id="tDistrict" placeholder="Ҳудуд">
-<input id="tResponsible" placeholder="Масъул">
-<input id="tTask" placeholder="Вазифа">
-<input id="tDeadline" type="date">
-<input id="tProgress" type="number" min="0" max="100" placeholder="Бажарилиш %">
-
-</div>
-
-<button class="btn-green" onclick="addTask()">
-➕ Вазифа қўшиш
-</button>
-
-<div id="taskAdmin"></div>
-
-</div>
-
-
 <!-- TOP 5 -->
+
 <div class="section">
 
 <h2>🚨 TOP-5 — РАҲБАР ЭЪТИБОРИ</h2>
@@ -311,18 +280,34 @@ onchange="importData(event)"
 
 
 <!-- RISK MAP -->
+
 <div class="section">
 
 <h2>🗺️ AI RISK MAP</h2>
 
-<div id="map" class="grid"></div>
+<p>
+🔴 Юқори хавф
+&nbsp;&nbsp;
+🟡 Ўрта хавф
+&nbsp;&nbsp;
+🟢 Паст хавф
+</p>
 
-<div id="detail"></div>
+<div id="map" class="map"></div>
+
+<div id="detail" class="detail">
+
+<b>Ҳудудни танланг</b>
+
+<p>Картадаги ҳудудни босинг.</p>
+
+</div>
 
 </div>
 
 
-<!-- AI -->
+<!-- AI ACTIONS -->
+
 <div class="section">
 
 <h2>🤖 AI ТАВСИЯЛАР</h2>
@@ -333,9 +318,10 @@ onchange="importData(event)"
 
 
 <!-- RANKING -->
+
 <div class="section">
 
-<h2>📊 ҲУДУДЛАР РЕЙТИНГИ</h2>
+<h2>📊 22 ТА ҲУДУД РЕЙТИНГИ</h2>
 
 <div id="ranking"></div>
 
@@ -343,83 +329,88 @@ onchange="importData(event)"
 
 
 <!-- EXECUTION -->
-<div class="section" id="executionSection">
+
+<div class="section">
 
 <h2>📋 ИЖРО НАЗОРАТИ</h2>
+
+<p style="color:#667085">
+Ҳудудлар бўйича вазифа, масъул, муддат ва бажарилиш ҳолати.
+</p>
 
 <div class="grid">
 
 <div class="card">
-<span>Жами вазифа</span>
-<strong id="taskTotal">0</strong>
+<span>📌 Жами вазифалар</span>
+<strong id="task-total">0</strong>
 </div>
 
 <div class="card green">
-<span>Бажарилган</span>
-<strong id="taskDone">0</strong>
+<span>🟢 Бажарилган</span>
+<strong id="task-done">0</strong>
 </div>
 
 <div class="card yellow">
-<span>Бажарилмоқда</span>
-<strong id="taskProgress">0</strong>
+<span>🟡 Бажарилмоқда</span>
+<strong id="task-progress">0</strong>
 </div>
 
 <div class="card red">
-<span>Кечиккан</span>
-<strong id="taskLate">0</strong>
+<span>🔴 Кечиккан</span>
+<strong id="task-late">0</strong>
 </div>
 
 </div>
 
-<div id="execution"></div>
+<div id="execution-list"></div>
 
 </div>
 
 
-<!-- SIGNALS -->
-<div class="section" id="signalsSection">
+<!-- RED SIGNALS -->
 
-<h2>🚨 ҚИЗИЛ СИГНАЛЛАР</h2>
+<div class="section">
+
+<h2>🚨 ҚИЗИЛ СИГНАЛЛАР — ДИРЕКТОР ЭЪТИБОРИ</h2>
+
+<p style="color:#667085">
+AI Risk ва ижро назорати асосида зудлик билан эътибор талаб қиладиган ҳолатлар.
+</p>
 
 <div id="signals"></div>
 
 </div>
 
 
-<!-- DATA -->
+<!-- GOOGLE SHEETS -->
+
 <div class="section">
 
-<h2>💾 МАЪЛУМОТЛАР</h2>
+<h2>📗 GOOGLE SHEETS</h2>
 
-<button class="btn" onclick="saveNow()">
-💾 Ҳозир сақлаш
-</button>
-
-<button class="btn-red" onclick="resetData()">
-♻️ Бошланғич ҳолатга қайтариш
-</button>
-
-<p id="saveStatus">
-Автоматик сақлаш ёқилган.
-</p>
-
-</div>
-
-
-<div style="text-align:center;padding:25px;color:#667085">
-Hududgaz Toshkent • AI KPI Management • v4.1
+<div id="sheet-status">
+🔄 Google Sheets текширилмоқда...
 </div>
 
 </div>
 
+
+<div class="footer">
+Hududgaz Toshkent • AI KPI Dashboard • v3.0
+</div>
+
+</div>
+
+
+<!-- SYSTEM CHECK -->
 
 <div class="system">
 
-🟢 <b>SYSTEM ONLINE</b><br>
+<b>🛠 DASHBOARD SYSTEM CHECK</b>
 
-<span id="systemStatus">
-Dashboard ишлаяпти
-</span>
+<div id="check-results" style="margin-top:10px">
+Текширилмоқда...
+</div>
 
 </div>
 
@@ -427,116 +418,105 @@ Dashboard ишлаяпти
 <script>
 
 /* =====================================================
-   NAVIGATION
+   GOOGLE SHEETS
 ===================================================== */
 
-function goHome(){
+const GOOGLE_SHEET_ID =
+"1thlAce8LlTnbn5jlpL8j2_xPqvg1-Teo60F_73cU1N8";
 
- window.scrollTo({
-  top:0,
-  behavior:"smooth"
- });
+const GOOGLE_SHEET_CSV =
+"https://docs.google.com/spreadsheets/d/"
++ GOOGLE_SHEET_ID
++ "/export?format=csv";
 
-}
 
-function openDashboard(){
+async function checkGoogleSheet(){
 
- window.location.href="dashboard.html";
+ try{
 
-}
+   const response =
+     await fetch(GOOGLE_SHEET_CSV);
 
-function openPanelAndScroll(id){
+   if(!response.ok)
+     throw new Error("Google Sheets error");
 
- const panel=document.getElementById(id);
+   const csv =
+     await response.text();
 
- if(panel.classList.contains("hidden")){
-  panel.classList.remove("hidden");
+   document.getElementById(
+     "sheet-status"
+   ).innerHTML =
+     "🟢 Google Sheets уланиши тайёр";
+
+   console.log("Google Sheets:",csv);
+
+ }catch(error){
+
+   document.getElementById(
+     "sheet-status"
+   ).innerHTML =
+     "🟡 Google Sheets маълумоти ҳозирча ўқилмади";
+
+   console.log(error);
+
  }
 
- panel.scrollIntoView({
-  behavior:"smooth",
-  block:"start"
- });
-
 }
 
-function scrollToSignals(){
-
- const section=document.getElementById("signalsSection");
-
- section.scrollIntoView({
-  behavior:"smooth",
-  block:"start"
- });
-
-}
+checkGoogleSheet();
 
 
 /* =====================================================
-   DEFAULT DATA
+   22 HUDUD KPI
 ===================================================== */
 
-const defaultDistricts = [
+const districtKPI = [
 
 ["Чирчиқ шаҳри",73,3.0,3.5,12,82,90],
+
 ["Оҳангарон тумани",62,2.9,3.4,9,78,86],
+
 ["Ангрен шаҳри",62,2.8,3.2,8,81,88],
+
 ["Оққўрғон тумани",71,3.1,3.7,13,74,84],
+
 ["Юқори Чирчиқ тумани",58,2.6,3.1,7,83,91],
+
 ["Бекобод шаҳри",51,2.1,2.6,6,86,93],
+
 ["Янгийўл шаҳри",42,2.2,2.5,5,88,94],
+
 ["Бўстонлиқ тумани",66,2.4,2.8,8,79,89],
+
 ["Бўка тумани",49,2.1,2.5,5,85,92],
+
 ["Нурафшон шаҳри",31,1.5,1.8,3,94,97],
+
 ["Зангиота тумани",34,1.7,2.1,4,91,95],
+
 ["Қибрай тумани",31,1.6,1.9,3,93,96],
+
 ["Бекобод тумани",48,2.0,2.4,5,87,92],
+
 ["Оҳангарон шаҳри",55,2.3,2.7,7,82,89],
+
 ["Олмалиқ шаҳри",57,2.5,2.9,7,80,88],
+
 ["Паркент тумани",46,2.0,2.3,4,89,94],
+
 ["Пискент тумани",44,1.9,2.2,4,90,94],
+
 ["Тошкент тумани",52,2.2,2.6,6,84,91],
+
 ["Чиноз тумани",47,2.0,2.4,5,87,93],
+
 ["Ўрта Чирчиқ тумани",54,2.3,2.8,6,83,90],
+
 ["Янгийўл тумани",50,2.1,2.5,5,86,92],
+
 ["Қуйи Чирчиқ тумани",45,1.9,2.3,4,89,94]
 
 ];
-
-let districts =
-JSON.parse(localStorage.getItem("districts")) ||
-defaultDistricts;
-
-let tasks =
-JSON.parse(localStorage.getItem("tasks")) ||
-[];
-
-
-/* =====================================================
-   SAVE
-===================================================== */
-
-function saveNow(){
-
- localStorage.setItem(
-   "districts",
-   JSON.stringify(districts)
- );
-
- localStorage.setItem(
-   "tasks",
-   JSON.stringify(tasks)
- );
-
- document.getElementById("saveStatus").innerText =
- "🟢 Маълумот сақланди: "+
- new Date().toLocaleString();
-
-}
-
-function autoSave(){
- saveNow();
-}
 
 
 /* =====================================================
@@ -545,617 +525,844 @@ function autoSave(){
 
 function calculateRisk(d){
 
- const debt=d[1];
- const loss=d[2]*20;
- const imbalance=d[3]*20;
- const illegal=d[4]*5;
- const online=100-d[5];
- const winter=100-d[6];
+ const debtRisk = d[1];
 
- let score =
- debt*.30+
- loss*.20+
- imbalance*.15+
- illegal*.15+
- online*.10+
- winter*.10;
+ const lossRisk = d[2] * 20;
 
- score=Math.round(score*10)/10;
+ const imbalanceRisk = d[3] * 20;
 
- let zone="🟢";
- let level="ПАСТ ХАВФ";
+ const illegalRisk = d[4] * 5;
 
- if(score>=70){
+ const onlineRisk = 100 - d[5];
+
+ const winterRisk = 100 - d[6];
+
+
+ const score =
+   debtRisk * .30 +
+   lossRisk * .20 +
+   imbalanceRisk * .15 +
+   illegalRisk * .15 +
+   onlineRisk * .10 +
+   winterRisk * .10;
+
+
+ const finalScore =
+   Math.round(score * 10) / 10;
+
+
+ let zone;
+ let level;
+
+
+ if(finalScore >= 70){
+
    zone="🔴";
    level="ЮҚОРИ ХАВФ";
- }
- else if(score>=40){
+
+ }else if(finalScore >= 40){
+
    zone="🟡";
    level="ЎРТА ХАВФ";
+
+ }else{
+
+   zone="🟢";
+   level="ПАСТ ХАВФ";
+
  }
 
+
  return {
-  name:d[0],
-  debt:d[1],
-  loss:d[2],
-  imbalance:d[3],
-  illegal:d[4],
-  online:d[5],
-  winter:d[6],
-  score,
-  zone,
-  level
+
+   name:d[0],
+   debt:d[1],
+   loss:d[2],
+   imbalance:d[3],
+   illegal:d[4],
+   online:d[5],
+   winter:d[6],
+   score:finalScore,
+   zone:zone,
+   level:level
+
  };
 
 }
 
 
-/* =====================================================
-   RENDER
-===================================================== */
-
-function render(){
-
- const results=districts
+const results =
+ districtKPI
  .map(calculateRisk)
  .sort((a,b)=>b.score-a.score);
 
- let red=results.filter(x=>x.score>=70).length;
- let yellow=results.filter(x=>x.score>=40&&x.score<70).length;
- let green=results.filter(x=>x.score<40).length;
 
- let avg=(
- results.reduce((a,b)=>a+b.score,0)/
- results.length
+/* =====================================================
+   SUMMARY
+===================================================== */
+
+const red =
+ results.filter(r=>r.score>=70).length;
+
+const yellow =
+ results.filter(
+   r=>r.score>=40 && r.score<70
+ ).length;
+
+const green =
+ results.filter(r=>r.score<40).length;
+
+const average =
+ (
+   results.reduce(
+     (sum,r)=>sum+r.score,0
+   ) / results.length
  ).toFixed(1);
 
- document.getElementById("total").innerText=results.length;
- document.getElementById("red").innerText=red;
- document.getElementById("yellow").innerText=yellow;
- document.getElementById("green").innerText=green;
- document.getElementById("avg").innerText=avg;
 
+document.getElementById("total").innerText =
+ results.length;
 
- /* TOP */
+document.getElementById("red").innerText =
+ red;
 
- document.getElementById("top5").innerHTML=
+document.getElementById("yellow").innerText =
+ yellow;
 
- results.slice(0,5).map((r,i)=>`
+document.getElementById("green").innerText =
+ green;
 
- <div class="row ${
- r.score>=70?"row-red":
- r.score>=40?"row-yellow":"row-green"
- }">
-
- <b>${i+1}. ${r.name}</b>
- — ${r.zone}
- <strong>${r.score}</strong>
-
- <span class="meta">
- Қарздорлик: ${r.debt} млрд |
- Йўқотиш: ${r.loss}% |
- Дебаланс: ${r.imbalance}%
- </span>
-
- </div>
-
- `).join("");
-
-
- /* MAP */
-
- document.getElementById("map").innerHTML=
-
- results.map((r,i)=>`
-
- <div class="card ${
- r.score>=70?"red":
- r.score>=40?"yellow":"green"
- }"
- onclick="showDetail(${i})">
-
- <b>${r.name}</b>
-
- <strong>
- ${r.zone} ${r.score}
- </strong>
-
- <small>${r.level}</small>
-
- </div>
-
- `).join("");
-
-
- /* RANKING */
-
- document.getElementById("ranking").innerHTML=
-
- results.map((r,i)=>`
-
- <div class="row ${
- r.score>=70?"row-red":
- r.score>=40?"row-yellow":"row-green"
- }">
-
- <b>${i+1}. ${r.name}</b>
- — ${r.zone}
- <strong>${r.score}</strong>
-
- <span class="meta">
-
- ${r.level} |
- Қарз: ${r.debt} млрд |
- Йўқотиш: ${r.loss}% |
- Дебаланс: ${r.imbalance}% |
- Онлайн: ${r.online}%
-
- </span>
-
- </div>
-
- `).join("");
-
-
- /* AI */
-
- let ai=[];
-
- results.slice(0,8).forEach(r=>{
-
- if(r.debt>=60)
- ai.push(`💰 <b>${r.name}</b> — қарздорликни камайтириш.`);
-
- if(r.loss>=2.8)
- ai.push(`🔧 <b>${r.name}</b> — йўқотишларни таҳлил қилиш.`);
-
- if(r.imbalance>=3.2)
- ai.push(`⚖️ <b>${r.name}</b> — дебалансни назорат қилиш.`);
-
- if(r.online<80)
- ai.push(`📡 <b>${r.name}</b> — онлайн ҳисоблагичларни тиклаш.`);
-
- });
-
- document.getElementById("actions").innerHTML=
- ai.map(x=>`<div class="row">${x}</div>`).join("");
-
-
- /* RED SIGNALS */
-
- let signals=[];
-
- results.forEach(r=>{
-
-   if(r.score>=70){
-     signals.push(
-       `<div class="row row-red">
-       🔴 <b>${r.name}</b> — ЮҚОРИ ХАВФ.
-       AI Risk: <b>${r.score}</b> |
-       Қарз: ${r.debt} млрд |
-       Йўқотиш: ${r.loss}% |
-       Дебаланс: ${r.imbalance}% |
-       Онлайн: ${r.online}%
-       </div>`
-     );
-   }
-
-   if(r.online<80){
-     signals.push(
-       `<div class="row row-red">
-       📡 <b>${r.name}</b> — онлайн кўрсаткич паст: ${r.online}%
-       </div>`
-     );
-   }
-
- });
-
- document.getElementById("signals").innerHTML =
- signals.length
- ? signals.join("")
- : `<div class="row row-green">
- 🟢 Ҳозирча қизил сигналлар аниқланмади.
- </div>`;
-
-
- renderTasks();
- renderDistrictAdmin();
-
-}
+document.getElementById("avg").innerText =
+ average;
 
 
 /* =====================================================
-   DISTRICT ADMIN
+   TOP 5
 ===================================================== */
 
-function addDistrict(){
+document.getElementById("top5").innerHTML =
 
- let name=document.getElementById("dName").value.trim();
+results.slice(0,5).map((r,i)=>`
 
- if(!name){
-   alert("Ҳудуд номини киритинг");
-   return;
- }
+<div class="
+ row
+ ${r.score>=70
+ ? "row-red"
+ : r.score>=40
+ ? "row-yellow"
+ : "row-green"}
+">
 
- districts.push([
-  name,
-  Number(document.getElementById("dDebt").value)||0,
-  Number(document.getElementById("dLoss").value)||0,
-  Number(document.getElementById("dImbalance").value)||0,
-  Number(document.getElementById("dIllegal").value)||0,
-  Number(document.getElementById("dOnline").value)||0,
-  Number(document.getElementById("dWinter").value)||0
- ]);
+<b>${i+1}. ${r.name}</b>
 
- saveNow();
- render();
+ — ${r.zone}
 
- document.querySelectorAll("#districtPanel input")
- .forEach(x=>x.value="");
+<strong>${r.score}</strong>
 
- alert("🟢 Ҳудуд қўшилди");
+<span class="meta">
 
-}
+Қарздорлик: ${r.debt} млрд
 
+&nbsp;|&nbsp;
 
-function deleteDistrict(index){
+Йўқотиш: ${r.loss}%
 
- if(confirm("Бу ҳудудни ўчиришни тасдиқлайсизми?")){
+&nbsp;|&nbsp;
 
-  districts.splice(index,1);
+Дебаланс: ${r.imbalance}%
 
-  saveNow();
-  render();
+</span>
 
- }
+</div>
 
-}
+`).join("");
 
 
-function renderDistrictAdmin(){
+/* =====================================================
+   MAP
+===================================================== */
 
- document.getElementById("districtAdmin").innerHTML=
+document.getElementById("map").innerHTML =
 
- districts.map((d,i)=>`
+results.map((r,i)=>`
 
- <div class="row">
+<div
+ class="
+ map-card
+ ${r.score>=70
+ ? "map-red"
+ : r.score>=40
+ ? "map-yellow"
+ : "map-green"}
+ "
+ onclick="showDistrict(${i})"
+>
 
- <b>${i+1}. ${d[0]}</b>
+<b>${r.name}</b>
 
- <span class="meta">
- Қарз: ${d[1]} млрд |
- Йўқотиш: ${d[2]}% |
- Дебаланс: ${d[3]}% |
- Онлайн: ${d[5]}%
- </span>
+<div class="score">
 
- <button
- class="btn-red"
- onclick="deleteDistrict(${i})">
- Ўчириш
- </button>
+${r.zone} ${r.score}
 
- </div>
+</div>
 
- `).join("");
+<small>${r.level}</small>
 
-}
+</div>
+
+`).join("");
 
 
 /* =====================================================
    DETAIL
 ===================================================== */
 
-function showDetail(index){
-
- const results=districts
- .map(calculateRisk)
- .sort((a,b)=>b.score-a.score);
+window.showDistrict =
+function(index){
 
  const r=results[index];
 
  document.getElementById("detail").innerHTML=`
 
- <div class="section">
-
  <h3>
  ${r.zone} ${r.name}
  </h3>
 
- <div class="grid">
+ <div class="detail-grid">
 
- <div class="card">
- <span>AI Risk</span>
+ <div class="detail-item">
+ <small>AI Risk</small>
  <strong>${r.score}</strong>
  </div>
 
- <div class="card">
- <span>Қарздорлик</span>
+ <div class="detail-item">
+ <small>Қарздорлик</small>
  <strong>${r.debt} млрд</strong>
  </div>
 
- <div class="card">
- <span>Йўқотиш</span>
+ <div class="detail-item">
+ <small>Йўқотиш</small>
  <strong>${r.loss}%</strong>
  </div>
 
- <div class="card">
- <span>Дебаланс</span>
+ <div class="detail-item">
+ <small>Дебаланс</small>
  <strong>${r.imbalance}%</strong>
  </div>
 
- <div class="card">
- <span>Ноқонуний уланиш</span>
+ <div class="detail-item">
+ <small>Ноқонуний уланиш</small>
  <strong>${r.illegal}</strong>
  </div>
 
- <div class="card">
- <span>Онлайн</span>
+ <div class="detail-item">
+ <small>Онлайн ҳисоблагич</small>
  <strong>${r.online}%</strong>
  </div>
 
- <div class="card">
- <span>Қишга тайёргарлик</span>
+ <div class="detail-item">
+ <small>Қишга тайёргарлик</small>
  <strong>${r.winter}%</strong>
  </div>
 
+ <div class="detail-item">
+ <small>Ҳолат</small>
+ <strong>${r.level}</strong>
  </div>
 
  </div>
 
  `;
 
-}
+};
 
 
 /* =====================================================
-   TASKS
+   AI ACTIONS
 ===================================================== */
 
-function addTask(){
+let actions=[];
 
- let district=document.getElementById("tDistrict").value;
- let responsible=document.getElementById("tResponsible").value;
- let task=document.getElementById("tTask").value;
- let deadline=document.getElementById("tDeadline").value;
- let progress=Number(document.getElementById("tProgress").value)||0;
 
- if(!district||!task){
-  alert("Ҳудуд ва вазифани киритинг");
-  return;
+results.slice(0,8).forEach(r=>{
+
+ if(r.debt>=60)
+ actions.push(`
+ <div class="action">
+ 💰 <b>${r.name}</b> —
+ қарздорликни зудлик билан назорат қилиш.
+ </div>`);
+
+ if(r.loss>=2.8)
+ actions.push(`
+ <div class="action">
+ 🔧 <b>${r.name}</b> —
+ йўқотишларни таҳлил қилиш.
+ </div>`);
+
+ if(r.imbalance>=3.2)
+ actions.push(`
+ <div class="action">
+ ⚖️ <b>${r.name}</b> —
+ дебаланс сабабларини аниқлаш.
+ </div>`);
+
+ if(r.online<80)
+ actions.push(`
+ <div class="action">
+ 📡 <b>${r.name}</b> —
+ онлайн ҳисоблагичларни тиклаш.
+ </div>`);
+
+ if(r.winter<85)
+ actions.push(`
+ <div class="action">
+ ❄️ <b>${r.name}</b> —
+ куз-қиш тайёргарлигини кучайтириш.
+ </div>`);
+
+});
+
+
+document.getElementById("actions").innerHTML =
+actions.length
+? actions.slice(0,10).join("")
+: `<div class="action">
+🟢 Критик сигнал аниқланмади.
+</div>`;
+
+
+/* =====================================================
+   FULL RANKING
+===================================================== */
+
+document.getElementById("ranking").innerHTML =
+
+results.map((r,i)=>`
+
+<div class="
+row
+${r.score>=70
+? "row-red"
+: r.score>=40
+? "row-yellow"
+: "row-green"}
+">
+
+<b>${i+1}. ${r.name}</b>
+
+ — ${r.zone}
+
+<strong>${r.score}</strong>
+
+<span class="meta">
+
+${r.level}
+
+&nbsp;|&nbsp;
+Қарз: ${r.debt} млрд
+
+&nbsp;|&nbsp;
+Йўқотиш: ${r.loss}%
+
+&nbsp;|&nbsp;
+Дебаланс: ${r.imbalance}%
+
+&nbsp;|&nbsp;
+Онлайн: ${r.online}%
+
+</span>
+
+</div>
+
+`).join("");
+
+
+/* =====================================================
+   EXECUTION CONTROL
+===================================================== */
+
+const executionTasks=[
+
+{
+district:"Оққўрғон тумани",
+responsible:"Туман раҳбари",
+task:"Қарздорликни камайтириш",
+deadline:"15.08.2026",
+progress:42,
+status:"Кечикмоқда"
+},
+
+{
+district:"Чирчиқ шаҳри",
+responsible:"Шаҳар раҳбари",
+task:"Йўқотишларни камайтириш",
+deadline:"18.08.2026",
+progress:58,
+status:"Бажарилмоқда"
+},
+
+{
+district:"Оҳангарон тумани",
+responsible:"Туман раҳбари",
+task:"Дебаланс сабабларини аниқлаш",
+deadline:"16.08.2026",
+progress:51,
+status:"Бажарилмоқда"
+},
+
+{
+district:"Ангрен шаҳри",
+responsible:"Шаҳар раҳбари",
+task:"Онлайн ҳисоблагичларни тиклаш",
+deadline:"20.08.2026",
+progress:64,
+status:"Бажарилмоқда"
+},
+
+{
+district:"Бўстонлиқ тумани",
+responsible:"Туман раҳбари",
+task:"Куз-қиш тайёргарлиги",
+deadline:"25.08.2026",
+progress:73,
+status:"Бажарилмоқда"
+},
+
+{
+district:"Юқори Чирчиқ тумани",
+responsible:"Туман раҳбари",
+task:"Дебалансни камайтириш",
+deadline:"19.08.2026",
+progress:80,
+status:"Бажарилмоқда"
+},
+
+{
+district:"Олмалиқ шаҳри",
+responsible:"Шаҳар раҳбари",
+task:"Йўқотишлар таҳлили",
+deadline:"22.08.2026",
+progress:67,
+status:"Бажарилмоқда"
+},
+
+{
+district:"Оҳангарон шаҳри",
+responsible:"Шаҳар раҳбари",
+task:"Қарздорлик назорати",
+deadline:"21.08.2026",
+progress:70,
+status:"Бажарилмоқда"
+},
+
+{
+district:"Ўрта Чирчиқ тумани",
+responsible:"Туман раҳбари",
+task:"Онлайн тизимни яхшилаш",
+deadline:"23.08.2026",
+progress:88,
+status:"Бажарилмоқда"
+},
+
+{
+district:"Тошкент тумани",
+responsible:"Туман раҳбари",
+task:"Профилактик назорат",
+deadline:"26.08.2026",
+progress:100,
+status:"Бажарилган"
+}
+
+];
+
+
+const taskTotal=executionTasks.length;
+
+const taskDone=
+executionTasks.filter(x=>x.progress>=100).length;
+
+const taskLate=
+executionTasks.filter(
+x=>x.status==="Кечикмоқда"
+).length;
+
+const taskProgress=
+taskTotal-taskDone-taskLate;
+
+
+document.getElementById("task-total").innerText=
+taskTotal;
+
+document.getElementById("task-done").innerText=
+taskDone;
+
+document.getElementById("task-progress").innerText=
+taskProgress;
+
+document.getElementById("task-late").innerText=
+taskLate;
+
+
+document.getElementById("execution-list").innerHTML=
+
+executionTasks.map((t,index)=>{
+
+ let border="#f9a825";
+ let background="#fff4cc";
+ let icon="🟡";
+
+ if(t.status==="Кечикмоқда"){
+   border="#d32f2f";
+   background="#ffe5e5";
+   icon="🔴";
  }
 
- tasks.push({
-  district,
-  responsible,
-  task,
-  deadline,
-  progress
- });
-
- saveNow();
- renderTasks();
-
- document.querySelectorAll("#taskPanel input")
- .forEach(x=>x.value="");
-
-}
-
-
-function deleteTask(index){
-
- tasks.splice(index,1);
-
- saveNow();
- renderTasks();
-
-}
-
-
-function renderTasks(){
-
- let done=tasks.filter(x=>x.progress>=100).length;
-
- let late=tasks.filter(x=>
- x.progress<100 &&
- x.deadline &&
- new Date(x.deadline)<new Date()
- ).length;
-
- let progress=tasks.length-done-late;
-
- document.getElementById("taskTotal").innerText=tasks.length;
- document.getElementById("taskDone").innerText=done;
- document.getElementById("taskLate").innerText=late;
- document.getElementById("taskProgress").innerText=progress;
-
-
- document.getElementById("execution").innerHTML=
-
- tasks.map((t,i)=>{
-
- let status="🟡 Бажарилмоқда";
-
- if(t.progress>=100)
- status="🟢 Бажарилган";
- else if(t.deadline &&
- new Date(t.deadline)<new Date())
- status="🔴 Кечикмоқда";
+ if(t.status==="Бажарилган"){
+   border="#2e7d32";
+   background="#e5f7e9";
+   icon="🟢";
+ }
 
  return `
 
- <div class="row">
+ <div style="
+ padding:16px;
+ margin:10px 0;
+ border-radius:14px;
+ background:${background};
+ border-left:6px solid ${border};
+ ">
 
- <b>${i+1}. ${t.district}</b>
+ <div style="
+ display:flex;
+ justify-content:space-between;
+ gap:10px;
+ flex-wrap:wrap;
+ ">
 
- <span class="meta">
- 👤 Масъул: ${t.responsible||"Кўрсатилмаган"}
- </span>
+ <div>
 
- <p>
- 🎯 ${t.task}
- </p>
+ <b style="font-size:17px">
+ ${index+1}. ${t.district}
+ </b>
 
- <span class="meta">
- 📅 ${t.deadline||"Муддат йўқ"}
- </span>
-
- <b>${status}</b>
-
- <div class="progress">
- <div style="width:${t.progress}%"></div>
+ <div style="margin-top:6px;color:#667085">
+ 👤 Масъул:
+ <b>${t.responsible}</b>
  </div>
 
- <span>${t.progress}%</span>
+ </div>
 
- <br>
+ <b>${icon} ${t.status}</b>
 
- <button
- class="btn-red"
- onclick="deleteTask(${i})">
- Ўчириш
- </button>
+ </div>
+
+ <div style="
+ margin-top:12px;
+ background:white;
+ padding:12px;
+ border-radius:10px;
+ ">
+
+ 🎯 <b>Вазифа:</b> ${t.task}
+
+ <br><br>
+
+ 📅 <b>Муддат:</b> ${t.deadline}
+
+ </div>
+
+ <div style="margin-top:12px">
+
+ <div style="
+ display:flex;
+ justify-content:space-between;
+ margin-bottom:5px
+ ">
+
+ <span>Бажарилиш</span>
+
+ <b>${t.progress}%</b>
+
+ </div>
+
+ <div class="progress">
+
+ <div style="
+ width:${t.progress}%;
+ background:${border}
+ "></div>
+
+ </div>
+
+ </div>
 
  </div>
 
  `;
 
- }).join("");
+}).join("");
 
 
- document.getElementById("taskAdmin").innerHTML=
- tasks.map((t,i)=>`
+/* =====================================================
+   RED SIGNALS
+===================================================== */
 
- <div class="row">
+let signals=[];
 
- <b>${t.district}</b> — ${t.task}
 
- <span class="meta">
- ${t.progress}% | ${t.deadline||"Муддат йўқ"}
- </span>
+/* DELAY */
 
- <button
- class="btn-red"
- onclick="deleteTask(${i})">
- Ўчириш
- </button>
+executionTasks
+.filter(t=>t.status==="Кечикмоқда")
+.forEach(t=>{
 
+ signals.push(`
+ <div class="signal">
+ <b>⏰ ИЖРО КЕЧИКМОҚДА</b>
+ <br><br>
+ <b>${t.district}</b>
+ <br>
+ ${t.task} — ${t.progress}%.
+ <br><br>
+ <b>ДИРЕКТОР ЭЪТИБОРИ КЕРАК</b>
  </div>
+ `);
 
- `).join("");
+});
 
-}
+
+/* HIGH DEBT */
+
+results
+.filter(r=>r.debt>=60)
+.forEach(r=>{
+
+ signals.push(`
+ <div class="signal">
+ 💰 <b>ЮҚОРИ ҚАРЗДОРЛИК</b>
+ <br><br>
+ <b>${r.name}</b>
+ <br>
+ Қарздорлик кўрсаткичи: ${r.debt}.
+ <br><br>
+ <b>ДИРЕКТОР ЭЪТИБОРИ КЕРАК</b>
+ </div>
+ `);
+
+});
+
+
+/* HIGH LOSS */
+
+results
+.filter(r=>r.loss>=2.8)
+.forEach(r=>{
+
+ signals.push(`
+ <div class="signal">
+ 🔧 <b>ЮҚОРИ ЙЎҚОТИШ</b>
+ <br><br>
+ <b>${r.name}</b>
+ <br>
+ Йўқотиш: ${r.loss}%.
+ <br><br>
+ <b>ДИРЕКТОР ЭЪТИБОРИ КЕРАК</b>
+ </div>
+ `);
+
+});
+
+
+/* HIGH IMBALANCE */
+
+results
+.filter(r=>r.imbalance>=3.2)
+.forEach(r=>{
+
+ signals.push(`
+ <div class="signal">
+ ⚖️ <b>ЮҚОРИ ДЕБАЛАНС</b>
+ <br><br>
+ <b>${r.name}</b>
+ <br>
+ Дебаланс: ${r.imbalance}%.
+ <br><br>
+ <b>ДИРЕКТОР ЭЪТИБОРИ КЕРАК</b>
+ </div>
+ `);
+
+});
+
+
+/* LOW ONLINE */
+
+results
+.filter(r=>r.online<80)
+.forEach(r=>{
+
+ signals.push(`
+ <div class="signal">
+ 📡 <b>ОНЛАЙН ТИЗИМ ПАСТ</b>
+ <br><br>
+ <b>${r.name}</b>
+ <br>
+ Онлайн ҳисоблагичлар: ${r.online}%.
+ <br><br>
+ <b>ДИРЕКТОР ЭЪТИБОРИ КЕРАК</b>
+ </div>
+ `);
+
+});
+
+
+/* WINTER */
+
+results
+.filter(r=>r.winter<85)
+.forEach(r=>{
+
+ signals.push(`
+ <div class="signal">
+ ❄️ <b>ҚИШГА ТАЙЁРГАРЛИК</b>
+ <br><br>
+ <b>${r.name}</b>
+ <br>
+ Тайёргарлик: ${r.winter}%.
+ <br><br>
+ <b>ДИРЕКТОР ЭЪТИБОРИ КЕРАК</b>
+ </div>
+ `);
+
+});
+
+
+document.getElementById("signals").innerHTML =
+signals.length
+? signals.join("")
+: `<div class="action">
+🟢 Критик сигнал аниқланмади.
+</div>`;
 
 
 /* =====================================================
-   BACKUP
+   SYSTEM CHECK
 ===================================================== */
 
-function exportData(){
+const checks=[
 
- const data={
-  districts,
-  tasks,
-  created:new Date().toISOString()
- };
+[
+"22 та ҳудуд",
+districtKPI.length===22
+],
 
- const blob=new Blob(
-  [JSON.stringify(data,null,2)],
-  {type:"application/json"}
- );
+[
+"AI Risk Engine",
+typeof calculateRisk==="function"
+],
 
- const url=URL.createObjectURL(blob);
+[
+"Risk натижалари",
+results.length===22
+],
 
- const a=document.createElement("a");
+[
+"TOP-5",
+document.getElementById("top5")!==null
+],
 
- a.href=url;
- a.download="hududgaz-dashboard-backup.json";
- a.click();
+[
+"AI Risk Map",
+document.getElementById("map")!==null
+],
 
- URL.revokeObjectURL(url);
+[
+"Ҳудуд маълумоти",
+document.getElementById("detail")!==null
+],
 
-}
+[
+"AI тавсиялар",
+document.getElementById("actions")!==null
+],
 
+[
+"22 та рейтинг",
+document.getElementById("ranking")!==null
+],
 
-function importData(event){
+[
+"Ижро назорати",
+document.getElementById("execution-list")!==null
+],
 
- const file=event.target.files[0];
+[
+"Қизил сигналлар",
+document.getElementById("signals")!==null
+],
 
- if(!file)return;
+[
+"Summary KPI",
+document.getElementById("total")!==null
+]
 
- const reader=new FileReader();
-
- reader.onload=function(){
-
-  try{
-
-   const data=JSON.parse(reader.result);
-
-   if(data.districts)
-    districts=data.districts;
-
-   if(data.tasks)
-    tasks=data.tasks;
-
-   saveNow();
-   render();
-
-   alert("🟢 Маълумот импорт қилинди");
-
-  }catch(e){
-
-   alert("❌ Файл нотўғри");
-
-  }
-
- };
-
- reader.readAsText(file);
-
-}
+];
 
 
-/* =====================================================
-   RESET
-===================================================== */
-
-function resetData(){
-
- if(!confirm(
- "Барча ўзгартиришларни бекор қилиб бошланғич ҳолатга қайтариш?"
- ))return;
-
- districts=JSON.parse(
- JSON.stringify(defaultDistricts)
- );
-
- tasks=[];
-
- saveNow();
- render();
-
-}
+const checkBox=
+document.getElementById("check-results");
 
 
-/* =====================================================
-   PANEL
-===================================================== */
+checkBox.innerHTML=
 
-function showPanel(id){
+checks.map(c=>`
 
- document.getElementById(id)
- .classList.toggle("hidden");
+<div style="
+padding:4px 0;
+color:${c[1]?"#176b36":"#b42318"}
+">
 
-}
+${c[1]?"✅":"❌"} ${c[0]}
+
+</div>
+
+`).join("");
 
 
-/* =====================================================
-   START
-===================================================== */
+const failed=
+checks.filter(c=>!c[1]).length;
 
-render();
 
-setInterval(saveNow,30000);
+checkBox.innerHTML+=`
+
+<div style="
+margin-top:10px;
+padding:9px;
+border-radius:9px;
+font-weight:bold;
+background:${failed===0?"#e5f7e9":"#ffe5e5"};
+color:${failed===0?"#176b36":"#b42318"};
+">
+
+${failed===0
+?"🟢 SYSTEM OK — Dashboard тайёр"
+:"🔴 "+failed+" та муаммо аниқланди"}
+
+</div>
+
+`;
+
+
+setTimeout(()=>{
+
+ const panel=
+ document.querySelector(".system");
+
+ if(panel)
+ panel.style.opacity=".25";
+
+},10000);
 
 </script>
 

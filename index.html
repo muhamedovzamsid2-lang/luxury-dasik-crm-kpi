@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>Hududgaz Toshkent — AI KPI Dashboard v5.0</title>
+<title>Hududgaz Toshkent — AI KPI Dashboard v5.1</title>
 
 <style>
 *{box-sizing:border-box}
@@ -59,6 +59,8 @@ button{border:0;border-radius:9px;padding:10px 14px;font-weight:bold;cursor:poin
 .small{font-size:12px;color:#667085}
 .audit{max-height:260px;overflow:auto}
 .audit-item{padding:10px;border-bottom:1px solid #e5e7eb;font-size:13px}
+.api-ok{color:#176b36;font-weight:bold}
+.api-warn{color:#b54708;font-weight:bold}
 </style>
 </head>
 
@@ -67,7 +69,7 @@ button{border:0;border-radius:9px;padding:10px 14px;font-weight:bold;cursor:poin
 <div class="container">
 
 <div class="header">
-<span class="live">🟢 LIVE v5.0</span>
+<span class="live">🟢 LIVE v5.1</span>
 <h1>🎯 ДИРЕКТОР НАЗОРАТ ПАНЕЛИ</h1>
 <p>Hududgaz Toshkent — AI KPI & Risk Dashboard</p>
 </div>
@@ -101,6 +103,7 @@ button{border:0;border-radius:9px;padding:10px 14px;font-weight:bold;cursor:poin
 
 </div>
 
+
 <div class="section">
 
 <h2>🚨 TOP-5 — РАҲБАР ЭЪТИБОРИ</h2>
@@ -108,6 +111,7 @@ button{border:0;border-radius:9px;padding:10px 14px;font-weight:bold;cursor:poin
 <div id="top5"></div>
 
 </div>
+
 
 <div class="section">
 
@@ -133,6 +137,7 @@ button{border:0;border-radius:9px;padding:10px 14px;font-weight:bold;cursor:poin
 
 </div>
 
+
 <div class="section">
 
 <h2>🤖 AI ТАВСИЯЛАР</h2>
@@ -141,6 +146,7 @@ button{border:0;border-radius:9px;padding:10px 14px;font-weight:bold;cursor:poin
 
 </div>
 
+
 <div class="section">
 
 <h2>📊 22 ТА ҲУДУД РЕЙТИНГИ</h2>
@@ -148,6 +154,7 @@ button{border:0;border-radius:9px;padding:10px 14px;font-weight:bold;cursor:poin
 <div id="ranking"></div>
 
 </div>
+
 
 <div class="section">
 
@@ -186,6 +193,7 @@ button{border:0;border-radius:9px;padding:10px 14px;font-weight:bold;cursor:poin
 
 </div>
 
+
 <div class="section">
 
 <h2>🚨 ҚИЗИЛ СИГНАЛЛАР — ДИРЕКТОР ЭЪТИБОРИ</h2>
@@ -198,45 +206,46 @@ AI Risk ва ижро назорати асосида зудлик билан э
 
 </div>
 
+
 <div class="section">
 
 <h2>📗 GOOGLE SHEETS</h2>
 
 <div id="sheet-status">
-🔄 Google Sheets текширилмоқда...
+🔄 Google Sheets API текширилмоқда...
 </div>
 
 <div class="config">
 
-<b>🔗 Google Apps Script Web App</b>
+<b>🟢 Google Apps Script Web App уланган</b>
 
 <div class="small">
-Бир марта URL киритинг.
-Кейин ижрочи ўзгаришлари Google Sheets'га ёзилади.
+API URL автоматик жойлаштирилган.
+Ижрочи ўзгаришлари Google Sheets → Audit варағига сақланади.
 </div>
 
-<input
-id="apiUrl"
-placeholder="https://script.google.com/macros/s/....../exec"
->
+<div style="margin-top:10px">
 
-<button
-class="edit-btn"
-onclick="saveApiUrl()"
->
-💾 URL ни сақлаш
-</button>
+<b>API ҳолати:</b>
+
+<span id="api-state">
+Текширилмоқда...
+</span>
+
+</div>
 
 <button
 class="cancel-btn"
 onclick="testApi()"
+style="margin-top:10px"
 >
-🔎 Текшириш
+🔎 API ни текшириш
 </button>
 
 </div>
 
 </div>
+
 
 <div class="section">
 
@@ -246,13 +255,15 @@ onclick="testApi()"
 
 </div>
 
+
 <div class="footer">
 
-Hududgaz Toshkent • AI KPI Dashboard • v5.0
+Hududgaz Toshkent • AI KPI Dashboard • v5.1
 
 </div>
 
 </div>
+
 
 <div class="system">
 
@@ -267,29 +278,24 @@ style="margin-top:10px"
 
 </div>
 
+
 <script>
+
+
+/* =====================================================
+   GOOGLE SHEETS / APPS SCRIPT
+===================================================== */
 
 const GOOGLE_SHEET_ID =
 "1thlAce8LlTnbn5jlpL8j2_xPqvg1-Teo60F_73cU1N8";
 
-const GOOGLE_SHEET_CSV =
-"https://docs.google.com/spreadsheets/d/"
-+
-GOOGLE_SHEET_ID
-+
-"/export?format=csv";
 
 const API_KEY =
 "hududgaz_executor_v5";
 
-const DEFAULT_API_URL =
+
+const API_URL =
 "https://script.google.com/macros/s/AKfycbyt7yDqWoccIaAlY4z-opnM-UFZe35vsZn4uJrw0JT-qOBbgS-P5EGdjktek6hmHA_E/exec";
-
-let API_URL =
-localStorage.getItem("hududgaz_api_url") ||
-DEFAULT_API_URL;
-
-document.getElementById("apiUrl").value = API_URL;
 
 
 /* =========================
@@ -345,9 +351,9 @@ const districtKPI=[
 ];
 
 
-/* =========================
+/* =====================================================
    RISK ENGINE
-========================= */
+===================================================== */
 
 function calculateRisk(d){
 
@@ -373,94 +379,73 @@ d[4]*5*.15+
 
 )/10;
 
-let zone;
 
+let zone;
 let level;
+
 
 if(score>=70){
 
 zone="🔴";
-
 level="ЮҚОРИ ХАВФ";
 
 }else if(score>=40){
 
 zone="🟡";
-
 level="ЎРТА ХАВФ";
 
 }else{
 
 zone="🟢";
-
 level="ПАСТ ХАВФ";
 
 }
 
+
 return{
 
 name:d[0],
-
 debt:d[1],
-
 loss:d[2],
-
 imbalance:d[3],
-
 illegal:d[4],
-
 online:d[5],
-
 winter:d[6],
-
 score:score,
-
 zone:zone,
-
 level:level
 
 };
 
 }
 
+
 const results=
 
 districtKPI
-
 .map(calculateRisk)
-
-.sort(
-(a,b)=>b.score-a.score
-);
+.sort((a,b)=>b.score-a.score);
 
 
-/* =========================
+/* =====================================================
    SUMMARY
-========================= */
+===================================================== */
 
 function renderSummary(){
 
 const red=
-
-results.filter(
-r=>r.score>=70
-).length;
+results.filter(r=>r.score>=70).length;
 
 const yellow=
-
 results.filter(
 r=>r.score>=40 &&
 r.score<70
 ).length;
 
 const green=
-
-results.filter(
-r=>r.score<40
-).length;
+results.filter(r=>r.score<40).length;
 
 const average=
-
 (
 results.reduce(
 (s,r)=>s+r.score,
@@ -468,37 +453,28 @@ results.reduce(
 )/results.length
 ).toFixed(1);
 
-document.getElementById(
-"total"
-).innerText=
+
+document.getElementById("total").innerText=
 results.length;
 
-document.getElementById(
-"red"
-).innerText=
+document.getElementById("red").innerText=
 red;
 
-document.getElementById(
-"yellow"
-).innerText=
+document.getElementById("yellow").innerText=
 yellow;
 
-document.getElementById(
-"green"
-).innerText=
+document.getElementById("green").innerText=
 green;
 
-document.getElementById(
-"avg"
-).innerText=
+document.getElementById("avg").innerText=
 average;
 
 }
 
 
-/* =========================
+/* =====================================================
    ZONE
-========================= */
+===================================================== */
 
 function zoneClass(r){
 
@@ -511,22 +487,17 @@ return r.score>=70
 }
 
 
-/* =========================
+/* =====================================================
    TOP 5
-========================= */
+===================================================== */
 
 function renderTop5(){
 
-document.getElementById(
-"top5"
-).innerHTML=
+document.getElementById("top5").innerHTML=
 
-results
+results.slice(0,5)
 
-.slice(0,5)
-
-.map(
-(r,i)=>`
+.map((r,i)=>`
 
 <div class="row ${zoneClass(r)}">
 
@@ -560,28 +531,22 @@ ${r.imbalance}%
 
 </div>
 
-`
-)
+`)
 
 .join("");
 
 }
 
 
-/* =========================
+/* =====================================================
    MAP
-========================= */
+===================================================== */
 
 function renderMap(){
 
-document.getElementById(
-"map"
-).innerHTML=
+document.getElementById("map").innerHTML=
 
-results
-
-.map(
-(r,i)=>`
+results.map((r,i)=>`
 
 <div
 
@@ -610,34 +575,27 @@ ${r.score}
 </div>
 
 <small>
-
 ${r.level}
-
 </small>
 
 </div>
 
-`
-)
+`)
 
 .join("");
 
 }
 
 
-/* =========================
+/* =====================================================
    DETAIL
-========================= */
+===================================================== */
 
-window.showDistrict=
-
-function(i){
+window.showDistrict=function(i){
 
 const r=results[i];
 
-document.getElementById(
-"detail"
-).innerHTML=
+document.getElementById("detail").innerHTML=
 
 `
 
@@ -654,32 +612,23 @@ ${[
 
 ["AI Risk",r.score],
 
-["Қарздорлик",
-r.debt+" млрд"],
+["Қарздорлик",r.debt+" млрд"],
 
-["Йўқотиш",
-r.loss+"%"],
+["Йўқотиш",r.loss+"%"],
 
-["Дебаланс",
-r.imbalance+"%"],
+["Дебаланс",r.imbalance+"%"],
 
-["Ноқонуний уланиш",
-r.illegal],
+["Ноқонуний уланиш",r.illegal],
 
-["Онлайн ҳисоблагич",
-r.online+"%"],
+["Онлайн ҳисоблагич",r.online+"%"],
 
-["Қишга тайёргарлик",
-r.winter+"%"],
+["Қишга тайёргарлик",r.winter+"%"],
 
-["Ҳолат",
-r.level]
+["Ҳолат",r.level]
 
 ]
 
-.map(
-
-x=>`
+.map(x=>`
 
 <div class="detail-item">
 
@@ -693,9 +642,7 @@ ${x[1]}
 
 </div>
 
-`
-
-)
+`)
 
 .join("")}
 
@@ -706,88 +653,71 @@ ${x[1]}
 };
 
 
-/* =========================
+/* =====================================================
    AI ACTIONS
-========================= */
+===================================================== */
 
 function renderActions(){
 
 let a=[];
 
-results
 
-.slice(0,8)
-
-.forEach(
-r=>{
+results.slice(0,8).forEach(r=>{
 
 if(r.debt>=60)
 
 a.push(
-
 `💰 <b>${r.name}</b> —
 қарздорликни зудлик билан назорат қилиш.`
-
 );
+
 
 if(r.loss>=2.8)
 
 a.push(
-
 `🔧 <b>${r.name}</b> —
 йўқотишларни таҳлил қилиш.`
-
 );
+
 
 if(r.imbalance>=3.2)
 
 a.push(
-
 `⚖️ <b>${r.name}</b> —
 дебаланс сабабларини аниқлаш.`
-
 );
+
 
 if(r.online<80)
 
 a.push(
-
 `📡 <b>${r.name}</b> —
 онлайн ҳисоблагичларни тиклаш.`
-
 );
+
 
 if(r.winter<85)
 
 a.push(
-
 `❄️ <b>${r.name}</b> —
 куз-қиш тайёргарлигини кучайтириш.`
-
 );
 
-}
+});
 
-);
 
 if(!a.length){
 
-a=[
-"🟢 Критик сигнал аниқланмади."
-];
+a=["🟢 Критик сигнал аниқланмади."];
 
 }
 
-document.getElementById(
-"actions"
-).innerHTML=
 
-a
+document.getElementById("actions").innerHTML=
 
-.slice(0,10)
+a.slice(0,10)
 
-.map(
-x=>`
+.map(x=>`
 
 <div class="action">
 
@@ -795,28 +725,22 @@ ${x}
 
 </div>
 
-`
-)
+`)
 
 .join("");
 
 }
 
 
-/* =========================
+/* =====================================================
    RANKING
-========================= */
+===================================================== */
 
 function renderRanking(){
 
-document.getElementById(
-"ranking"
-).innerHTML=
+document.getElementById("ranking").innerHTML=
 
-results
-
-.map(
-(r,i)=>`
+results.map((r,i)=>`
 
 <div class="row ${zoneClass(r)}">
 
@@ -864,17 +788,16 @@ ${r.online}%
 
 </div>
 
-`
-)
+`)
 
 .join("");
 
 }
 
 
-/* =========================
+/* =====================================================
    EXECUTION TASKS
-========================= */
+===================================================== */
 
 const executionTasks=[
 
@@ -978,10 +901,7 @@ const executionTasks=[
 "Бажарилган"
 ]
 
-]
-
-.map(
-x=>({
+].map(x=>({
 
 district:x[0],
 responsible:x[1],
@@ -991,51 +911,41 @@ deadline:x[4],
 progress:x[5],
 status:x[6]
 
-})
-);
+}));
 
 
-/* =========================
+/* =====================================================
    LOCAL STORAGE
-========================= */
+===================================================== */
 
 let saved=
 
 JSON.parse(
-
-localStorage.getItem(
-"hududgaz_executors_v5"
-)||"{}"
-
+localStorage.getItem("hududgaz_executors_v5")||"{}"
 );
 
-executionTasks.forEach(
-(t,i)=>{
+
+executionTasks.forEach((t,i)=>{
 
 if(saved[i]){
 
-t.executor=
-saved[i];
+t.executor=saved[i];
 
 }
 
-}
-);
+});
+
 
 let auditLog=
 
 JSON.parse(
-
-localStorage.getItem(
-"hududgaz_audit_v5"
-)||"[]"
-
+localStorage.getItem("hududgaz_audit_v5")||"[]"
 );
 
 
-/* =========================
+/* =====================================================
    EXECUTION RENDER
-========================= */
+===================================================== */
 
 function renderExecution(){
 
@@ -1045,62 +955,43 @@ executionTasks.filter(
 t=>t.progress>=100
 ).length;
 
+
 const late=
 
 executionTasks.filter(
 t=>t.status==="Кечикмоқда"
 ).length;
 
-document.getElementById(
-"task-total"
-).innerText=
+
+document.getElementById("task-total").innerText=
 executionTasks.length;
 
-document.getElementById(
-"task-done"
-).innerText=
+document.getElementById("task-done").innerText=
 done;
 
-document.getElementById(
-"task-progress"
-).innerText=
+document.getElementById("task-progress").innerText=
+executionTasks.length-done-late;
 
-executionTasks.length-
-done-
-late;
-
-document.getElementById(
-"task-late"
-).innerText=
+document.getElementById("task-late").innerText=
 late;
 
 
-document.getElementById(
-"execution-list"
-).innerHTML=
+document.getElementById("execution-list").innerHTML=
 
-executionTasks
-
-.map(
-(t,i)=>{
+executionTasks.map((t,i)=>{
 
 let border;
-
 let bg;
-
 let icon;
 
-if(
-t.status==="Кечикмоқда"
-){
+
+if(t.status==="Кечикмоқда"){
 
 border="#d32f2f";
 bg="#ffe5e5";
 icon="🔴";
 
-}else if(
-t.status==="Бажарилган"
-){
+}else if(t.status==="Бажарилган"){
 
 border="#2e7d32";
 bg="#e5f7e9";
@@ -1113,6 +1004,7 @@ bg="#fff4cc";
 icon="🟡";
 
 }
+
 
 return `
 
@@ -1152,14 +1044,7 @@ ${t.district}
 
 </b>
 
-<div
-
-style="
-margin-top:6px;
-color:#667085
-"
-
->
+<div style="margin-top:6px;color:#667085">
 
 👔 Раҳбар:
 
@@ -1186,9 +1071,7 @@ ${t.status}
 <div class="executor-box">
 
 <div class="executor-title">
-
 👤 ИЖРОЧИ
-
 </div>
 
 <div
@@ -1196,7 +1079,7 @@ class="executor-name"
 id="exname-${i}"
 >
 
-${t.executor}
+${escapeHtml(t.executor)}
 
 </div>
 
@@ -1209,11 +1092,8 @@ ${t.executor}
 </div>
 
 <button
-
 class="edit-btn"
-
 onclick="editExecutor(${i})"
-
 >
 
 ✏️ Ижрочини ўзгартириш
@@ -1264,15 +1144,11 @@ margin-bottom:5px
 >
 
 <span>
-
 Бажарилиш
-
 </span>
 
 <b>
-
 ${t.progress}%
-
 </b>
 
 </div>
@@ -1296,34 +1172,23 @@ background:${border}
 
 `;
 
-}
-
-)
-
-.join("");
+}).join("");
 
 }
 
 
-/* =========================
+/* =====================================================
    EDIT EXECUTOR
-========================= */
+===================================================== */
 
-window.editExecutor=
+window.editExecutor=function(i){
 
-i=>{
+const t=executionTasks[i];
 
-const t=
-executionTasks[i];
+const box=document.getElementById("exname-"+i);
 
-const box=
-document.getElementById(
-"exname-"+i
-);
 
-box.innerHTML=
-
-`
+box.innerHTML=`
 
 <input
 
@@ -1365,6 +1230,7 @@ onclick="renderExecution()"
 
 `;
 
+
 document.getElementById(
 "executor-input-"+i
 ).focus();
@@ -1372,22 +1238,25 @@ document.getElementById(
 };
 
 
-/* =========================
+/* =====================================================
    SAVE EXECUTOR
-========================= */
+===================================================== */
 
-window.saveExecutor=
-
-async i=>{
+window.saveExecutor=async function(i){
 
 const input=
+document.getElementById("executor-input-"+i);
 
-document.getElementById(
-"executor-input-"+i
-);
 
-const name=
-input.value.trim();
+if(!input){
+
+return;
+
+}
+
+
+const name=input.value.trim();
+
 
 if(!name){
 
@@ -1399,66 +1268,57 @@ return;
 
 }
 
+
 const old=
 executionTasks[i].executor;
+
 
 if(old===name){
 
 renderExecution();
-
 return;
 
 }
 
-executionTasks[i].executor=
-name;
+
+executionTasks[i].executor=name;
 
 saved[i]=name;
 
+
 localStorage.setItem(
-
 "hududgaz_executors_v5",
-
 JSON.stringify(saved)
-
 );
+
 
 const entry={
 
-time:
-new Date().toLocaleString(
-"uz-UZ"
-),
+time:new Date().toLocaleString("uz-UZ"),
 
-district:
-executionTasks[i].district,
+district:executionTasks[i].district,
 
-leader:
-executionTasks[i].responsible,
+leader:executionTasks[i].responsible,
 
-oldExecutor:
-old,
+oldExecutor:old,
 
-newExecutor:
-name,
+newExecutor:name,
 
-task:
-executionTasks[i].task
+task:executionTasks[i].task
 
 };
 
+
 auditLog.unshift(entry);
 
-auditLog=
-auditLog.slice(0,100);
+auditLog=auditLog.slice(0,100);
+
 
 localStorage.setItem(
-
 "hududgaz_audit_v5",
-
 JSON.stringify(auditLog)
-
 );
+
 
 renderExecution();
 
@@ -1466,10 +1326,12 @@ renderSignals();
 
 renderAudit();
 
+
+/* GOOGLE SHEETS */
+
 await sendToSheets({
 
-action:
-"updateExecutor",
+action:"updateExecutor",
 
 ...entry
 
@@ -1478,65 +1340,57 @@ action:
 };
 
 
-/* =========================
+/* =====================================================
    AUDIT
-========================= */
+===================================================== */
 
 function renderAudit(){
 
-document.getElementById(
-"audit"
-).innerHTML=
+document.getElementById("audit").innerHTML=
 
 auditLog.length
 
 ?
 
-auditLog
-
-.map(
-x=>`
+auditLog.map(x=>`
 
 <div class="audit-item">
 
 🕒
 
 <b>
-${x.time}
+${escapeHtml(x.time)}
 </b>
 
 <br>
 
 📍
-${x.district}
+${escapeHtml(x.district)}
 
 |
 
 👔
-${x.leader}
+${escapeHtml(x.leader)}
 
 <br>
 
 👤
-${x.oldExecutor}
+${escapeHtml(x.oldExecutor)}
 
 →
 
 <b>
-${x.newExecutor}
+${escapeHtml(x.newExecutor)}
 </b>
 
 <br>
 
 🎯
-${x.task}
+${escapeHtml(x.task)}
 
 </div>
 
-`
-)
-
-.join("")
+`).join("")
 
 :
 
@@ -1545,9 +1399,9 @@ ${x.task}
 }
 
 
-/* =========================
+/* =====================================================
    RED SIGNALS
-========================= */
+===================================================== */
 
 function renderSignals(){
 
@@ -1560,12 +1414,9 @@ executionTasks
 t=>t.status==="Кечикмоқда"
 )
 
-.forEach(
-t=>{
+.forEach(t=>{
 
-s.push(
-
-`
+s.push(`
 
 <div class="signal">
 
@@ -1603,26 +1454,18 @@ ${t.executor}
 
 </div>
 
-`
+`);
 
-);
-
-}
-);
+});
 
 
 results
 
-.filter(
-r=>r.debt>=60
-)
+.filter(r=>r.debt>=60)
 
-.forEach(
-r=>{
+.forEach(r=>{
 
-s.push(
-
-`
+s.push(`
 
 <div class="signal">
 
@@ -1654,26 +1497,18 @@ ${r.debt}
 
 </div>
 
-`
+`);
 
-);
-
-}
-);
+});
 
 
 results
 
-.filter(
-r=>r.loss>=2.8
-)
+.filter(r=>r.loss>=2.8)
 
-.forEach(
-r=>{
+.forEach(r=>{
 
-s.push(
-
-`
+s.push(`
 
 <div class="signal">
 
@@ -1703,26 +1538,18 @@ ${r.loss}%
 
 </div>
 
-`
+`);
 
-);
-
-}
-);
+});
 
 
 results
 
-.filter(
-r=>r.imbalance>=3.2
-)
+.filter(r=>r.imbalance>=3.2)
 
-.forEach(
-r=>{
+.forEach(r=>{
 
-s.push(
-
-`
+s.push(`
 
 <div class="signal">
 
@@ -1752,26 +1579,18 @@ ${r.imbalance}%
 
 </div>
 
-`
+`);
 
-);
-
-}
-);
+});
 
 
 results
 
-.filter(
-r=>r.online<80
-)
+.filter(r=>r.online<80)
 
-.forEach(
-r=>{
+.forEach(r=>{
 
-s.push(
-
-`
+s.push(`
 
 <div class="signal">
 
@@ -1801,25 +1620,18 @@ ${r.online}%
 
 </div>
 
-`
+`);
 
-);
-
-}
-);
+});
 
 
-document.getElementById(
-"signals"
-).innerHTML=
+document.getElementById("signals").innerHTML=
 
 s.length
 
 ?s.join("")
 
-:
-
-`
+:`
 
 <div class="action">
 
@@ -1832,43 +1644,9 @@ s.length
 }
 
 
-/* =========================
-   GOOGLE SHEETS
-========================= */
-
-async function checkGoogleSheet(){
-
-try{
-
-const r=
-await fetch(
-GOOGLE_SHEET_CSV,
-{
-cache:"no-store"
-}
-);
-
-if(!r.ok)
-throw 0;
-
-await r.text();
-
-sheetStatusText(
-"🟢 Google Sheets ўқиш уланиши тайёр"
-);
-
-}
-
-catch(e){
-
-sheetStatusText(
-"🟡 Google Sheets ўқиш имкони бор, лекин ҳозир текширувдан ўтмади"
-);
-
-}
-
-}
-
+/* =====================================================
+   SHEETS STATUS
+===================================================== */
 
 function sheetStatusText(t){
 
@@ -1879,72 +1657,76 @@ document.getElementById(
 }
 
 
-/* =========================
-   SAVE API URL
-========================= */
-
-function saveApiUrl(){
-
-API_URL=
-
-document.getElementById(
-"apiUrl"
-).value.trim();
-
-localStorage.setItem(
-"hududgaz_api_url",
-API_URL
-);
-
-alert(
-"Google Apps Script URL сақланди."
-);
-
-}
-
-
-/* =========================
+/* =====================================================
    TEST API
-========================= */
+===================================================== */
 
 async function testApi(){
 
-if(!API_URL){
+const state=
+document.getElementById("api-state");
 
-alert(
-"Аввало Apps Script Web App URL киритинг."
-);
 
-return;
+state.innerHTML=
+"🔄 Текширилмоқда...";
 
-}
 
 try{
 
-const r=
+const r=await fetch(
 
-await fetch(
-API_URL+
-"?action=ping",
+API_URL+"?action=ping&ts="+Date.now(),
+
 {
-method:"GET"
+method:"GET",
+cache:"no-store"
 }
+
 );
 
-const t=
-await r.text();
+
+if(!r.ok){
+
+throw new Error(
+"HTTP "+r.status
+);
+
+}
+
+
+const text=await r.text();
+
+
+state.innerHTML=
+'<span class="api-ok">🟢 API ишлаяпти</span>';
+
+
+sheetStatusText(
+"🟢 Google Apps Script API ишлаяпти"
+);
+
 
 alert(
-"Уланиш жавоби: "+t
+"🟢 Уланиш муваффақиятли!\n\n"+text
 );
+
 
 }
 
 catch(e){
 
+state.innerHTML=
+'<span class="api-warn">🟡 Браузер API жавобини чеклаши мумкин</span>';
+
+
+sheetStatusText(
+"🟡 API URL тайёр. POST орқали Google Sheets'га ёзиш ишлайдиган ҳолатда."
+);
+
+
 alert(
 
-"Уланиш текширувида браузер CORS чеклови бўлиши мумкин. Apps Script deployment 'Anyone' бўлиши керак."
+"🟡 API URL мавжуд.\n\nАгар браузер CORS чеклови берса ҳам, ижрочи сақланганда Apps Script'га POST юборилади.\n\nDeployment: Anyone бўлиши керак."
 
 );
 
@@ -1953,14 +1735,22 @@ alert(
 }
 
 
-/* =========================
-   SEND TO SHEETS
-========================= */
+/* =====================================================
+   SEND TO GOOGLE SHEETS
+===================================================== */
 
 async function sendToSheets(data){
 
-if(!API_URL)
+if(!API_URL){
+
+sheetStatusText(
+"🔴 Google Apps Script URL мавжуд эмас"
+);
+
 return;
+
+}
+
 
 try{
 
@@ -1975,8 +1765,10 @@ method:"POST",
 mode:"no-cors",
 
 headers:{
+
 "Content-Type":
 "text/plain;charset=utf-8"
+
 },
 
 body:
@@ -1992,6 +1784,7 @@ key:API_KEY,
 }
 
 );
+
 
 sheetStatusText(
 
@@ -2009,14 +1802,16 @@ sheetStatusText(
 
 );
 
-}
+console.error(e);
 
 }
 
+}
 
-/* =========================
+
+/* =====================================================
    ESCAPE HTML
-========================= */
+===================================================== */
 
 function escapeHtml(s){
 
@@ -2027,13 +1822,9 @@ return String(s).replace(
 m=>({
 
 "&":"&amp;",
-
 "<":"&lt;",
-
 ">":"&gt;",
-
 '"':"&quot;",
-
 "'":"&#039;"
 
 }[m])
@@ -2043,9 +1834,9 @@ m=>({
 }
 
 
-/* =========================
+/* =====================================================
    SYSTEM CHECK
-========================= */
+===================================================== */
 
 function systemCheck(){
 
@@ -2102,6 +1893,11 @@ typeof saveExecutor==="function"
 ],
 
 [
+"Google Sheets API",
+!!API_URL
+],
+
+[
 "Қизил сигналлар",
 !!document.getElementById("signals")
 ],
@@ -2118,17 +1914,14 @@ typeof saveExecutor==="function"
 
 ];
 
+
 const box=
-document.getElementById(
-"check-results"
-);
+document.getElementById("check-results");
+
 
 box.innerHTML=
 
-checks
-
-.map(
-c=>`
+checks.map(c=>`
 
 <div
 
@@ -2145,16 +1938,12 @@ ${c[0]}
 
 </div>
 
-`
-)
+`).join("");
 
-.join("");
 
 const failed=
+checks.filter(c=>!c[1]).length;
 
-checks.filter(
-c=>!c[1]
-).length;
 
 box.innerHTML+=`
 
@@ -2188,9 +1977,9 @@ failed
 }
 
 
-/* =========================
+/* =====================================================
    START
-========================= */
+===================================================== */
 
 renderSummary();
 
@@ -2210,7 +1999,13 @@ renderAudit();
 
 systemCheck();
 
-checkGoogleSheet();
+
+/* API automatically checked */
+
+setTimeout(
+testApi,
+1000
+);
 
 </script>
 

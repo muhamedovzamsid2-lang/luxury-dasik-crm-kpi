@@ -9,33 +9,139 @@
 *{box-sizing:border-box}
 body{margin:0;font-family:Arial,sans-serif;background:#eef2f6;color:#17202a}
 .container{max-width:1400px;margin:auto;padding:15px}
-.header{background:#102a43;color:#fff;border-radius:18px;padding:20px;margin-bottom:15px}
+.header{background:#102a43;color:#fff;border-radius:18px;padding:20px;margin-bottom:12px}
 .header h1{margin:0 0 7px}
 .live{float:right;background:#d9f7df;color:#176b36;padding:7px 12px;border-radius:20px;font-weight:bold}
+
+.nav{
+background:white;
+padding:10px;
+border-radius:15px;
+margin-bottom:15px;
+box-shadow:0 4px 18px #00000010;
+display:flex;
+flex-wrap:wrap;
+gap:5px;
+}
+
+.nav button{
+margin:0;
+flex:1;
+min-width:130px;
+}
+
 .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:12px}
 .card,.section{background:white;border-radius:16px;padding:17px;box-shadow:0 4px 18px #00000010}
 .section{margin-top:15px}
 .card span{color:#667085;font-size:14px}
 .card strong{display:block;font-size:28px;margin-top:7px}
 .red{background:#ffe5e5}.yellow{background:#fff4cc}.green{background:#e5f7e9}
-button{border:0;border-radius:10px;padding:10px 14px;cursor:pointer;font-weight:bold;margin:3px}
+
+button{
+border:0;
+border-radius:10px;
+padding:10px 14px;
+cursor:pointer;
+font-weight:bold;
+margin:3px
+}
+
 .btn{background:#102a43;color:#fff}
 .btn-green{background:#198754;color:#fff}
 .btn-red{background:#d32f2f;color:#fff}
 .btn-yellow{background:#f9a825;color:#111}
-input,select{width:100%;padding:11px;border:1px solid #d0d5dd;border-radius:9px;margin:5px 0}
-.form-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:8px}
-.row{background:#f8fafc;border-left:6px solid #98a2b3;padding:14px;margin:8px 0;border-radius:12px}
-.row-red{border-color:#d32f2f}.row-yellow{border-color:#f9a825}.row-green{border-color:#2e7d32}
-.meta{display:block;color:#667085;font-size:13px;margin-top:6px}
-.progress{height:10px;background:#e5e7eb;border-radius:10px;overflow:hidden;margin-top:7px}
-.progress div{height:100%;background:#198754}
+
+input,select{
+width:100%;
+padding:11px;
+border:1px solid #d0d5dd;
+border-radius:9px;
+margin:5px 0
+}
+
+.form-grid{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(170px,1fr));
+gap:8px
+}
+
+.row{
+background:#f8fafc;
+border-left:6px solid #98a2b3;
+padding:14px;
+margin:8px 0;
+border-radius:12px
+}
+
+.row-red{border-color:#d32f2f}
+.row-yellow{border-color:#f9a825}
+.row-green{border-color:#2e7d32}
+
+.meta{
+display:block;
+color:#667085;
+font-size:13px;
+margin-top:6px
+}
+
+.progress{
+height:10px;
+background:#e5e7eb;
+border-radius:10px;
+overflow:hidden;
+margin-top:7px
+}
+
+.progress div{
+height:100%;
+background:#198754
+}
+
 .hidden{display:none}
+
 .table-wrap{overflow:auto}
-table{width:100%;border-collapse:collapse;min-width:850px}
-th,td{padding:10px;border-bottom:1px solid #e5e7eb;text-align:left}
+
+table{
+width:100%;
+border-collapse:collapse;
+min-width:850px
+}
+
+th,td{
+padding:10px;
+border-bottom:1px solid #e5e7eb;
+text-align:left
+}
+
 th{background:#f1f5f9}
-.system{position:fixed;right:15px;bottom:15px;background:white;padding:12px 16px;border-radius:14px;box-shadow:0 5px 25px #0003;font-size:13px}
+
+.system{
+position:fixed;
+right:15px;
+bottom:15px;
+background:white;
+padding:12px 16px;
+border-radius:14px;
+box-shadow:0 5px 25px #0003;
+font-size:13px;
+z-index:100
+}
+
+.mobile-menu{
+background:#102a43;
+color:white;
+padding:12px;
+border-radius:14px;
+margin-bottom:15px;
+}
+
+@media(max-width:600px){
+.container{padding:8px}
+.header{padding:15px}
+.header h1{font-size:21px}
+.nav button{min-width:45%;font-size:12px;padding:9px 6px}
+.card strong{font-size:24px}
+}
 </style>
 </head>
 
@@ -43,20 +149,73 @@ th{background:#f1f5f9}
 
 <div class="container">
 
+<!-- HEADER -->
 <div class="header">
 <span class="live">🟢 ONLINE</span>
 <h1>🎯 ДИРЕКТОР НАЗОРАТ ПАНЕЛИ</h1>
 <div>Hududgaz Toshkent — AI KPI & Management Dashboard</div>
 </div>
 
+
+<!-- =====================================================
+     MAIN NAVIGATION
+===================================================== -->
+
+<div class="nav">
+
+<button class="btn" onclick="goHome()">
+🏠 Бош саҳифа
+</button>
+
+<button class="btn" onclick="openDashboard()">
+📊 KPI Dashboard
+</button>
+
+<button class="btn" onclick="openPanelAndScroll('districtPanel')">
+🏢 Ҳудудлар
+</button>
+
+<button class="btn" onclick="openPanelAndScroll('taskPanel')">
+📋 Ижро
+</button>
+
+<button class="btn-red" onclick="scrollToSignals()">
+🚨 Қизил сигналлар
+</button>
+
+</div>
+
+
 <!-- SUMMARY -->
 <div class="grid">
-<div class="card"><span>Ҳудудлар</span><strong id="total">0</strong></div>
-<div class="card red"><span>🔴 Юқори хавф</span><strong id="red">0</strong></div>
-<div class="card yellow"><span>🟡 Ўрта хавф</span><strong id="yellow">0</strong></div>
-<div class="card green"><span>🟢 Паст хавф</span><strong id="green">0</strong></div>
-<div class="card"><span>Ўртача Risk</span><strong id="avg">0</strong></div>
+
+<div class="card">
+<span>Ҳудудлар</span>
+<strong id="total">0</strong>
 </div>
+
+<div class="card red">
+<span>🔴 Юқори хавф</span>
+<strong id="red">0</strong>
+</div>
+
+<div class="card yellow">
+<span>🟡 Ўрта хавф</span>
+<strong id="yellow">0</strong>
+</div>
+
+<div class="card green">
+<span>🟢 Паст хавф</span>
+<strong id="green">0</strong>
+</div>
+
+<div class="card">
+<span>Ўртача Risk</span>
+<strong id="avg">0</strong>
+</div>
+
+</div>
+
 
 <!-- ADMIN -->
 <div class="section">
@@ -75,14 +234,21 @@ th{background:#f1f5f9}
 💾 Backup
 </button>
 
-<button class="btn-green" onclick="document.getElementById('importFile').click()">
+<button class="btn-green"
+onclick="document.getElementById('importFile').click()">
 📥 Import
 </button>
 
-<input id="importFile" type="file" accept=".json" class="hidden"
-onchange="importData(event)">
+<input
+id="importFile"
+type="file"
+accept=".json"
+class="hidden"
+onchange="importData(event)"
+>
 
 </div>
+
 
 <!-- DISTRICT MANAGEMENT -->
 <div class="section hidden" id="districtPanel">
@@ -109,6 +275,7 @@ onchange="importData(event)">
 
 </div>
 
+
 <!-- TASK MANAGEMENT -->
 <div class="section hidden" id="taskPanel">
 
@@ -132,72 +299,178 @@ onchange="importData(event)">
 
 </div>
 
+
 <!-- TOP 5 -->
 <div class="section">
+
 <h2>🚨 TOP-5 — РАҲБАР ЭЪТИБОРИ</h2>
+
 <div id="top5"></div>
+
 </div>
+
 
 <!-- RISK MAP -->
 <div class="section">
+
 <h2>🗺️ AI RISK MAP</h2>
+
 <div id="map" class="grid"></div>
+
 <div id="detail"></div>
+
 </div>
+
 
 <!-- AI -->
 <div class="section">
+
 <h2>🤖 AI ТАВСИЯЛАР</h2>
+
 <div id="actions"></div>
+
 </div>
+
 
 <!-- RANKING -->
 <div class="section">
+
 <h2>📊 ҲУДУДЛАР РЕЙТИНГИ</h2>
+
 <div id="ranking"></div>
+
 </div>
 
+
 <!-- EXECUTION -->
-<div class="section">
+<div class="section" id="executionSection">
 
 <h2>📋 ИЖРО НАЗОРАТИ</h2>
 
 <div class="grid">
-<div class="card"><span>Жами вазифа</span><strong id="taskTotal">0</strong></div>
-<div class="card green"><span>Бажарилган</span><strong id="taskDone">0</strong></div>
-<div class="card yellow"><span>Бажарилмоқда</span><strong id="taskProgress">0</strong></div>
-<div class="card red"><span>Кечиккан</span><strong id="taskLate">0</strong></div>
+
+<div class="card">
+<span>Жами вазифа</span>
+<strong id="taskTotal">0</strong>
+</div>
+
+<div class="card green">
+<span>Бажарилган</span>
+<strong id="taskDone">0</strong>
+</div>
+
+<div class="card yellow">
+<span>Бажарилмоқда</span>
+<strong id="taskProgress">0</strong>
+</div>
+
+<div class="card red">
+<span>Кечиккан</span>
+<strong id="taskLate">0</strong>
+</div>
+
 </div>
 
 <div id="execution"></div>
 
 </div>
 
+
 <!-- SIGNALS -->
-<div class="section">
+<div class="section" id="signalsSection">
+
 <h2>🚨 ҚИЗИЛ СИГНАЛЛАР</h2>
+
 <div id="signals"></div>
+
 </div>
 
+
+<!-- DATA -->
 <div class="section">
+
 <h2>💾 МАЪЛУМОТЛАР</h2>
-<button class="btn" onclick="saveNow()">💾 Ҳозир сақлаш</button>
-<button class="btn-red" onclick="resetData()">♻️ Бошланғич ҳолатга қайтариш</button>
-<p id="saveStatus">Автоматик сақлаш ёқилган.</p>
+
+<button class="btn" onclick="saveNow()">
+💾 Ҳозир сақлаш
+</button>
+
+<button class="btn-red" onclick="resetData()">
+♻️ Бошланғич ҳолатга қайтариш
+</button>
+
+<p id="saveStatus">
+Автоматик сақлаш ёқилган.
+</p>
+
 </div>
+
 
 <div style="text-align:center;padding:25px;color:#667085">
-Hududgaz Toshkent • AI KPI Management • v4.0
+Hududgaz Toshkent • AI KPI Management • v4.1
 </div>
 
 </div>
+
 
 <div class="system">
+
 🟢 <b>SYSTEM ONLINE</b><br>
-<span id="systemStatus">Dashboard ишлаяпти</span>
+
+<span id="systemStatus">
+Dashboard ишлаяпти
+</span>
+
 </div>
 
+
 <script>
+
+/* =====================================================
+   NAVIGATION
+===================================================== */
+
+function goHome(){
+
+ window.scrollTo({
+  top:0,
+  behavior:"smooth"
+ });
+
+}
+
+function openDashboard(){
+
+ window.location.href="dashboard.html";
+
+}
+
+function openPanelAndScroll(id){
+
+ const panel=document.getElementById(id);
+
+ if(panel.classList.contains("hidden")){
+  panel.classList.remove("hidden");
+ }
+
+ panel.scrollIntoView({
+  behavior:"smooth",
+  block:"start"
+ });
+
+}
+
+function scrollToSignals(){
+
+ const section=document.getElementById("signalsSection");
+
+ section.scrollIntoView({
+  behavior:"smooth",
+  block:"start"
+ });
+
+}
+
 
 /* =====================================================
    DEFAULT DATA
@@ -448,8 +721,46 @@ function render(){
  ai.map(x=>`<div class="row">${x}</div>`).join("");
 
 
+ /* RED SIGNALS */
+
+ let signals=[];
+
+ results.forEach(r=>{
+
+   if(r.score>=70){
+     signals.push(
+       `<div class="row row-red">
+       🔴 <b>${r.name}</b> — ЮҚОРИ ХАВФ.
+       AI Risk: <b>${r.score}</b> |
+       Қарз: ${r.debt} млрд |
+       Йўқотиш: ${r.loss}% |
+       Дебаланс: ${r.imbalance}% |
+       Онлайн: ${r.online}%
+       </div>`
+     );
+   }
+
+   if(r.online<80){
+     signals.push(
+       `<div class="row row-red">
+       📡 <b>${r.name}</b> — онлайн кўрсаткич паст: ${r.online}%
+       </div>`
+     );
+   }
+
+ });
+
+ document.getElementById("signals").innerHTML =
+ signals.length
+ ? signals.join("")
+ : `<div class="row row-green">
+ 🟢 Ҳозирча қизил сигналлар аниқланмади.
+ </div>`;
+
+
  renderTasks();
  renderDistrictAdmin();
+
 }
 
 

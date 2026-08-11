@@ -282,14 +282,14 @@ GOOGLE_SHEET_ID
 const API_KEY =
 "hududgaz_executor_v5";
 
-let API_URL =
-localStorage.getItem(
-"hududgaz_api_url"
-)||"";
+const DEFAULT_API_URL =
+"https://script.google.com/macros/s/AKfycbyt7yDqWoccIaAlY4z-opnM-UFZe35vsZn4uJrw0JT-qOBbgS-P5EGdjktek6hmHA_E/exec";
 
-document.getElementById(
-"apiUrl"
-).value=API_URL;
+let API_URL =
+localStorage.getItem("hududgaz_api_url") ||
+DEFAULT_API_URL;
+
+document.getElementById("apiUrl").value = API_URL;
 
 
 /* =========================

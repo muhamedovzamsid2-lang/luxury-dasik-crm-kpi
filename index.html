@@ -3,100 +3,568 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>ХУДУДГАЗТАЪМИНОТ АЖ — Республика AI KPI Dashboard</title>
+<meta http-equiv="Cache-Control" content="no-cache,no-store,must-revalidate">
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Expires" content="0">
+
+<title>ХУДУДГАЗТАЪМИНОТ АЖ — AI KPI Dashboard v5.3</title>
 
 <style>
 *{box-sizing:border-box}
-html{scroll-behavior:smooth}
-body{margin:0;font-family:Arial,sans-serif;background:#f2f4f7;color:#17202a}
-button,input,select,textarea{font:inherit}
-button{border:0;border-radius:10px;padding:10px 14px;font-weight:bold;cursor:pointer}
-.container{max-width:1450px;margin:auto;padding:12px}
-.header{background:linear-gradient(135deg,#102a43,#175cd3);color:#fff;border-radius:20px;padding:20px;margin-bottom:14px;box-shadow:0 8px 25px rgba(16,42,67,.18)}
-.header h1{margin:0 0 7px;font-size:25px}
-.header p{margin:0;opacity:.88}
-.live{float:right;background:#e5f7e9;color:#176b36;padding:7px 12px;border-radius:20px;font-weight:bold}
-.toolbar{display:flex;gap:8px;flex-wrap:wrap;margin-top:16px}
-.btn-blue{background:#175cd3;color:#fff}
-.btn-green{background:#176b36;color:#fff}
-.btn-red{background:#b42318;color:#fff}
-.btn-gray{background:#667085;color:#fff}
-.btn-white{background:#fff;color:#175cd3}
-.btn-dark{background:#17202a;color:#fff}
-.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(155px,1fr));gap:12px}
-.card,.section{background:#fff;border-radius:16px;padding:17px;box-shadow:0 4px 18px rgba(0,0,0,.06)}
-.card span{display:block;color:#667085;font-size:13px}
-.card strong{display:block;font-size:27px;margin-top:7px}
-.red{background:#ffe5e5}
-.yellow{background:#fff4cc}
-.green{background:#e5f7e9}
-.blue{background:#eef4ff}
-.section{margin-top:15px}
-.section h2{margin-top:0}
-.map{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:10px}
-.map-card{padding:14px;border-radius:14px;cursor:pointer;transition:.2s;background:#fff}
-.map-card:hover{transform:translateY(-2px);box-shadow:0 8px 20px rgba(0,0,0,.1)}
-.map-red{background:#ffe5e5;border:2px solid #d32f2f}
-.map-yellow{background:#fff4cc;border:2px solid #f9a825}
-.map-green{background:#e5f7e9;border:2px solid #2e7d32}
-.score{font-size:23px;font-weight:800;margin:7px 0}
-.row{padding:13px;margin:7px 0;border-radius:12px;background:#f8fafc;border-left:5px solid #98a2b3}
-.row-red{border-color:#d32f2f}
-.row-yellow{border-color:#f9a825}
-.row-green{border-color:#2e7d32}
-.meta{display:block;margin-top:5px;color:#667085;font-size:12px}
-.detail{margin-top:13px;padding:16px;border-radius:14px;background:#f8fafc}
-.detail-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(135px,1fr));gap:9px}
-.detail-item{background:#fff;padding:11px;border-radius:10px}
-.detail-item small{display:block;color:#667085}
-.detail-item strong{display:block;font-size:17px;margin-top:4px}
-.action,.signal{padding:12px;margin:7px 0;border-radius:10px;background:#f8fafc}
-.signal{background:#ffe5e5;border-left:6px solid #d32f2f}
-.progress{width:100%;height:10px;background:#e5e7eb;border-radius:10px;overflow:hidden}
-.progress div{height:100%;border-radius:10px}
-.executor-box{background:#fff;border:1px solid #d0d5dd;border-radius:12px;padding:13px;margin-top:10px}
-.executor-title{color:#667085;font-size:12px;margin-bottom:5px}
-.executor-name{font-size:16px;font-weight:bold}
-.locked{color:#667085;font-size:12px;margin-top:4px}
-.edit-btn{margin-top:9px;background:#175cd3;color:#fff}
-.save-btn{background:#176b36;color:#fff;margin-left:5px}
-.cancel-btn{background:#667085;color:#fff;margin-left:5px}
-.executor-input,.form-input,.form-select,.form-textarea{width:100%;padding:10px;border:1px solid #d0d5dd;border-radius:9px;font-size:14px;margin-top:6px;background:#fff}
-.form-textarea{min-height:80px;resize:vertical}
-.form-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(175px,1fr));gap:10px}
-.form-group label{display:block;font-size:12px;font-weight:bold;color:#475467;margin-bottom:3px}
-.config{background:#eef4ff;border:1px solid #b2ccff;padding:13px;border-radius:12px;margin-top:11px}
-.small{font-size:12px;color:#667085}
-.audit{max-height:300px;overflow:auto}
-.audit-item{padding:9px;border-bottom:1px solid #e5e7eb;font-size:12px}
-.api-ok{color:#176b36;font-weight:bold}
-.api-warn{color:#b54708;font-weight:bold}
-.system{position:fixed;right:14px;bottom:14px;z-index:9999;max-width:360px;background:#fff;border-radius:15px;padding:14px;box-shadow:0 8px 30px rgba(0,0,0,.18);font-size:13px}
-.footer{text-align:center;color:#667085;font-size:12px;padding:24px}
-.hidden{display:none!important}
-.table-wrap{overflow-x:auto}
-table{width:100%;border-collapse:collapse;min-width:980px}
-th,td{padding:9px;border-bottom:1px solid #e5e7eb;text-align:left;font-size:13px}
-th{background:#f8fafc;color:#475467}
-.badge{display:inline-block;padding:5px 8px;border-radius:20px;font-size:11px;font-weight:bold}
-.badge-red{background:#ffe5e5;color:#b42318}
-.badge-yellow{background:#fff4cc;color:#8a5b00}
-.badge-green{background:#e5f7e9;color:#176b36}
-.notice{padding:11px;border-radius:10px;background:#f8fafc;margin-top:9px}
-.tabs{display:flex;gap:7px;flex-wrap:wrap;margin-bottom:12px}
-.tab{background:#eef2f6;color:#344054}
-.tab.active{background:#175cd3;color:#fff}
-.statbar{height:8px;background:#e5e7eb;border-radius:8px;overflow:hidden;margin-top:6px}
-.statbar div{height:100%;background:#175cd3}
+
+html{
+ scroll-behavior:smooth
+}
+
+body{
+ margin:0;
+ font-family:Arial,sans-serif;
+ background:#f2f4f7;
+ color:#17202a
+}
+
+button,input,select{
+ font:inherit
+}
+
+button{
+ border:0;
+ border-radius:9px;
+ padding:10px 14px;
+ font-weight:bold;
+ cursor:pointer
+}
+
+.container{
+ max-width:1250px;
+ margin:auto;
+ padding:14px
+}
+
+.header{
+ background:linear-gradient(135deg,#102a43,#175cd3);
+ color:#fff;
+ border-radius:20px;
+ padding:22px;
+ margin-bottom:15px;
+ box-shadow:0 8px 25px rgba(16,42,67,.18)
+}
+
+.header h1{
+ margin:0 0 7px;
+ font-size:25px
+}
+
+.header p{
+ margin:0;
+ opacity:.85
+}
+
+.live{
+ float:right;
+ background:#e5f7e9;
+ color:#176b36;
+ padding:7px 12px;
+ border-radius:20px;
+ font-weight:bold
+}
+
+.toolbar{
+ display:flex;
+ gap:8px;
+ flex-wrap:wrap;
+ margin-top:16px
+}
+
+.btn-blue{
+ background:#175cd3;
+ color:#fff
+}
+
+.btn-green{
+ background:#176b36;
+ color:#fff
+}
+
+.btn-red{
+ background:#b42318;
+ color:#fff
+}
+
+.btn-gray{
+ background:#667085;
+ color:#fff
+}
+
+.btn-white{
+ background:#fff;
+ color:#175cd3
+}
+
+.grid{
+ display:grid;
+ grid-template-columns:repeat(auto-fit,minmax(150px,1fr));
+ gap:12px
+}
+
+.card,.section{
+ background:#fff;
+ border-radius:16px;
+ padding:18px;
+ box-shadow:0 4px 18px rgba(0,0,0,.06)
+}
+
+.card span{
+ display:block;
+ color:#667085;
+ font-size:14px
+}
+
+.card strong{
+ display:block;
+ font-size:28px;
+ margin-top:8px
+}
+
+.red{
+ background:#ffe5e5
+}
+
+.yellow{
+ background:#fff4cc
+}
+
+.green{
+ background:#e5f7e9
+}
+
+.blue{
+ background:#eef4ff
+}
+
+.section{
+ margin-top:16px
+}
+
+.section h2{
+ margin-top:0
+}
+
+/* =========================
+   MAP
+========================= */
+
+.map-shell{
+ background:linear-gradient(180deg,#eef6ff,#f8fbff);
+ border:1px solid #d8e5f5;
+ border-radius:18px;
+ padding:12px;
+ overflow:hidden
+}
+
+.uz-map{
+ width:100%;
+ height:auto;
+ display:block;
+ min-height:380px
+}
+
+.region{
+ cursor:pointer;
+ stroke:#fff;
+ stroke-width:2;
+ transition:.18s
+}
+
+.region:hover{
+ filter:brightness(.92);
+ stroke:#17202a;
+ stroke-width:3
+}
+
+.region-label{
+ font-size:11px;
+ font-weight:bold;
+ fill:#17202a;
+ text-anchor:middle;
+ pointer-events:none
+}
+
+.map-list{
+ display:grid;
+ grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
+ gap:9px;
+ margin-top:12px
+}
+
+.map-card{
+ padding:13px;
+ border-radius:12px;
+ cursor:pointer;
+ background:#fff;
+ border:2px solid #d0d5dd;
+ transition:.2s
+}
+
+.map-card:hover{
+ transform:translateY(-2px);
+ box-shadow:0 6px 16px rgba(0,0,0,.1)
+}
+
+.map-card.red-card{
+ background:#ffe5e5;
+ border-color:#d32f2f
+}
+
+.map-card.yellow-card{
+ background:#fff4cc;
+ border-color:#f9a825
+}
+
+.map-card.green-card{
+ background:#e5f7e9;
+ border-color:#2e7d32
+}
+
+.map-red{
+ fill:#e74c3c
+}
+
+.map-yellow{
+ fill:#f1c40f
+}
+
+.map-green{
+ fill:#2eae62
+}
+
+.map-gray{
+ fill:#cbd5e1
+}
+
+.score{
+ font-size:23px;
+ font-weight:800;
+ margin:6px 0
+}
+
+.map{
+ display:grid;
+ grid-template-columns:repeat(auto-fit,minmax(190px,1fr));
+ gap:12px
+}
+
+.row{
+ padding:14px;
+ margin:8px 0;
+ border-radius:12px;
+ background:#f8fafc;
+ border-left:5px solid #98a2b3
+}
+
+.row-red{
+ border-color:#d32f2f
+}
+
+.row-yellow{
+ border-color:#f9a825
+}
+
+.row-green{
+ border-color:#2e7d32
+}
+
+.meta{
+ display:block;
+ margin-top:6px;
+ color:#667085;
+ font-size:13px
+}
+
+.detail{
+ margin-top:15px;
+ padding:18px;
+ border-radius:14px;
+ background:#f8fafc
+}
+
+.detail-grid{
+ display:grid;
+ grid-template-columns:repeat(auto-fit,minmax(140px,1fr));
+ gap:10px
+}
+
+.detail-item{
+ background:#fff;
+ padding:12px;
+ border-radius:10px
+}
+
+.detail-item small{
+ display:block;
+ color:#667085
+}
+
+.detail-item strong{
+ display:block;
+ font-size:18px;
+ margin-top:5px
+}
+
+.action,.signal{
+ padding:13px;
+ margin:7px 0;
+ border-radius:10px;
+ background:#f8fafc
+}
+
+.signal{
+ background:#ffe5e5;
+ border-left:6px solid #d32f2f
+}
+
+.progress{
+ width:100%;
+ height:10px;
+ background:#e5e7eb;
+ border-radius:10px;
+ overflow:hidden
+}
+
+.progress div{
+ height:100%;
+ border-radius:10px
+}
+
+.executor-box{
+ background:#fff;
+ border:1px solid #d0d5dd;
+ border-radius:12px;
+ padding:14px;
+ margin-top:12px
+}
+
+.executor-title{
+ color:#667085;
+ font-size:13px;
+ margin-bottom:6px
+}
+
+.executor-name{
+ font-size:17px;
+ font-weight:bold
+}
+
+.locked{
+ color:#667085;
+ font-size:13px;
+ margin-top:5px
+}
+
+.edit-btn{
+ margin-top:10px;
+ background:#175cd3;
+ color:#fff
+}
+
+.save-btn{
+ background:#176b36;
+ color:#fff;
+ margin-left:6px
+}
+
+.cancel-btn{
+ background:#667085;
+ color:#fff;
+ margin-left:6px
+}
+
+.executor-input,
+.form-input{
+ width:100%;
+ padding:11px;
+ border:1px solid #d0d5dd;
+ border-radius:9px;
+ font-size:15px;
+ margin-top:7px;
+ background:#fff
+}
+
+.form-grid{
+ display:grid;
+ grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
+ gap:10px
+}
+
+.form-group label{
+ display:block;
+ font-size:13px;
+ font-weight:bold;
+ color:#475467;
+ margin-bottom:4px
+}
+
+.config{
+ background:#eef4ff;
+ border:1px solid #b2ccff;
+ padding:14px;
+ border-radius:12px;
+ margin-top:12px
+}
+
+.small{
+ font-size:12px;
+ color:#667085
+}
+
+.audit{
+ max-height:300px;
+ overflow:auto
+}
+
+.audit-item{
+ padding:10px;
+ border-bottom:1px solid #e5e7eb;
+ font-size:13px
+}
+
+.api-ok{
+ color:#176b36;
+ font-weight:bold
+}
+
+.api-warn{
+ color:#b54708;
+ font-weight:bold
+}
+
+.api-bad{
+ color:#b42318;
+ font-weight:bold
+}
+
+.status-dot{
+ display:inline-block;
+ width:9px;
+ height:9px;
+ border-radius:50%;
+ margin-right:5px;
+ background:#98a2b3
+}
+
+.system{
+ position:fixed;
+ right:15px;
+ bottom:15px;
+ z-index:9999;
+ max-width:370px;
+ background:#fff;
+ border-radius:15px;
+ padding:16px;
+ box-shadow:0 8px 30px rgba(0,0,0,.18);
+ font-size:14px
+}
+
+.footer{
+ text-align:center;
+ color:#667085;
+ font-size:12px;
+ padding:25px
+}
+
+.hidden{
+ display:none!important
+}
+
+.table-wrap{
+ overflow-x:auto
+}
+
+table{
+ width:100%;
+ border-collapse:collapse;
+ min-width:800px
+}
+
+th,td{
+ padding:10px;
+ border-bottom:1px solid #e5e7eb;
+ text-align:left
+}
+
+th{
+ background:#f8fafc;
+ color:#475467
+}
+
+.badge{
+ display:inline-block;
+ padding:5px 9px;
+ border-radius:20px;
+ font-size:12px;
+ font-weight:bold
+}
+
+.badge-red{
+ background:#ffe5e5;
+ color:#b42318
+}
+
+.badge-yellow{
+ background:#fff4cc;
+ color:#8a5b00
+}
+
+.badge-green{
+ background:#e5f7e9;
+ color:#176b36
+}
+
+.notice{
+ padding:12px;
+ border-radius:10px;
+ background:#f8fafc;
+ margin-top:10px
+}
 
 @media(max-width:600px){
-.container{padding:8px}
-.header{padding:16px}
-.header h1{font-size:19px}
-.card strong{font-size:23px}
-.system{position:relative;right:auto;bottom:auto;margin:9px}
-.live{float:none;display:inline-block;margin-bottom:9px}
-th,td{font-size:12px}
+
+ .container{
+  padding:9px
+ }
+
+ .header{
+  padding:17px
+ }
+
+ .header h1{
+  font-size:20px
+ }
+
+ .card strong{
+  font-size:24px
+ }
+
+ .system{
+  position:relative;
+  right:auto;
+  bottom:auto;
+  margin:10px
+ }
+
+ .live{
+  float:none;
+  display:inline-block;
+  margin-bottom:10px
+ }
+
+ .uz-map{
+  min-height:250px
+ }
+
+ .region-label{
+  font-size:9px
+ }
 }
 </style>
 </head>
@@ -106,47 +574,60 @@ th,td{font-size:12px}
 <div class="container">
 
 <div class="header">
-<span class="live">🟢 ONLINE • v7.0</span>
 
-<h1>🎯 ХУДУДГАЗТАЪМИНОТ АЖ</h1>
+<span class="live">
+🟢 LIVE v5.3
+</span>
+
+<h1>
+🎯 ДИРЕКТОР НАЗОРАТ ПАНЕЛИ
+</h1>
 
 <p>
-Республика директор назорат панели • AI KPI • Risk • Газ таъминоти • Суюлтирилган газ • Ижро назорати
+ХУДУДГАЗТАЪМИНОТ АЖ —
+🇺🇿 Республика бўйича AI KPI & Risk Dashboard
 </p>
 
 <div class="toolbar">
 
-<button class="btn-white" onclick="scrollToSection('dashboard')">
+<button class="btn-white"
+onclick="scrollToSection('dashboard')">
 📊 Dashboard
 </button>
 
-<button class="btn-white" onclick="scrollToSection('republicMap')">
+<button class="btn-white"
+onclick="scrollToSection('map-section')">
 🗺️ Республика харитаси
 </button>
 
-<button class="btn-white" onclick="scrollToSection('manage')">
+<button class="btn-white"
+onclick="scrollToSection('manage')">
 ⚙️ Маълумот киритиш
 </button>
 
-<button class="btn-white" onclick="scrollToSection('execution')">
-📋 Ижро
+<button class="btn-white"
+onclick="scrollToSection('execution')">
+📋 Ижро назорати
 </button>
 
-<button class="btn-white" onclick="scrollToSection('liquefied')">
-🛢️ Суюлтирилган газ
-</button>
-
-<button class="btn-white" onclick="scrollToSection('sheets')">
+<button class="btn-white"
+onclick="scrollToSection('sheets')">
 📗 Google Sheets
 </button>
 
 </div>
+
 </div>
+
+
+<!-- =========================
+     SUMMARY
+========================= -->
 
 <div id="dashboard" class="grid">
 
 <div class="card">
-<span>🇺🇿 Республика ҳудудлари</span>
+<span>Ҳудудлар</span>
 <strong id="total">0</strong>
 </div>
 
@@ -166,7 +647,7 @@ th,td{font-size:12px}
 </div>
 
 <div class="card blue">
-<span>Ўртача AI Risk</span>
+<span>Ўртача Risk</span>
 <strong id="avg">0</strong>
 </div>
 
@@ -175,201 +656,613 @@ th,td{font-size:12px}
 <strong id="totalDebt">0</strong>
 </div>
 
-<div class="card">
-<span>🛢️ LPG кечикиш</span>
-<strong id="lpgDelay">0</strong>
 </div>
 
-</div>
+
+<!-- =========================
+     TOP 5
+========================= -->
 
 <div class="section">
 
-<h2>🚨 TOP-5 — РЕСПУБЛИКА БЎЙИЧА РАҲБАР ЭЪТИБОРИ</h2>
+<h2>
+🚨 TOP-5 — РАҲБАР ЭЪТИБОРИ
+</h2>
 
 <div id="top5"></div>
 
 </div>
 
-<div id="republicMap" class="section">
 
-<h2>🗺️ 🇺🇿 РЕСПУБЛИКА AI RISK MAP</h2>
+<!-- =========================
+     UZBEKISTAN MAP
+========================= -->
+
+<div id="map-section" class="section">
+
+<h2>
+🗺️ 🇺🇿 ЎЗБЕКИСТОН РЕСПУБЛИКАСИ — AI RISK MAP
+</h2>
 
 <p>
-Ҳудудни босинг — вилоят/Қорақалпоғистон/Тошкент шаҳри бўйича маълумот очилади.
+🔴 Юқори хавф
+&nbsp;&nbsp;
+🟡 Ўрта хавф
+&nbsp;&nbsp;
+🟢 Паст хавф
 </p>
 
-<div class="tabs" id="regionTabs"></div>
+<div class="map-shell">
 
-<div id="map" class="map"></div>
+<svg
+class="uz-map"
+viewBox="0 0 900 520"
+role="img"
+aria-label="O'zbekiston AI Risk xaritasi"
+>
+
+<!-- MAP BASE -->
+
+<path
+d="M105 150
+L165 115
+L230 128
+L280 105
+L345 118
+L405 90
+L475 105
+L530 80
+L600 105
+L665 92
+L735 120
+L790 165
+L770 215
+L815 255
+L780 305
+L800 350
+L735 365
+L690 410
+L625 390
+L570 425
+L510 395
+L450 420
+L390 390
+L325 405
+L270 370
+L210 385
+L170 345
+L120 330
+L140 285
+L95 245
+L125 205
+Z"
+fill="#cbd5e1"
+stroke="#64748b"
+stroke-width="4"
+/>
+
+
+<!-- QORAQALPOG'ISTON -->
+
+<ellipse
+id="region-qoraqalpogiston"
+class="region map-gray"
+data-region="Қорақалпоғистон Республикаси"
+cx="180"
+cy="205"
+rx="72"
+ry="48"
+onclick="showRegion('Қорақалпоғистон Республикаси')"
+/>
+
+<text
+x="180"
+y="205"
+class="region-label"
+>
+Қорақалп.
+</text>
+
+
+<!-- XORAZM -->
+
+<ellipse
+id="region-xorazm"
+class="region map-gray"
+data-region="Хоразм вилояти"
+cx="165"
+cy="285"
+rx="48"
+ry="30"
+onclick="showRegion('Хоразм вилояти')"
+/>
+
+<text
+x="165"
+y="285"
+class="region-label"
+>
+Хоразм
+</text>
+
+
+<!-- NAVOI -->
+
+<ellipse
+id="region-navoi"
+class="region map-gray"
+data-region="Навоий вилояти"
+cx="330"
+cy="205"
+rx="70"
+ry="45"
+onclick="showRegion('Навоий вилояти')"
+/>
+
+<text
+x="330"
+y="205"
+class="region-label"
+>
+Навоий
+</text>
+
+
+<!-- BUXORO -->
+
+<ellipse
+id="region-buxoro"
+class="region map-gray"
+data-region="Бухоро вилояти"
+cx="315"
+cy="300"
+rx="62"
+ry="42"
+onclick="showRegion('Бухоро вилояти')"
+/>
+
+<text
+x="315"
+y="300"
+class="region-label"
+>
+Бухоро
+</text>
+
+
+<!-- SAMARQAND -->
+
+<ellipse
+id="region-samarqand"
+class="region map-gray"
+data-region="Самарқанд вилояти"
+cx="440"
+cy="300"
+rx="62"
+ry="42"
+onclick="showRegion('Самарқанд вилояти')"
+/>
+
+<text
+x="440"
+y="300"
+class="region-label"
+>
+Самарқанд
+</text>
+
+
+<!-- QASHQADARYO -->
+
+<ellipse
+id="region-qashqadaryo"
+class="region map-gray"
+data-region="Қашқадарё вилояти"
+cx="455"
+cy="380"
+rx="72"
+ry="40"
+onclick="showRegion('Қашқадарё вилояти')"
+/>
+
+<text
+x="455"
+y="380"
+class="region-label"
+>
+Қашқадарё
+</text>
+
+
+<!-- SURXONDARYO -->
+
+<ellipse
+id="region-surxondaryo"
+class="region map-gray"
+data-region="Сурхондарё вилояти"
+cx="565"
+cy="405"
+rx="55"
+ry="35"
+onclick="showRegion('Сурхондарё вилояти')"
+/>
+
+<text
+x="565"
+y="405"
+class="region-label"
+>
+Сурхондарё
+</text>
+
+
+<!-- JIZZAX -->
+
+<ellipse
+id="region-jizzax"
+class="region map-gray"
+data-region="Жиззах вилояти"
+cx="535"
+cy="275"
+rx="45"
+ry="30"
+onclick="showRegion('Жиззах вилояти')"
+/>
+
+<text
+x="535"
+y="275"
+class="region-label"
+>
+Жиззах
+</text>
+
+
+<!-- SIRDARYO -->
+
+<ellipse
+id="region-sirdaryo"
+class="region map-gray"
+data-region="Сирдарё вилояти"
+cx="615"
+cy="270"
+rx="43"
+ry="28"
+onclick="showRegion('Сирдарё вилояти')"
+/>
+
+<text
+x="615"
+y="270"
+class="region-label"
+>
+Сирдарё
+</text>
+
+
+<!-- TOSHKENT VILOYATI -->
+
+<ellipse
+id="region-toshkent"
+class="region map-gray"
+data-region="Тошкент вилояти"
+cx="700"
+cy="205"
+rx="62"
+ry="43"
+onclick="showRegion('Тошкент вилояти')"
+/>
+
+<text
+x="700"
+y="205"
+class="region-label"
+>
+Тошкент
+</text>
+
+
+<!-- TOSHKENT CITY -->
+
+<ellipse
+id="region-toshkent-city"
+class="region map-gray"
+data-region="Тошкент шаҳри"
+cx="725"
+cy="265"
+rx="30"
+ry="23"
+onclick="showRegion('Тошкент шаҳри')"
+/>
+
+<text
+x="725"
+y="265"
+class="region-label"
+>
+Тошкент ш.
+</text>
+
+
+<!-- FARGONA -->
+
+<ellipse
+id="region-fargona"
+class="region map-gray"
+data-region="Фарғона вилояти"
+cx="735"
+cy="335"
+rx="58"
+ry="36"
+onclick="showRegion('Фарғона вилояти')"
+/>
+
+<text
+x="735"
+y="335"
+class="region-label"
+>
+Фарғона
+</text>
+
+
+<!-- ANDIJON -->
+
+<ellipse
+id="region-andijon"
+class="region map-gray"
+data-region="Андижон вилояти"
+cx="790"
+cy="310"
+rx="35"
+ry="28"
+onclick="showRegion('Андижон вилояти')"
+/>
+
+<text
+x="790"
+y="310"
+class="region-label"
+>
+Андижон
+</text>
+
+
+<!-- NAMANGAN -->
+
+<ellipse
+id="region-namangan"
+class="region map-gray"
+data-region="Наманган вилояти"
+cx="735"
+cy="285"
+rx="42"
+ry="28"
+onclick="showRegion('Наманган вилояти')"
+/>
+
+<text
+x="735"
+y="285"
+class="region-label"
+>
+Наманган
+</text>
+
+</svg>
+
+</div>
+
+<div id="regionCards" class="map-list"></div>
 
 <div id="detail" class="detail">
 
-<b>Ҳудудни танланг</b>
+<b>
+Ҳудудни танланг
+</b>
 
-<p>Картадаги ҳудудни босинг.</p>
+<p>
+Харитадаги ҳудудни босинг.
+</p>
 
 </div>
 
 </div>
+
+
+<!-- =========================
+     AI
+========================= -->
 
 <div class="section">
 
-<h2>🤖 AI ТАВСИЯЛАР</h2>
+<h2>
+🤖 AI ТАВСИЯЛАР
+</h2>
 
 <div id="actions"></div>
 
 </div>
 
+
+<!-- =========================
+     RANKING
+========================= -->
+
 <div class="section">
 
-<h2>📊 РЕСПУБЛИКА РЕЙТИНГИ</h2>
+<h2>
+📊 22 ТА ҲУДУД РЕЙТИНГИ
+</h2>
 
 <div id="ranking"></div>
 
 </div>
 
-<div id="liquefied" class="section">
 
-<h2>🛢️ СУЮЛТИРИЛГАН ГАЗ НАЗОРАТИ</h2>
-
-<div class="grid">
-
-<div class="card">
-<span>Жами абонентлар</span>
-<strong id="lpgSubs">0</strong>
-</div>
-
-<div class="card">
-<span>Меъёрий даврийлик</span>
-<strong id="lpgPeriod">0 кун</strong>
-</div>
-
-<div class="card">
-<span>Жўнатилган баллон</span>
-<strong id="lpgDelivered">0</strong>
-</div>
-
-<div class="card yellow">
-<span>Кечиккан ҳудудлар</span>
-<strong id="lpgLateAreas">0</strong>
-</div>
-
-</div>
-
-<div class="notice">
-
-ℹ️ Бу панель киритилган маълумотларни ҳисоблайди.
-Реал рақамлар масъул ходимлар томонидан киритилгандан кейин ишончли ҳисобланади.
-
-</div>
-
-<div id="lpgTable" style="margin-top:12px"></div>
-
-</div>
+<!-- =========================
+     DATA MANAGEMENT
+========================= -->
 
 <div id="manage" class="section">
 
-<h2>⚙️ РЕСПУБЛИКА МАЪЛУМОТЛАРИНИ БОШҚАРИШ</h2>
+<h2>
+⚙️ ҲУДУД МАЪЛУМОТЛАРИНИ БОШҚАРИШ
+</h2>
 
 <div class="notice">
 
-<b>🟢 Битта файл:</b>
-вилоят, шаҳар ва туманларни қўшиш/ўзгартириш,
-реал KPI рақамларини киритиш ва браузерда сақлаш мумкин.
+<b>
+🟢 Маълумот киритиш:
+</b>
+
+Ҳудуд KPI маълумотларини ўзгартириш мумкин.
 
 </div>
 
-<div style="margin-top:12px">
+<div style="margin-top:15px">
 
-<button class="btn-blue" onclick="openAddDistrict()">
+<button
+class="btn-blue"
+onclick="openAddDistrict()"
+>
 ➕ Янги ҳудуд қўшиш
 </button>
 
-<button class="btn-gray" onclick="resetDistrictData()">
+<button
+class="btn-gray"
+onclick="resetDistrictData()"
+>
 ↩️ Бошланғич маълумот
-</button>
-
-<button class="btn-green" onclick="exportData()">
-⬇️ JSON экспорт
 </button>
 
 </div>
 
-<div id="districtForm" class="config hidden">
+<div
+id="districtForm"
+class="config hidden"
+>
 
-<h3 id="formTitle">Янги ҳудуд</h3>
+<h3 id="formTitle">
+Янги ҳудуд
+</h3>
 
 <div class="form-grid">
 
 <div class="form-group">
-<label>Вилоят/ҳудуд</label>
-<select id="f-region" class="form-select"></select>
+
+<label>
+Ҳудуд номи
+</label>
+
+<input
+id="f-name"
+class="form-input"
+>
+
 </div>
 
 <div class="form-group">
-<label>Ҳудуд номи</label>
-<input id="f-name" class="form-input">
+
+<label>
+Қарздорлик (млрд)
+</label>
+
+<input
+id="f-debt"
+type="number"
+class="form-input"
+>
+
 </div>
 
 <div class="form-group">
-<label>Қарздорлик (млрд сўм)</label>
-<input id="f-debt" type="number" step="0.1" class="form-input">
+
+<label>
+Йўқотиш (%)
+</label>
+
+<input
+id="f-loss"
+type="number"
+step="0.1"
+class="form-input"
+>
+
 </div>
 
 <div class="form-group">
-<label>Йўқотиш (%)</label>
-<input id="f-loss" type="number" step="0.1" class="form-input">
+
+<label>
+Дебаланс (%)
+</label>
+
+<input
+id="f-imbalance"
+type="number"
+step="0.1"
+class="form-input"
+>
+
 </div>
 
 <div class="form-group">
-<label>Дебаланс (%)</label>
-<input id="f-imbalance" type="number" step="0.1" class="form-input">
+
+<label>
+Ноқонуний уланиш
+</label>
+
+<input
+id="f-illegal"
+type="number"
+class="form-input"
+>
+
 </div>
 
 <div class="form-group">
-<label>Ноқонуний уланиш</label>
-<input id="f-illegal" type="number" class="form-input">
+
+<label>
+Онлайн ҳисоблагич (%)
+</label>
+
+<input
+id="f-online"
+type="number"
+class="form-input"
+>
+
 </div>
 
 <div class="form-group">
-<label>Онлайн ҳисоблагич (%)</label>
-<input id="f-online" type="number" class="form-input">
-</div>
 
-<div class="form-group">
-<label>Қишга тайёргарлик (%)</label>
-<input id="f-winter" type="number" class="form-input">
-</div>
+<label>
+Қишга тайёргарлик (%)
+</label>
 
-<div class="form-group">
-<label>LPG абонентлар</label>
-<input id="f-subs" type="number" class="form-input">
-</div>
+<input
+id="f-winter"
+type="number"
+class="form-input"
+>
 
-<div class="form-group">
-<label>LPG охирги етказиш (кун)</label>
-<input id="f-lpgDays" type="number" class="form-input">
-</div>
-
-<div class="form-group">
-<label>LPG меъёр (кун)</label>
-<input id="f-lpgNorm" type="number" class="form-input" value="40">
-</div>
-
-<div class="form-group">
-<label>Етказилган баллон</label>
-<input id="f-delivered" type="number" class="form-input">
 </div>
 
 </div>
 
 <div style="margin-top:12px">
 
-<button class="btn-green" onclick="saveDistrict()">
+<button
+class="btn-green"
+onclick="saveDistrict()"
+>
 💾 Сақлаш
 </button>
 
-<button class="btn-gray" onclick="closeDistrictForm()">
+<button
+class="btn-gray"
+onclick="closeDistrictForm()"
+>
 Бекор қилиш
 </button>
 
@@ -377,38 +1270,77 @@ th,td{font-size:12px}
 
 </div>
 
-<div id="manageTable" style="margin-top:14px"></div>
+<div
+id="manageTable"
+style="margin-top:15px"
+></div>
 
 </div>
 
+
+<!-- =========================
+     EXECUTION
+========================= -->
+
 <div id="execution" class="section">
 
-<h2>📋 ИЖРО НАЗОРАТИ</h2>
+<h2>
+📋 ИЖРО НАЗОРАТИ
+</h2>
 
 <p style="color:#667085">
-🔒 Раҳбар маълумоти қулфланган. Фақат ижрочи ўзгариши мумкин.
+🔒 Раҳбар маълумоти қулфланган.
+Фақат ижрочи ўзгариши мумкин.
 </p>
 
 <div class="grid">
 
 <div class="card">
-<span>📌 Жами вазифалар</span>
-<strong id="task-total">0</strong>
+
+<span>
+📌 Жами вазифалар
+</span>
+
+<strong id="task-total">
+0
+</strong>
+
 </div>
 
 <div class="card green">
-<span>🟢 Бажарилган</span>
-<strong id="task-done">0</strong>
+
+<span>
+🟢 Бажарилган
+</span>
+
+<strong id="task-done">
+0
+</strong>
+
 </div>
 
 <div class="card yellow">
-<span>🟡 Бажарилмоқда</span>
-<strong id="task-progress">0</strong>
+
+<span>
+🟡 Бажарилмоқда
+</span>
+
+<strong id="task-progress">
+0
+</strong>
+
 </div>
 
 <div class="card red">
-<span>🔴 Кечиккан</span>
-<strong id="task-late">0</strong>
+
+<span>
+🔴 Кечиккан
+</span>
+
+<strong id="task-late">
+0
+</strong>
+
 </div>
 
 </div>
@@ -417,17 +1349,31 @@ th,td{font-size:12px}
 
 </div>
 
+
+<!-- =========================
+     SIGNALS
+========================= -->
+
 <div class="section">
 
-<h2>🚨 ҚИЗИЛ СИГНАЛЛАР</h2>
+<h2>
+🚨 ҚИЗИЛ СИГНАЛЛАР
+</h2>
 
 <div id="signals"></div>
 
 </div>
 
+
+<!-- =========================
+     GOOGLE SHEETS
+========================= -->
+
 <div id="sheets" class="section">
 
-<h2>📗 GOOGLE SHEETS</h2>
+<h2>
+📗 GOOGLE SHEETS
+</h2>
 
 <div id="sheet-status">
 🔄 Google Sheets API текширилмоқда...
@@ -435,18 +1381,25 @@ th,td{font-size:12px}
 
 <div class="config">
 
-<b>Google Apps Script Web App</b>
+<b>
+🟢 Google Apps Script Web App
+</b>
 
-<div class="small" style="margin-top:6px">
+<div
+class="small"
+style="margin-top:7px"
+>
 
-Ижрочи ўзгаришлари Audit журналига ва API орқали
+Ижрочи ўзгаришлари
 Google Sheets'га юборилади.
 
 </div>
 
-<div style="margin-top:9px">
+<div style="margin-top:10px">
 
-<b>API ҳолати:</b>
+<b>
+API ҳолати:
+</b>
 
 <span id="api-state">
 Текширилмоқда...
@@ -454,7 +1407,11 @@ Google Sheets'га юборилади.
 
 </div>
 
-<button class="btn-gray" onclick="testApi()" style="margin-top:9px">
+<button
+class="btn-gray"
+onclick="testApi()"
+style="margin-top:10px"
+>
 🔎 API ни текшириш
 </button>
 
@@ -462,207 +1419,215 @@ Google Sheets'га юборилади.
 
 </div>
 
+
+<!-- =========================
+     AUDIT
+========================= -->
+
 <div class="section">
 
-<h2>📝 АУДИТ ЖУРНАЛИ</h2>
+<h2>
+📝 ИЖРОЧИ ЎЗГАРТИРИШ ЖУРНАЛИ
+</h2>
 
 <div id="audit" class="audit"></div>
 
 </div>
 
+
 <div class="footer">
 
-ХУДУДГАЗТАЪМИНОТ АЖ • Республика AI KPI Dashboard • v7.0 • Бир файлли тизим
+ХУДУДГАЗТАЪМИНОТ АЖ
+•
+AI KPI Dashboard
+•
+v5.3
 
 </div>
 
 </div>
+
+
+<!-- SYSTEM -->
 
 <div class="system">
 
-<b>🛠 DASHBOARD SYSTEM CHECK</b>
+<b>
+🛠 DASHBOARD SYSTEM CHECK
+</b>
 
-<div id="check-results" style="margin-top:9px">
+<div
+id="check-results"
+style="margin-top:10px"
+>
 Текширилмоқда...
 </div>
 
 </div>
 
+
 <script>
 
-const GOOGLE_SHEET_ID=
+/* =====================================================
+   GOOGLE APPS SCRIPT
+===================================================== */
+
+const GOOGLE_SHEET_ID =
 "1thlAce8LlTnbn5jlpL8j2_xPqvg1-Teo60F_73cU1N8";
 
-const API_KEY=
-"hududgaz_executor_v7";
+const API_KEY =
+"hududgaz_executor_v5";
 
-const API_URL=
+const API_URL =
 "https://script.google.com/macros/s/AKfycbyt7yDqWoccIaAlY4z-opnM-UFZe35vsZn4uJrw0JT-qOBbgS-P5EGdjktek6hmHA_E/exec";
 
 
-const REGIONS=[
-"Қорақалпоғистон Республикаси",
-"Андижон вилояти",
-"Бухоро вилояти",
-"Жиззах вилояти",
-"Қашқадарё вилояти",
-"Навоий вилояти",
-"Наманган вилояти",
-"Самарқанд вилояти",
-"Сурхондарё вилояти",
-"Сирдарё вилояти",
-"Тошкент вилояти",
-"Фарғона вилояти",
-"Хоразм вилояти",
-"Тошкент шаҳри"
-];
-
+/* =====================================================
+   22 TOSHKENT DISTRICTS
+===================================================== */
 
 const defaultDistrictKPI=[
 
-["Қорақалпоғистон Республикаси","Нукус шаҳри",86,3.4,4.1,14,77,83,44000,48,40,21000],
+["Чирчиқ шаҳри",73,3.0,3.5,12,82,90],
 
-["Андижон вилояти","Андижон шаҳри",74,3.0,3.6,11,82,88,52000,43,40,27000],
+["Оҳангарон тумани",62,2.9,3.4,9,78,86],
 
-["Бухоро вилояти","Бухоро шаҳри",68,2.7,3.2,9,85,90,39000,41,40,20500],
+["Ангрен шаҳри",62,2.8,3.2,8,81,88],
 
-["Жиззах вилояти","Жиззах шаҳри",52,2.4,2.9,7,88,92,25000,39,40,13000],
+["Оққўрғон тумани",71,3.1,3.7,13,74,84],
 
-["Қашқадарё вилояти","Қарши шаҳри",79,3.2,3.8,12,80,86,61000,45,40,30000],
+["Юқори Чирчиқ тумани",58,2.6,3.1,7,83,91],
 
-["Навоий вилояти","Навоий шаҳри",46,2.1,2.6,5,91,94,18000,38,40,10000],
+["Бекобод шаҳри",51,2.1,2.6,6,86,93],
 
-["Наманган вилояти","Наманган шаҳри",71,2.9,3.5,10,84,89,49000,42,40,25000],
+["Янгийўл шаҳри",42,2.2,2.5,5,88,94],
 
-["Самарқанд вилояти","Самарқанд шаҳри",82,3.1,3.9,13,81,87,68000,46,40,34000],
+["Бўстонлиқ тумани",66,2.4,2.8,8,79,89],
 
-["Сурхондарё вилояти","Термиз шаҳри",69,3.0,3.7,10,79,85,36000,44,40,18000],
+["Бўка тумани",49,2.1,2.5,5,85,92],
 
-["Сирдарё вилояти","Гулистон шаҳри",43,2.0,2.4,5,92,94,15000,38,40,8000],
+["Нурафшон шаҳри",31,1.5,1.8,3,94,97],
 
-["Тошкент вилояти","Чирчиқ шаҳри",73,3.0,3.5,12,82,90,44000,42,40,22000],
+["Зангиота тумани",34,1.7,2.1,4,91,95],
 
-["Тошкент вилояти","Оҳангарон тумани",62,2.9,3.4,9,78,86,21000,43,40,11000],
+["Қибрай тумани",31,1.6,1.9,3,93,96],
 
-["Тошкент вилояти","Ангрен шаҳри",62,2.8,3.2,8,81,88,26000,41,40,13000],
+["Бекобод тумани",48,2.0,2.4,5,87,92],
 
-["Тошкент вилояти","Оққўрғон тумани",71,3.1,3.7,13,74,84,19000,46,40,9000],
+["Оҳангарон шаҳри",55,2.3,2.7,7,82,89],
 
-["Тошкент вилояти","Юқори Чирчиқ тумани",58,2.6,3.1,7,83,91,18000,40,40,9000],
+["Олмалиқ шаҳри",57,2.5,2.9,7,80,88],
 
-["Тошкент вилояти","Бекобод шаҳри",51,2.1,2.6,6,86,93,23000,39,40,12000],
+["Паркент тумани",46,2.0,2.3,4,89,94],
 
-["Тошкент вилояти","Янгийўл шаҳри",42,2.2,2.5,5,88,94,20000,38,40,10000],
+["Пискент тумани",44,1.9,2.2,4,90,94],
 
-["Тошкент вилояти","Бўстонлиқ тумани",66,2.4,2.8,8,79,89,17000,41,40,8500],
+["Тошкент тумани",52,2.2,2.6,6,84,91],
 
-["Тошкент вилояти","Бўка тумани",49,2.1,2.5,5,85,92,16000,40,40,8000],
+["Чиноз тумани",47,2.0,2.4,5,87,93],
 
-["Тошкент вилояти","Нурафшон шаҳри",31,1.5,1.8,3,94,97,12000,39,40,6000],
+["Ўрта Чирчиқ тумани",54,2.3,2.8,6,83,90],
 
-["Тошкент вилояти","Зангиота тумани",34,1.7,2.1,4,91,95,22000,40,40,11000],
+["Янгийўл тумани",50,2.1,2.5,5,86,92],
 
-["Тошкент вилояти","Қибрай тумани",31,1.6,1.9,3,93,96,19000,39,40,9500],
-
-["Тошкент вилояти","Бекобод тумани",48,2.0,2.4,5,87,92,14000,41,40,7000],
-
-["Тошкент вилояти","Оҳангарон шаҳри",55,2.3,2.7,7,82,89,15000,43,40,7500],
-
-["Тошкент вилояти","Олмалиқ шаҳри",57,2.5,2.9,7,80,88,17000,42,40,8500],
-
-["Тошкент вилояти","Паркент тумани",46,2.0,2.3,4,89,94,13000,40,40,6500],
-
-["Тошкент вилояти","Пискент тумани",44,1.9,2.2,4,90,94,12000,39,40,6000],
-
-["Тошкент вилояти","Тошкент тумани",52,2.2,2.6,6,84,91,24000,42,40,12000],
-
-["Тошкент вилояти","Чиноз тумани",47,2.0,2.4,5,87,93,15000,40,40,7500],
-
-["Тошкент вилояти","Ўрта Чирчиқ тумани",54,2.3,2.8,6,83,90,17000,41,40,8500],
-
-["Тошкент вилояти","Янгийўл тумани",50,2.1,2.5,5,86,92,18000,40,40,9000],
-
-["Тошкент вилояти","Қуйи Чирчиқ тумани",45,1.9,2.3,4,89,94,14000,39,40,7000],
-
-["Фарғона вилояти","Фарғона шаҳри",77,3.0,3.6,11,83,88,57000,43,40,28500],
-
-["Хоразм вилояти","Урганч шаҳри",64,2.6,3.1,8,87,91,32000,41,40,16000],
-
-["Тошкент шаҳри","Тошкент шаҳри",96,3.6,4.2,16,76,82,8000,45,40,4000]
+["Қуйи Чирчиқ тумани",45,1.9,2.3,4,89,94]
 
 ];
 
 
-let districtKPI=
-JSON.parse(
-localStorage.getItem("hududgaz_republic_v7")
-||
-"null"
-);
+/* =====================================================
+   LOAD
+===================================================== */
 
-if(!Array.isArray(districtKPI))
-districtKPI=
-JSON.parse(
-JSON.stringify(defaultDistrictKPI)
-);
+let districtKPI;
 
+try{
+
+ districtKPI=
+ JSON.parse(
+ localStorage.getItem(
+ "hududgaz_districts_v53"
+ )||"null"
+ );
+
+}catch(e){
+
+ districtKPI=null;
+
+}
+
+if(!Array.isArray(districtKPI)){
+
+ districtKPI=
+ JSON.parse(
+ JSON.stringify(defaultDistrictKPI)
+ );
+
+}
+
+
+/* =====================================================
+   RISK ENGINE
+===================================================== */
 
 function calculateRisk(d){
 
-const debt=+d[2]||0;
-const loss=+d[3]||0;
-const imb=+d[4]||0;
-const illegal=+d[5]||0;
-const online=+d[6]||0;
-const winter=+d[7]||0;
+const debt=Number(d[1])||0;
+const loss=Number(d[2])||0;
+const imbalance=Number(d[3])||0;
+const illegal=Number(d[4])||0;
+const online=Number(d[5])||0;
+const winter=Number(d[6])||0;
 
-const score=
-Math.round(
+const score=Math.round(
+
 (
-debt*.30+
-loss*20*.20+
-imb*20*.15+
-illegal*5*.15+
-(100-online)*.10+
-(100-winter)*.10
+ debt*.30+
+ loss*20*.20+
+ imbalance*20*.15+
+ illegal*5*.15+
+ (100-online)*.10+
+ (100-winter)*.10
 )*10
+
 )/10;
 
-let zone=
-score>=70
-?"🔴"
-:score>=40
-?"🟡"
-:"🟢";
+let zone;
+let level;
 
-let level=
-score>=70
-?"ЮҚОРИ ХАВФ"
-:score>=40
-?"ЎРТА ХАВФ"
-:"ПАСТ ХАВФ";
+if(score>=70){
 
-const lpgDays=+d[9]||0;
-const lpgNorm=+d[10]||40;
+zone="🔴";
+level="ЮҚОРИ ХАВФ";
+
+}
+
+else if(score>=40){
+
+zone="🟡";
+level="ЎРТА ХАВФ";
+
+}
+
+else{
+
+zone="🟢";
+level="ПАСТ ХАВФ";
+
+}
 
 return{
 
-region:d[0],
-name:d[1],
+name:d[0],
 debt,
 loss,
-imbalance:imb,
+imbalance,
 illegal,
 online,
 winter,
 score,
 zone,
-level,
-subs:+d[8]||0,
-lpgDays,
-lpgNorm,
-delivered:+d[11]||0,
-delay:Math.max(0,lpgDays-lpgNorm)
+level
 
 };
 
@@ -673,84 +1638,52 @@ function getResults(){
 
 return districtKPI
 .map(calculateRisk)
-.sort(
-(a,b)=>b.score-a.score
-);
+.sort((a,b)=>b.score-a.score);
 
 }
 
 
-function zoneClass(r){
-
-return r.score>=70
-?"row-red"
-:r.score>=40
-?"row-yellow"
-:"row-green";
-
-}
+let results=getResults();
 
 
-function escapeHtml(s){
-
-return String(s??"")
-.replace(
-/[&<>"']/g,
-m=>({
-"&":"&amp;",
-"<":"&lt;",
-">":"&gt;",
-'"':"&quot;",
-"'":"&#039;"
-}[m])
-);
-
-}
-
+/* =====================================================
+   SUMMARY
+===================================================== */
 
 function renderSummary(){
 
-const rs=getResults();
+results=getResults();
 
 const red=
-rs.filter(
-x=>x.score>=70
-).length;
+results.filter(r=>r.score>=70).length;
 
 const yellow=
-rs.filter(
-x=>x.score>=40&&x.score<70
+results.filter(
+r=>r.score>=40&&r.score<70
 ).length;
 
 const green=
-rs.filter(
-x=>x.score<40
-).length;
+results.filter(r=>r.score<40).length;
 
 const avg=
-rs.length
+results.length
 ?
 (
-rs.reduce(
-(a,x)=>a+x.score,
+results.reduce(
+(s,r)=>s+r.score,
 0
-)/rs.length
+)/results.length
 ).toFixed(1)
 :"0";
 
 const debt=
-rs.reduce(
-(a,x)=>a+x.debt,
+results.reduce(
+(s,r)=>s+r.debt,
 0
 ).toFixed(1);
 
-const late=
-rs.filter(
-x=>x.delay>0
-).length;
-
 document.getElementById("total").innerText=
-rs.length;
+results.length;
 
 document.getElementById("red").innerText=
 red;
@@ -767,28 +1700,27 @@ avg;
 document.getElementById("totalDebt").innerText=
 debt+" млрд";
 
-document.getElementById("lpgDelay").innerText=
-late+" ҳудуд";
-
 }
 
 
+/* =====================================================
+   TOP 5
+===================================================== */
+
 function renderTop5(){
+
+results=getResults();
 
 document.getElementById("top5").innerHTML=
 
-getResults()
+results
 .slice(0,5)
-.map(
-(r,i)=>`
+.map((r,i)=>`
 
 <div class="row ${zoneClass(r)}">
 
 <b>
-${i+1}.
-${escapeHtml(r.region)}
-—
-${escapeHtml(r.name)}
+${i+1}. ${escapeHtml(r.name)}
 </b>
 
 —
@@ -800,7 +1732,7 @@ ${r.score}
 
 <span class="meta">
 
-Қарз:
+Қарздорлик:
 ${r.debt} млрд
 
 |
@@ -813,114 +1745,306 @@ ${r.loss}%
 Дебаланс:
 ${r.imbalance}%
 
-|
-
-LPG:
-${r.lpgDays} кун
-
 </span>
 
 </div>
 
-`
-)
+`)
 .join("");
 
 }
 
 
-function renderRegionTabs(){
+/* =====================================================
+   MAP REGION DATA
+===================================================== */
 
-const regions=[
-"БАРЧАСИ",
-...REGIONS
-];
+const republicRegions={
 
-document.getElementById(
-"regionTabs"
-).innerHTML=
+"Қорақалпоғистон Республикаси":{
+debt:82,
+loss:3.2,
+imbalance:3.7,
+illegal:15,
+online:76,
+winter:84
+},
 
-regions.map(
-(x,i)=>`
+"Хоразм вилояти":{
+debt:68,
+loss:2.9,
+imbalance:3.2,
+illegal:11,
+online:81,
+winter:88
+},
 
-<button
-class="tab ${i===0?"active":""}"
-onclick="selectRegion('${escapeHtml(x)}',this)"
->
-${escapeHtml(x)}
-</button>
+"Навоий вилояти":{
+debt:45,
+loss:2.1,
+imbalance:2.4,
+illegal:7,
+online:90,
+winter:94
+},
 
-`
-).join("");
+"Бухоро вилояти":{
+debt:74,
+loss:3.0,
+imbalance:3.5,
+illegal:13,
+online:79,
+winter:87
+},
 
+"Самарқанд вилояти":{
+debt:71,
+loss:2.8,
+imbalance:3.2,
+illegal:12,
+online:83,
+winter:90
+},
+
+"Қашқадарё вилояти":{
+debt:88,
+loss:3.4,
+imbalance:4.0,
+illegal:17,
+online:72,
+winter:82
+},
+
+"Сурхондарё вилояти":{
+debt:79,
+loss:3.1,
+imbalance:3.7,
+illegal:14,
+online:75,
+winter:84
+},
+
+"Жиззах вилояти":{
+debt:52,
+loss:2.3,
+imbalance:2.7,
+illegal:8,
+online:87,
+winter:92
+},
+
+"Сирдарё вилояти":{
+debt:49,
+loss:2.2,
+imbalance:2.5,
+illegal:7,
+online:89,
+winter:93
+},
+
+"Тошкент вилояти":{
+debt:73,
+loss:3.0,
+imbalance:3.5,
+illegal:12,
+online:82,
+winter:90
+},
+
+"Тошкент шаҳри":{
+debt:55,
+loss:1.9,
+imbalance:2.2,
+illegal:6,
+online:94,
+winter:97
+},
+
+"Фарғона вилояти":{
+debt:69,
+loss:2.7,
+imbalance:3.1,
+illegal:10,
+online:84,
+winter:91
+},
+
+"Андижон вилояти":{
+debt:63,
+loss:2.6,
+imbalance:3.0,
+illegal:9,
+online:86,
+winter:92
+},
+
+"Наманган вилояти":{
+debt:67,
+loss:2.8,
+imbalance:3.2,
+illegal:11,
+online:82,
+winter:89
 }
-
-
-let selectedRegion=
-"БАРЧАСИ";
-
-
-window.selectRegion=function(
-region,
-btn
-){
-
-selectedRegion=region;
-
-document
-.querySelectorAll(".tab")
-.forEach(
-x=>x.classList.remove("active")
-);
-
-btn.classList.add("active");
-
-renderMap();
 
 };
 
 
-function renderMap(){
+/* =====================================================
+   REGION RISK
+===================================================== */
 
-let rs=getResults();
+function calculateRegionRisk(r){
 
-if(selectedRegion!=="БАРЧАСИ")
-rs=
-rs.filter(
-x=>x.region===selectedRegion
+const score=Math.round(
+
+(
+ r.debt*.30+
+ r.loss*20*.20+
+ r.imbalance*20*.15+
+ r.illegal*5*.15+
+ (100-r.online)*.10+
+ (100-r.winter)*.10
+)*10
+
+)/10;
+
+if(score>=70){
+
+return{
+ ...r,
+ score,
+ zone:"🔴",
+ level:"ЮҚОРИ ХАВФ"
+};
+
+}
+
+if(score>=40){
+
+return{
+ ...r,
+ score,
+ zone:"🟡",
+ level:"ЎРТА ХАВФ"
+};
+
+}
+
+return{
+ ...r,
+ score,
+ zone:"🟢",
+ level:"ПАСТ ХАВФ"
+};
+
+}
+
+
+/* =====================================================
+   MAP COLOR
+===================================================== */
+
+function updateMapColors(){
+
+Object.keys(republicRegions)
+.forEach(name=>{
+
+const data=
+calculateRegionRisk(
+republicRegions[name]
 );
 
-document.getElementById("map").innerHTML=
+const elements=
+document.querySelectorAll(
+'[data-region="'+name+'"]'
+);
 
-rs.map(
-(r,i)=>`
+elements.forEach(el=>{
+
+el.classList.remove(
+"map-red",
+"map-yellow",
+"map-green",
+"map-gray"
+);
+
+if(data.score>=70){
+
+el.classList.add("map-red");
+
+}
+
+else if(data.score>=40){
+
+el.classList.add("map-yellow");
+
+}
+
+else{
+
+el.classList.add("map-green");
+
+}
+
+});
+
+});
+
+}
+
+
+/* =====================================================
+   MAP CARDS
+===================================================== */
+
+function renderRegionCards(){
+
+const list=
+Object.keys(republicRegions)
+.map(name=>{
+
+const r=
+calculateRegionRisk(
+republicRegions[name]
+);
+
+let cls;
+
+if(r.score>=70){
+
+cls="red-card";
+
+}
+
+else if(r.score>=40){
+
+cls="yellow-card";
+
+}
+
+else{
+
+cls="green-card";
+
+}
+
+return`
 
 <div
-class="map-card
-${
-r.score>=70
-?"map-red"
-:r.score>=40
-?"map-yellow"
-:"map-green"
-}"
-onclick="showDistrictByName(
-'${encodeURIComponent(r.region)}',
-'${encodeURIComponent(r.name)}'
-)"
+class="map-card ${cls}"
+onclick="showRegion('${escapeJs(name)}')"
 >
 
 <b>
-${escapeHtml(r.name)}
+${escapeHtml(name)}
 </b>
 
-<div class="small">
-${escapeHtml(r.region)}
-</div>
-
 <div class="score">
+
 ${r.zone}
 ${r.score}
+
 </div>
 
 <small>
@@ -929,28 +2053,31 @@ ${r.level}
 
 </div>
 
-`
-).join("")
+`;
 
-||
+})
+.join("");
 
-"<div class='notice'>Маълумот йўқ.</div>";
+document.getElementById(
+"regionCards"
+).innerHTML=list;
 
 }
 
 
-window.showDistrictByName=
-function(region,name){
+/* =====================================================
+   SHOW REGION
+===================================================== */
+
+window.showRegion=function(name){
+
+const base=
+republicRegions[name];
+
+if(!base)return;
 
 const r=
-getResults().find(
-x=>
-x.region===decodeURIComponent(region)
-&&
-x.name===decodeURIComponent(name)
-);
-
-if(!r)return;
+calculateRegionRisk(base);
 
 document.getElementById(
 "detail"
@@ -959,143 +2086,180 @@ document.getElementById(
 `
 
 <h3>
+
 ${r.zone}
-${escapeHtml(r.region)}
-—
-${escapeHtml(r.name)}
+
+${escapeHtml(name)}
+
 </h3>
 
 <div class="detail-grid">
 
-${[
-["AI Risk",r.score],
-["Қарздорлик",r.debt+" млрд"],
-["Йўқотиш",r.loss+"%"],
-["Дебаланс",r.imbalance+"%"],
-["Ноқонуний уланиш",r.illegal],
-["Онлайн ҳисоблагич",r.online+"%"],
-["Қишга тайёргарлик",r.winter+"%"],
-["LPG абонент",r.subs],
-["LPG даврийлиги",r.lpgDays+" кун"],
-["Кечикиш",r.delay+" кун"],
-["Етказилган баллон",r.delivered],
-["Ҳолат",r.level]
-
-]
-.map(
-x=>`
-
 <div class="detail-item">
-
-<small>
-${x[0]}
-</small>
-
-<strong>
-${x[1]}
-</strong>
-
+<small>AI Risk</small>
+<strong>${r.score}</strong>
 </div>
 
-`
-)
-.join("")}
+<div class="detail-item">
+<small>Қарздорлик</small>
+<strong>${r.debt} млрд</strong>
+</div>
+
+<div class="detail-item">
+<small>Йўқотиш</small>
+<strong>${r.loss}%</strong>
+</div>
+
+<div class="detail-item">
+<small>Дебаланс</small>
+<strong>${r.imbalance}%</strong>
+</div>
+
+<div class="detail-item">
+<small>Ноқонуний уланиш</small>
+<strong>${r.illegal}</strong>
+</div>
+
+<div class="detail-item">
+<small>Онлайн ҳисоблагич</small>
+<strong>${r.online}%</strong>
+</div>
+
+<div class="detail-item">
+<small>Қишга тайёргарлик</small>
+<strong>${r.winter}%</strong>
+</div>
+
+<div class="detail-item">
+<small>Ҳолат</small>
+<strong>${r.level}</strong>
+</div>
 
 </div>
 
 `;
 
-document.getElementById(
-"detail"
-).scrollIntoView({
-behavior:"smooth",
-block:"nearest"
-});
-
 };
 
 
+/* =====================================================
+   MAP
+===================================================== */
+
+function renderMap(){
+
+updateMapColors();
+
+renderRegionCards();
+
+}
+
+
+/* =====================================================
+   ZONE
+===================================================== */
+
+function zoneClass(r){
+
+return r.score>=70
+?
+"row-red"
+:
+r.score>=40
+?
+"row-yellow"
+:
+"row-green";
+
+}
+
+
+/* =====================================================
+   AI ACTIONS
+===================================================== */
+
 function renderActions(){
 
-const rs=getResults();
-const a=[];
+results=getResults();
 
-rs.forEach(r=>{
+let a=[];
+
+results.forEach(r=>{
 
 if(r.debt>=60)
 
 a.push(
-`💰 <b>${escapeHtml(r.region)} / ${escapeHtml(r.name)}</b> — қарздорликни зудлик билан назорат қилиш.`
+`💰 <b>${escapeHtml(r.name)}</b> —
+қарздорликни зудлик билан назорат қилиш.`
 );
 
 if(r.loss>=2.8)
 
 a.push(
-`🔧 <b>${escapeHtml(r.name)}</b> — техник йўқотишларни таҳлил қилиш.`
+`🔧 <b>${escapeHtml(r.name)}</b> —
+йўқотишларни таҳлил қилиш.`
 );
 
 if(r.imbalance>=3.2)
 
 a.push(
-`⚖️ <b>${escapeHtml(r.name)}</b> — дебаланс сабабларини аниқлаш.`
+`⚖️ <b>${escapeHtml(r.name)}</b> —
+дебаланс сабабларини аниқлаш.`
 );
 
 if(r.online<80)
 
 a.push(
-`📡 <b>${escapeHtml(r.name)}</b> — онлайн ҳисоблагичларни тиклаш.`
+`📡 <b>${escapeHtml(r.name)}</b> —
+онлайн ҳисоблагичларни тиклаш.`
 );
 
 if(r.winter<85)
 
 a.push(
-`❄️ <b>${escapeHtml(r.name)}</b> — куз-қиш тайёргарлигини кучайтириш.`
-);
-
-if(r.delay>0)
-
-a.push(
-`🛢️ <b>${escapeHtml(r.name)}</b> — LPG етказиб бериш ${r.delay} кун кечиккан.`
+`❄️ <b>${escapeHtml(r.name)}</b> —
+куз-қиш тайёргарлигини кучайтириш.`
 );
 
 });
 
-document.getElementById(
-"actions"
-).innerHTML=
+document.getElementById("actions").innerHTML=
 
-(
-a.length
+(a.length
 ?
-a
+a.slice(0,15)
 :
 ["🟢 Критик сигнал аниқланмади."]
 )
-.slice(0,20)
-.map(
-x=>`<div class="action">${x}</div>`
-)
+.map(x=>`
+
+<div class="action">
+${x}
+</div>
+
+`)
 .join("");
 
 }
 
 
+/* =====================================================
+   RANKING
+===================================================== */
+
 function renderRanking(){
 
-document.getElementById(
-"ranking"
-).innerHTML=
+results=getResults();
 
-getResults()
-.map(
-(r,i)=>`
+document.getElementById("ranking").innerHTML=
+
+results
+.map((r,i)=>`
 
 <div class="row ${zoneClass(r)}">
 
 <b>
 ${i+1}.
-${escapeHtml(r.region)}
-—
 ${escapeHtml(r.name)}
 </b>
 
@@ -1130,451 +2294,26 @@ ${r.imbalance}%
 Онлайн:
 ${r.online}%
 
-|
-
-LPG:
-${r.lpgDays} кун
-
 </span>
 
 </div>
 
-`
-)
+`)
 .join("");
 
 }
 
 
-function renderLPG(){
-
-const rs=getResults();
-
-const subs=
-rs.reduce(
-(a,x)=>a+x.subs,
-0
-);
-
-const del=
-rs.reduce(
-(a,x)=>a+x.delivered,
-0
-);
-
-const late=
-rs.filter(
-x=>x.delay>0
-).length;
-
-document.getElementById(
-"lpgSubs"
-).innerText=
-subs.toLocaleString("uz-UZ");
-
-document.getElementById(
-"lpgPeriod"
-).innerText=
-"40 кун";
-
-document.getElementById(
-"lpgDelivered"
-).innerText=
-del.toLocaleString("uz-UZ");
-
-document.getElementById(
-"lpgLateAreas"
-).innerText=
-late;
-
-document.getElementById(
-"lpgTable"
-).innerHTML=
-
-`
-
-<div class="table-wrap">
-
-<table>
-
-<thead>
-
-<tr>
-<th>Ҳудуд</th>
-<th>Абонент</th>
-<th>Охирги етказиш</th>
-<th>Меъёр</th>
-<th>Кечикиш</th>
-<th>Баллон</th>
-<th>Ҳолат</th>
-</tr>
-
-</thead>
-
-<tbody>
-
-${rs.map(
-r=>`
-
-<tr>
-
-<td>
-<b>
-${escapeHtml(r.region)}
-—
-${escapeHtml(r.name)}
-</b>
-</td>
-
-<td>
-${r.subs.toLocaleString("uz-UZ")}
-</td>
-
-<td>
-${r.lpgDays} кун
-</td>
-
-<td>
-${r.lpgNorm} кун
-</td>
-
-<td>
-${r.delay} кун
-</td>
-
-<td>
-${r.delivered.toLocaleString("uz-UZ")}
-</td>
-
-<td>
-
-<span
-class="badge
-${r.delay>0
-?"badge-yellow"
-:"badge-green"}"
->
-
-${r.delay>0
-?"🟡 Кечиккан"
-:"🟢 Меъёрда"}
-
-</span>
-
-</td>
-
-</tr>
-
-`
-).join("")}
-
-</tbody>
-
-</table>
-
-</div>
-
-`;
-
-}
-
+/* =====================================================
+   MANAGEMENT
+===================================================== */
 
 let editDistrictIndex=-1;
 
 
-function fillRegionSelect(){
-
-document.getElementById(
-"f-region"
-).innerHTML=
-
-REGIONS.map(
-r=>`
-
-<option>
-${escapeHtml(r)}
-</option>
-
-`
-).join("");
-
-}
-
-
-function clearForm(){
-
-[
-"f-name",
-"f-debt",
-"f-loss",
-"f-imbalance",
-"f-illegal",
-"f-online",
-"f-winter",
-"f-subs",
-"f-lpgDays",
-"f-delivered"
-
-]
-.forEach(
-id=>
-document.getElementById(id).value=""
-);
-
-document.getElementById(
-"f-lpgNorm"
-).value=40;
-
-}
-
-
-window.openAddDistrict=
-function(){
-
-editDistrictIndex=-1;
-
-document.getElementById(
-"formTitle"
-).innerText=
-"➕ Янги ҳудуд қўшиш";
-
-clearForm();
-
-document.getElementById(
-"districtForm"
-).classList.remove(
-"hidden"
-);
-
-};
-
-
-window.editDistrict=
-function(i){
-
-const d=districtKPI[i];
-
-editDistrictIndex=i;
-
-document.getElementById(
-"formTitle"
-).innerText=
-"✏️ Ҳудуд маълумотини ўзгартириш";
-
-document.getElementById(
-"f-region"
-).value=d[0];
-
-document.getElementById(
-"f-name"
-).value=d[1];
-
-document.getElementById(
-"f-debt"
-).value=d[2];
-
-document.getElementById(
-"f-loss"
-).value=d[3];
-
-document.getElementById(
-"f-imbalance"
-).value=d[4];
-
-document.getElementById(
-"f-illegal"
-).value=d[5];
-
-document.getElementById(
-"f-online"
-).value=d[6];
-
-document.getElementById(
-"f-winter"
-).value=d[7];
-
-document.getElementById(
-"f-subs"
-).value=d[8];
-
-document.getElementById(
-"f-lpgDays"
-).value=d[9];
-
-document.getElementById(
-"f-lpgNorm"
-).value=d[10];
-
-document.getElementById(
-"f-delivered"
-).value=d[11];
-
-document.getElementById(
-"districtForm"
-).classList.remove(
-"hidden"
-);
-
-document.getElementById(
-"manage"
-).scrollIntoView({
-behavior:"smooth"
-});
-
-};
-
-
-window.closeDistrictForm=
-function(){
-
-document.getElementById(
-"districtForm"
-).classList.add(
-"hidden"
-);
-
-};
-
-
-window.saveDistrict=
-function(){
-
-const name=
-document.getElementById(
-"f-name"
-).value.trim();
-
-if(!name){
-
-alert(
-"Ҳудуд номини киритинг."
-);
-
-return;
-
-}
-
-const d=[
-
-document.getElementById(
-"f-region"
-).value,
-
-name,
-
-+document.getElementById(
-"f-debt"
-).value||0,
-
-+document.getElementById(
-"f-loss"
-).value||0,
-
-+document.getElementById(
-"f-imbalance"
-).value||0,
-
-+document.getElementById(
-"f-illegal"
-).value||0,
-
-+document.getElementById(
-"f-online"
-).value||0,
-
-+document.getElementById(
-"f-winter"
-).value||0,
-
-+document.getElementById(
-"f-subs"
-).value||0,
-
-+document.getElementById(
-"f-lpgDays"
-).value||0,
-
-+document.getElementById(
-"f-lpgNorm"
-).value||40,
-
-+document.getElementById(
-"f-delivered"
-).value||0
-
-];
-
-if(editDistrictIndex<0)
-districtKPI.push(d);
-else
-districtKPI[editDistrictIndex]=d;
-
-localStorage.setItem(
-"hududgaz_republic_v7",
-JSON.stringify(districtKPI)
-);
-
-closeDistrictForm();
-
-refreshAll();
-
-alert(
-"🟢 Маълумот сақланди."
-);
-
-};
-
-
-window.deleteDistrict=
-function(i){
-
-if(
-!confirm(
-"«"+
-districtKPI[i][1]+
-"» ҳудудини ўчиришни тасдиқлайсизми?"
-)
-)
-return;
-
-districtKPI.splice(i,1);
-
-localStorage.setItem(
-"hududgaz_republic_v7",
-JSON.stringify(districtKPI)
-);
-
-refreshAll();
-
-};
-
-
-window.resetDistrictData=
-function(){
-
-if(
-!confirm(
-"Барча киритилган республика маълумотлари бошланғич demo ҳолатига қайтарилади. Давом этасизми?"
-)
-)
-return;
-
-districtKPI=
-JSON.parse(
-JSON.stringify(defaultDistrictKPI)
-);
-
-localStorage.setItem(
-"hududgaz_republic_v7",
-JSON.stringify(districtKPI)
-);
-
-refreshAll();
-
-};
-
-
 function renderManageTable(){
+
+const list=districtKPI;
 
 document.getElementById(
 "manageTable"
@@ -1596,7 +2335,6 @@ document.getElementById(
 <th>Йўқотиш</th>
 <th>Дебаланс</th>
 <th>Онлайн</th>
-<th>LPG</th>
 <th>Risk</th>
 <th>Амал</th>
 
@@ -1606,19 +2344,22 @@ document.getElementById(
 
 <tbody>
 
-${districtKPI.map(
-(d,i)=>{
+${list.map((d,i)=>{
 
 const r=calculateRisk(d);
 
 const badge=
 r.score>=70
-?"badge-red"
-:r.score>=40
-?"badge-yellow"
-:"badge-green";
+?
+"badge-red"
+:
+r.score>=40
+?
+"badge-yellow"
+:
+"badge-green";
 
-return `
+return`
 
 <tr>
 
@@ -1627,19 +2368,17 @@ ${i+1}
 </td>
 
 <td>
-
 <b>
 ${escapeHtml(d[0])}
 </b>
-
-<br>
-
-${escapeHtml(d[1])}
-
 </td>
 
 <td>
-${d[2]} млрд
+${d[1]} млрд
+</td>
+
+<td>
+${d[2]}%
 </td>
 
 <td>
@@ -1647,24 +2386,13 @@ ${d[3]}%
 </td>
 
 <td>
-${d[4]}%
-</td>
-
-<td>
-${d[6]}%
-</td>
-
-<td>
-${d[9]} кун
+${d[5]}%
 </td>
 
 <td>
 
 <span class="badge ${badge}">
-
-${r.zone}
-${r.score}
-
+${r.zone} ${r.score}
 </span>
 
 </td>
@@ -1691,8 +2419,7 @@ onclick="deleteDistrict(${i})"
 
 `;
 
-}
-).join("")}
+}).join("")}
 
 </tbody>
 
@@ -1705,169 +2432,380 @@ onclick="deleteDistrict(${i})"
 }
 
 
-function exportData(){
+/* =====================================================
+   ADD
+===================================================== */
 
-const blob=
-new Blob(
-[
-JSON.stringify(
-districtKPI,
-null,
-2
-)
-],
-{
-type:"application/json"
-}
-);
+window.openAddDistrict=function(){
 
-const a=
-document.createElement("a");
+editDistrictIndex=-1;
 
-a.href=
-URL.createObjectURL(blob);
-
-a.download=
-"hududgaz_republic_data.json";
-
-a.click();
-
-URL.revokeObjectURL(
-a.href
-);
-
-}
-
-
-const defaultExecutionTasks=[
+document.getElementById(
+"formTitle"
+).innerText=
+"➕ Янги ҳудуд қўшиш";
 
 [
-"Тошкент вилояти",
-"Вилоят раҳбари",
-"Ижрочи 1",
-"Қарздорликни камайтириш",
-"20.08.2026",
-65,
-"Бажарилмоқда"
-],
-
-[
-"Самарқанд вилояти",
-"Вилоят раҳбари",
-"Ижрочи 2",
-"Йўқотишларни камайтириш",
-"22.08.2026",
-55,
-"Бажарилмоқда"
-],
-
-[
-"Қашқадарё вилояти",
-"Вилоят раҳбари",
-"Ижрочи 3",
-"Дебаланс сабабларини аниқлаш",
-"18.08.2026",
-45,
-"Кечикмоқда"
-],
-
-[
-"Андижон вилояти",
-"Вилоят раҳбари",
-"Ижрочи 4",
-"Онлайн ҳисоблагичларни тиклаш",
-"25.08.2026",
-72,
-"Бажарилмоқда"
-],
-
-[
-"Бухоро вилояти",
-"Вилоят раҳбари",
-"Ижрочи 5",
-"Куз-қиш тайёргарлиги",
-"28.08.2026",
-80,
-"Бажарилмоқда"
-],
-
-[
-"Қорақалпоғистон Республикаси",
-"Раис ўринбосари",
-"Ижрочи 6",
-"LPG етказиб беришни назорат қилиш",
-"19.08.2026",
-60,
-"Бажарилмоқда"
-],
-
-[
-"Тошкент шаҳри",
-"Шаҳар раҳбари",
-"Ижрочи 7",
-"Профилактик назорат",
-"30.08.2026",
-100,
-"Бажарилган"
+"f-name",
+"f-debt",
+"f-loss",
+"f-imbalance",
+"f-illegal",
+"f-online",
+"f-winter"
 ]
+.forEach(id=>{
+document.getElementById(id).value="";
+});
+
+document.getElementById(
+"districtForm"
+).classList.remove("hidden");
+
+};
+
+
+/* =====================================================
+   EDIT
+===================================================== */
+
+window.editDistrict=function(i){
+
+const d=districtKPI[i];
+
+editDistrictIndex=i;
+
+document.getElementById(
+"formTitle"
+).innerText=
+"✏️ Ҳудуд маълумотини ўзгартириш";
+
+document.getElementById("f-name").value=d[0];
+
+document.getElementById("f-debt").value=d[1];
+
+document.getElementById("f-loss").value=d[2];
+
+document.getElementById("f-imbalance").value=d[3];
+
+document.getElementById("f-illegal").value=d[4];
+
+document.getElementById("f-online").value=d[5];
+
+document.getElementById("f-winter").value=d[6];
+
+document.getElementById(
+"districtForm"
+).classList.remove("hidden");
+
+};
+
+
+/* =====================================================
+   CLOSE
+===================================================== */
+
+window.closeDistrictForm=function(){
+
+document.getElementById(
+"districtForm"
+).classList.add("hidden");
+
+};
+
+
+/* =====================================================
+   SAVE
+===================================================== */
+
+window.saveDistrict=function(){
+
+const name=
+document.getElementById(
+"f-name"
+).value.trim();
+
+if(!name){
+
+alert(
+"Ҳудуд номини киритинг."
+);
+
+return;
+
+}
+
+const d=[
+
+name,
+
+Number(
+document.getElementById("f-debt").value
+)||0,
+
+Number(
+document.getElementById("f-loss").value
+)||0,
+
+Number(
+document.getElementById("f-imbalance").value
+)||0,
+
+Number(
+document.getElementById("f-illegal").value
+)||0,
+
+Number(
+document.getElementById("f-online").value
+)||0,
+
+Number(
+document.getElementById("f-winter").value
+)||0
+
+];
+
+if(editDistrictIndex===-1){
+
+districtKPI.push(d);
+
+}
+else{
+
+districtKPI[
+editDistrictIndex
+]=d;
+
+}
+
+localStorage.setItem(
+"hududgaz_districts_v53",
+JSON.stringify(districtKPI)
+);
+
+closeDistrictForm();
+
+refreshAll();
+
+alert(
+"🟢 Маълумот сақланди."
+);
+
+};
+
+
+/* =====================================================
+   DELETE
+===================================================== */
+
+window.deleteDistrict=function(i){
+
+if(districtKPI.length<=1){
+
+alert(
+"Камида 1 та ҳудуд қолиши керак."
+);
+
+return;
+
+}
+
+const name=districtKPI[i][0];
+
+if(
+!confirm(
+"«"+name+"» ҳудудини ўчиришни тасдиқлайсизми?"
+)
+)return;
+
+districtKPI.splice(i,1);
+
+localStorage.setItem(
+"hududgaz_districts_v53",
+JSON.stringify(districtKPI)
+);
+
+refreshAll();
+
+};
+
+
+/* =====================================================
+   RESET
+===================================================== */
+
+window.resetDistrictData=function(){
+
+if(
+!confirm(
+"Барча маълумот бошланғич ҳолатга қайтарилади."
+)
+)return;
+
+districtKPI=
+JSON.parse(
+JSON.stringify(defaultDistrictKPI)
+);
+
+localStorage.setItem(
+"hududgaz_districts_v53",
+JSON.stringify(districtKPI)
+);
+
+refreshAll();
+
+};
+
+
+/* =====================================================
+   EXECUTION
+===================================================== */
+
+const executionTasks=[
+
+{
+district:"Оққўрғон тумани",
+responsible:"Туман раҳбари",
+executor:"Ижрочи 1",
+task:"Қарздорликни камайтириш",
+deadline:"15.08.2026",
+progress:42,
+status:"Кечикмоқда"
+},
+
+{
+district:"Чирчиқ шаҳри",
+responsible:"Шаҳар раҳбари",
+executor:"Ижрочи 2",
+task:"Йўқотишларни камайтириш",
+deadline:"18.08.2026",
+progress:58,
+status:"Бажарилмоқда"
+},
+
+{
+district:"Оҳангарон тумани",
+responsible:"Туман раҳбари",
+executor:"Ижрочи 3",
+task:"Дебаланс сабабларини аниқлаш",
+deadline:"16.08.2026",
+progress:51,
+status:"Бажарилмоқда"
+},
+
+{
+district:"Ангрен шаҳри",
+responsible:"Шаҳар раҳбари",
+executor:"Ижрочи 4",
+task:"Онлайн ҳисоблагичларни тиклаш",
+deadline:"20.08.2026",
+progress:64,
+status:"Бажарилмоқда"
+},
+
+{
+district:"Бўстонлиқ тумани",
+responsible:"Туман раҳбари",
+executor:"Ижрочи 5",
+task:"Куз-қиш тайёргарлиги",
+deadline:"25.08.2026",
+progress:73,
+status:"Бажарилмоқда"
+},
+
+{
+district:"Юқори Чирчиқ тумани",
+responsible:"Туман раҳбари",
+executor:"Ижрочи 6",
+task:"Дебалансни камайтириш",
+deadline:"19.08.2026",
+progress:80,
+status:"Бажарилмоқда"
+},
+
+{
+district:"Олмалиқ шаҳри",
+responsible:"Шаҳар раҳбари",
+executor:"Ижрочи 7",
+task:"Йўқотишлар таҳлили",
+deadline:"22.08.2026",
+progress:67,
+status:"Бажарилмоқда"
+},
+
+{
+district:"Оҳангарон шаҳри",
+responsible:"Шаҳар раҳбари",
+executor:"Ижрочи 8",
+task:"Қарздорлик назорати",
+deadline:"21.08.2026",
+progress:70,
+status:"Бажарилмоқда"
+},
+
+{
+district:"Ўрта Чирчиқ тумани",
+responsible:"Туман раҳбари",
+executor:"Ижрочи 9",
+task:"Онлайн тизимни яхшилаш",
+deadline:"23.08.2026",
+progress:88,
+status:"Бажарилмоқда"
+},
+
+{
+district:"Тошкент тумани",
+responsible:"Туман раҳбари",
+executor:"Ижрочи 10",
+task:"Профилактик назорат",
+deadline:"26.08.2026",
+progress:100,
+status:"Бажарилган"
+}
 
 ];
 
 
-let executionTasks=
+let saved={};
+
+try{
+
+saved=
 JSON.parse(
 localStorage.getItem(
-"hududgaz_tasks_v7"
-)
-||
-"null"
+"hududgaz_executors_v53"
+)||"{}"
 );
 
-if(
-!Array.isArray(executionTasks)
-)
-executionTasks=
-defaultExecutionTasks.map(
-x=>({
-
-district:x[0],
-responsible:x[1],
-executor:x[2],
-task:x[3],
-deadline:x[4],
-progress:x[5],
-status:x[6]
-
-})
-);
-
-
-let saved=
-JSON.parse(
-localStorage.getItem(
-"hududgaz_executors_v7"
-)
-||
-"{}"
-);
+}catch(e){}
 
 executionTasks.forEach(
 (t,i)=>{
-if(saved[i])
-t.executor=saved[i]
+
+if(saved[i]){
+t.executor=saved[i];
 }
-);
+
+});
 
 
-let auditLog=
+let auditLog=[];
+
+try{
+
+auditLog=
 JSON.parse(
 localStorage.getItem(
-"hududgaz_audit_v7"
-)
-||
-"[]"
+"hududgaz_audit_v53"
+)||"[]"
 );
 
+}catch(e){}
+
+
+/* =====================================================
+   EXECUTION RENDER
+===================================================== */
 
 function renderExecution(){
 
@@ -1894,59 +2832,58 @@ done;
 document.getElementById(
 "task-progress"
 ).innerText=
-Math.max(
-0,
-executionTasks.length-done-late
-);
+executionTasks.length-done-late;
 
 document.getElementById(
 "task-late"
 ).innerText=
 late;
 
+
 document.getElementById(
 "execution-list"
 ).innerHTML=
 
-executionTasks.map(
-(t,i)=>{
+executionTasks
+.map((t,i)=>{
 
-const isLate=
-t.status==="Кечикмоқда";
+let border;
+let bg;
+let icon;
 
-const done=
-t.status==="Бажарилган";
+if(t.status==="Кечикмоқда"){
 
-const border=
-isLate
-?"#d32f2f"
-:done
-?"#2e7d32"
-:"#f9a825";
+border="#d32f2f";
+bg="#ffe5e5";
+icon="🔴";
 
-const bg=
-isLate
-?"#ffe5e5"
-:done
-?"#e5f7e9"
-:"#fff4cc";
+}
+else if(
+t.status==="Бажарилган"
+){
 
-const icon=
-isLate
-?"🔴"
-:done
-?"🟢"
-:"🟡";
+border="#2e7d32";
+bg="#e5f7e9";
+icon="🟢";
 
-return `
+}
+else{
+
+border="#f9a825";
+bg="#fff4cc";
+icon="🟡";
+
+}
+
+return`
 
 <div
 style="
-padding:15px;
-margin:9px 0;
+padding:16px;
+margin:10px 0;
 border-radius:14px;
 background:${bg};
-border-left:6px solid ${border}
+border-left:6px solid ${border};
 "
 >
 
@@ -1955,21 +2892,44 @@ style="
 display:flex;
 justify-content:space-between;
 gap:10px;
-flex-wrap:wrap
+flex-wrap:wrap;
 "
 >
 
-<b>
+<div>
+
+<b style="font-size:17px">
+
 ${i+1}.
 ${escapeHtml(t.district)}
+
 </b>
 
+<div
+style="margin-top:6px;color:#667085"
+>
+
+👔 Раҳбар:
+
 <b>
+${escapeHtml(t.responsible)}
+</b>
+
+🔒
+
+</div>
+
+</div>
+
+<b>
+
 ${icon}
 ${escapeHtml(t.status)}
+
 </b>
 
 </div>
+
 
 <div class="executor-box">
 
@@ -1989,6 +2949,7 @@ ${escapeHtml(t.executor)}
 <div class="locked">
 
 🔒 Раҳбар ўзгартирилмайди.
+
 Фақат ижрочи ўзгариши мумкин.
 
 </div>
@@ -2004,39 +2965,40 @@ onclick="editExecutor(${i})"
 
 </div>
 
+
 <div
 style="
-margin-top:10px;
-background:#fff;
-padding:11px;
+margin-top:12px;
+background:white;
+padding:12px;
 border-radius:10px
 "
 >
 
-👔
-<b>Раҳбар:</b>
-${escapeHtml(t.responsible)}
-
-<br><br>
-
 🎯
+
 <b>Вазифа:</b>
+
 ${escapeHtml(t.task)}
 
 <br><br>
 
 📅
+
 <b>Муддат:</b>
+
 ${escapeHtml(t.deadline)}
 
 </div>
 
-<div style="margin-top:10px">
+
+<div style="margin-top:12px">
 
 <div
 style="
 display:flex;
-justify-content:space-between
+justify-content:space-between;
+margin-bottom:5px
 "
 >
 
@@ -2073,14 +3035,19 @@ background:${border}
 
 `;
 
-}
-).join("");
+})
+.join("");
 
 }
 
 
-window.editExecutor=
-function(i){
+/* =====================================================
+   EDIT EXECUTOR
+===================================================== */
+
+window.editExecutor=function(i){
+
+const t=executionTasks[i];
 
 const box=
 document.getElementById(
@@ -2094,25 +3061,27 @@ box.innerHTML=
 <input
 class="executor-input"
 id="executor-input-${i}"
-value="${escapeHtml(
-executionTasks[i].executor
-)}"
+value="${escapeHtml(t.executor)}"
 >
 
-<div style="margin-top:7px">
+<div style="margin-top:8px">
 
 <button
 class="save-btn"
 onclick="saveExecutor(${i})"
 >
+
 💾 Сақлаш
+
 </button>
 
 <button
 class="cancel-btn"
 onclick="renderExecution()"
 >
+
 Бекор қилиш
+
 </button>
 
 </div>
@@ -2126,16 +3095,20 @@ document.getElementById(
 };
 
 
-window.saveExecutor=
-async function(i){
+/* =====================================================
+   SAVE EXECUTOR
+===================================================== */
+
+window.saveExecutor=async function(i){
 
 const input=
 document.getElementById(
 "executor-input-"+i
 );
 
-const name=
-input?.value.trim();
+if(!input)return;
+
+const name=input.value.trim();
 
 if(!name){
 
@@ -2158,26 +3131,19 @@ return;
 
 }
 
-executionTasks[i].executor=
-name;
+executionTasks[i].executor=name;
 
 saved[i]=name;
 
 localStorage.setItem(
-"hududgaz_executors_v7",
+"hududgaz_executors_v53",
 JSON.stringify(saved)
-);
-
-localStorage.setItem(
-"hududgaz_tasks_v7",
-JSON.stringify(executionTasks)
 );
 
 const entry={
 
-time:new Date().toLocaleString(
-"uz-UZ"
-),
+time:
+new Date().toLocaleString("uz-UZ"),
 
 district:
 executionTasks[i].district,
@@ -2202,7 +3168,7 @@ auditLog=
 auditLog.slice(0,100);
 
 localStorage.setItem(
-"hududgaz_audit_v7",
+"hududgaz_audit_v53",
 JSON.stringify(auditLog)
 );
 
@@ -2213,12 +3179,19 @@ renderSignals();
 renderAudit();
 
 await sendToSheets({
+
 action:"updateExecutor",
+
 ...entry
+
 });
 
 };
 
+
+/* =====================================================
+   AUDIT
+===================================================== */
 
 function renderAudit(){
 
@@ -2230,12 +3203,13 @@ auditLog.length
 
 ?
 
-auditLog.map(
-x=>`
+auditLog
+.map(x=>`
 
 <div class="audit-item">
 
 🕒
+
 <b>
 ${escapeHtml(x.time)}
 </b>
@@ -2268,8 +3242,8 @@ ${escapeHtml(x.task)}
 
 </div>
 
-`
-).join("")
+`)
+.join("")
 
 :
 
@@ -2278,24 +3252,29 @@ ${escapeHtml(x.task)}
 }
 
 
+/* =====================================================
+   SIGNALS
+===================================================== */
+
 function renderSignals(){
 
-const rs=
-getResults();
+results=getResults();
 
-const s=[];
+let s=[];
+
 
 executionTasks
 .filter(
 t=>t.status==="Кечикмоқда"
 )
-.forEach(
-t=>
+.forEach(t=>{
+
 s.push(`
 
 <div class="signal">
 
 ⏰
+
 <b>
 ИЖРО КЕЧИКМОҚДА
 </b>
@@ -2328,47 +3307,37 @@ ${escapeHtml(t.executor)}
 
 </div>
 
-`)
-);
+`);
 
-rs
+});
+
+
+results
 .filter(
-r=>
-r.score>=70
-||
-r.debt>=60
-||
-r.delay>0
+r=>r.debt>=60
 )
-.forEach(
-r=>
+.forEach(r=>{
+
 s.push(`
 
 <div class="signal">
 
-🚨
+💰
 
 <b>
-${r.zone}
-${escapeHtml(r.region)}
-—
-${escapeHtml(r.name)}
+ЮҚОРИ ҚАРЗДОРЛИК
 </b>
 
 <br><br>
 
-AI Risk:
-${r.score}
+<b>
+${escapeHtml(r.name)}
+</b>
 
-|
+<br>
 
-Қарз:
+Қарздорлик:
 ${r.debt} млрд
-
-|
-
-LPG кечикиш:
-${r.delay} кун
 
 <br><br>
 
@@ -2378,8 +3347,130 @@ ${r.delay} кун
 
 </div>
 
-`)
-);
+`);
+
+});
+
+
+results
+.filter(
+r=>r.loss>=2.8
+)
+.forEach(r=>{
+
+s.push(`
+
+<div class="signal">
+
+🔧
+
+<b>
+ЮҚОРИ ЙЎҚОТИШ
+</b>
+
+<br><br>
+
+<b>
+${escapeHtml(r.name)}
+</b>
+
+<br>
+
+Йўқотиш:
+${r.loss}%
+
+<br><br>
+
+<b>
+ДИРЕКТОР ЭЪТИБОРИ КЕРАК
+</b>
+
+</div>
+
+`);
+
+});
+
+
+results
+.filter(
+r=>r.imbalance>=3.2
+)
+.forEach(r=>{
+
+s.push(`
+
+<div class="signal">
+
+⚖️
+
+<b>
+ЮҚОРИ ДЕБАЛАНС
+</b>
+
+<br><br>
+
+<b>
+${escapeHtml(r.name)}
+</b>
+
+<br>
+
+Дебаланс:
+${r.imbalance}%
+
+<br><br>
+
+<b>
+ДИРЕКТОР ЭЪТИБОРИ КЕРАК
+</b>
+
+</div>
+
+`);
+
+});
+
+
+results
+.filter(
+r=>r.online<80
+)
+.forEach(r=>{
+
+s.push(`
+
+<div class="signal">
+
+📡
+
+<b>
+ОНЛАЙН ТИЗИМ ПАСТ
+</b>
+
+<br><br>
+
+<b>
+${escapeHtml(r.name)}
+</b>
+
+<br>
+
+Онлайн:
+${r.online}%
+
+<br><br>
+
+<b>
+ДИРЕКТОР ЭЪТИБОРИ КЕРАК
+</b>
+
+</div>
+
+`);
+
+});
+
 
 document.getElementById(
 "signals"
@@ -2402,6 +3493,10 @@ s.slice(0,25).join("")
 }
 
 
+/* =====================================================
+   GOOGLE SHEETS
+===================================================== */
+
 function sheetStatusText(t){
 
 document.getElementById(
@@ -2423,22 +3518,42 @@ state.innerHTML=
 
 try{
 
+const controller=
+new AbortController();
+
+const timer=
+setTimeout(
+()=>controller.abort(),
+10000
+);
+
 const r=
 await fetch(
+
 API_URL+
 "?action=ping&ts="+
 Date.now(),
+
 {
 method:"GET",
-cache:"no-store"
+cache:"no-store",
+redirect:"follow",
+signal:controller.signal
 }
+
 );
 
-if(!r.ok)
+clearTimeout(timer);
+
+if(!r.ok){
+
 throw new Error(
 "HTTP "+r.status
 );
 
+}
+
+const text=
 await r.text();
 
 state.innerHTML=
@@ -2448,8 +3563,16 @@ sheetStatusText(
 "🟢 Google Apps Script API ишлаяпти"
 );
 
+if(text){
+
+console.log(
+"API:",
+text
+);
+
 }
 
+}
 catch(e){
 
 state.innerHTML=
@@ -2459,6 +3582,11 @@ sheetStatusText(
 "🟡 API URL мавжуд. CORS ёки Deployment ҳолатини текширинг."
 );
 
+console.warn(
+"API check:",
+e
+);
+
 }
 
 }
@@ -2466,24 +3594,48 @@ sheetStatusText(
 
 async function sendToSheets(data){
 
+if(!API_URL){
+
+sheetStatusText(
+"🔴 Google Apps Script URL мавжуд эмас"
+);
+
+return;
+
+}
+
+const payload=
+JSON.stringify({
+
+key:API_KEY,
+
+...data
+
+});
+
 try{
 
 await fetch(
+
 API_URL,
+
 {
+
 method:"POST",
+
 mode:"no-cors",
+
 headers:{
 "Content-Type":
 "text/plain;charset=utf-8"
 },
-body:
-JSON.stringify({
-key:API_KEY,
-sheetId:GOOGLE_SHEET_ID,
-...data
-})
+
+body:payload,
+
+keepalive:true
+
 }
+
 );
 
 sheetStatusText(
@@ -2491,30 +3643,95 @@ sheetStatusText(
 );
 
 }
-
 catch(e){
 
+try{
+
+if(navigator.sendBeacon){
+
+const blob=
+new Blob(
+[payload],
+{
+type:
+"text/plain;charset=utf-8"
+}
+);
+
+const ok=
+navigator.sendBeacon(
+API_URL,
+blob
+);
+
+if(ok){
+
 sheetStatusText(
-"🟡 Локал сақланди; Google Sheets API хатолиги"
+"🟢 Google Sheets'га фон режимида юборилди"
+);
+
+return;
+
+}
+
+}
+
+}catch(be){}
+
+sheetStatusText(
+"🟡 Локал сақланди; Google Sheets'га юборишда хатолик"
+);
+
+console.error(e);
+
+}
+
+}
+
+
+/* =====================================================
+   ESCAPE
+===================================================== */
+
+function escapeHtml(s){
+
+return String(s).replace(
+/[&<>"']/g,
+m=>({
+
+"&":"&amp;",
+"<":"&lt;",
+">":"&gt;",
+'"':"&quot;",
+"'":"&#039;"
+
+}[m])
 );
 
 }
 
+function escapeJs(s){
+
+return String(s)
+.replace(/\\/g,"\\\\")
+.replace(/'/g,"\\'")
+.replace(/\n/g,"\\n")
+.replace(/\r/g,"\\r");
+
 }
 
+
+/* =====================================================
+   SYSTEM CHECK
+===================================================== */
 
 function systemCheck(){
 
 const checks=[
 
 [
-"Ҳудуд маълумотлари",
-Array.isArray(districtKPI)
-],
-
-[
-"Республика ҳудудлари",
-REGIONS.length===14
+"22 та ҳудуд",
+districtKPI.length===22
 ],
 
 [
@@ -2524,22 +3741,37 @@ typeof calculateRisk==="function"
 
 [
 "Risk натижалари",
-getResults().length>=1
+results.length===22
 ],
 
 [
-"Республика харитаси",
-!!document.getElementById("map")
+"TOP-5",
+!!document.getElementById("top5")
 ],
 
 [
-"Маълумот бошқаруви",
-!!document.getElementById("manage")
+"AI Risk Map",
+!!document.getElementById("map-section")
 ],
 
 [
-"LPG модули",
-!!document.getElementById("liquefied")
+"Ўзбекистон харитаси",
+!!document.querySelector(".uz-map")
+],
+
+[
+"14 та республика ҳудуди",
+Object.keys(republicRegions).length===14
+],
+
+[
+"AI тавсиялар",
+!!document.getElementById("actions")
+],
+
+[
+"22 та рейтинг",
+!!document.getElementById("ranking")
 ],
 
 [
@@ -2548,8 +3780,23 @@ getResults().length>=1
 ],
 
 [
+"Ижрочини ўзгартириш",
+typeof saveExecutor==="function"
+],
+
+[
 "Google Sheets API",
 !!API_URL
+],
+
+[
+"Қизил сигналлар",
+!!document.getElementById("signals")
+],
+
+[
+"Summary KPI",
+!!document.getElementById("total")
 ],
 
 [
@@ -2559,10 +3806,6 @@ getResults().length>=1
 
 ];
 
-const failed=
-checks.filter(
-x=>!x[1]
-).length;
 
 const box=
 document.getElementById(
@@ -2571,41 +3814,42 @@ document.getElementById(
 
 box.innerHTML=
 
-checks.map(
-x=>`
+checks
+.map(c=>`
 
 <div
 style="
-padding:3px 0;
-color:${x[1]?"#176b36":"#b42318"}
+padding:4px 0;
+color:${c[1]?"#176b36":"#b42318"}
 "
 >
 
-${x[1]?"✅":"❌"}
+${c[1]?"✅":"❌"}
 
-${x[0]}
+${c[0]}
 
 </div>
 
-`
-).join("");
+`)
+.join("");
+
+const failed=
+checks.filter(
+c=>!c[1]
+).length;
 
 box.innerHTML+=`
 
 <div
 style="
-margin-top:8px;
-padding:8px;
+margin-top:10px;
+padding:9px;
 border-radius:9px;
 font-weight:bold;
 background:
-${failed
-?"#ffe5e5"
-:"#e5f7e9"};
+${failed?"#ffe5e5":"#e5f7e9"};
 color:
-${failed
-?"#b42318"
-:"#176b36"}
+${failed?"#b42318":"#176b36"};
 "
 >
 
@@ -2624,21 +3868,21 @@ failed
 }
 
 
+/* =====================================================
+   REFRESH
+===================================================== */
+
 function refreshAll(){
 
 renderSummary();
 
 renderTop5();
 
-renderRegionTabs();
-
 renderMap();
 
 renderActions();
 
 renderRanking();
-
-renderLPG();
 
 renderManageTable();
 
@@ -2648,32 +3892,41 @@ renderSignals();
 
 renderAudit();
 
-fillRegionSelect();
-
 systemCheck();
 
 }
 
 
-window.scrollToSection=
-function(id){
+/* =====================================================
+   SCROLL
+===================================================== */
+
+window.scrollToSection=function(id){
 
 const el=
 document.getElementById(id);
 
-if(el)
+if(el){
+
 el.scrollIntoView({
 behavior:"smooth"
 });
 
+}
+
 };
 
 
+/* =====================================================
+   START
+===================================================== */
+
 refreshAll();
+
 
 setTimeout(
 testApi,
-1200
+800
 );
 
 </script>

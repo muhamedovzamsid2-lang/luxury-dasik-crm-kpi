@@ -2076,6 +2076,4878 @@ console.log(
 );
 
 </script>
+<script>
 
+/* =========================================================
+   HUDUDGAZTAAMINOT AJ — AI KPI DASHBOARD v8.2
+   5-QISM
+   Республика → Вилоят → Туман/шаҳар
+   AI Risk + Debt + Loss + Debalance + LPG
+   ========================================================= */
+
+
+/* =========================
+   1. РЕСПУБЛИКА ҲУДУДЛАРИ
+   ========================= */
+
+const regions = [
+  {
+    id:"tashkent",
+    name:"Тошкент вилояти",
+    debt:1700,
+    loss:3.1,
+    debalance:3.5,
+    online:91,
+    winter:94,
+    lpg:44000,
+    lpgDelay:2,
+    illegal:126,
+    manager:"Ҳудуд раҳбарияти"
+  },
+
+  {
+    id:"tashkent_city",
+    name:"Тошкент шаҳри",
+    debt:980,
+    loss:2.4,
+    debalance:2.8,
+    online:95,
+    winter:96,
+    lpg:0,
+    lpgDelay:0,
+    illegal:74,
+    manager:"Тошкент шаҳар бошқармаси"
+  },
+
+  {
+    id:"andijan",
+    name:"Андижон вилояти",
+    debt:1250,
+    loss:2.9,
+    debalance:3.2,
+    online:92,
+    winter:93,
+    lpg:36000,
+    lpgDelay:2,
+    illegal:98,
+    manager:"Ҳудуд раҳбарияти"
+  },
+
+  {
+    id:"bukhara",
+    name:"Бухоро вилояти",
+    debt:1180,
+    loss:3.0,
+    debalance:3.4,
+    online:90,
+    winter:92,
+    lpg:31000,
+    lpgDelay:3,
+    illegal:87,
+    manager:"Ҳудуд раҳбарияти"
+  },
+
+  {
+    id:"jizzakh",
+    name:"Жиззах вилояти",
+    debt:620,
+    loss:3.2,
+    debalance:3.8,
+    online:88,
+    winter:91,
+    lpg:19000,
+    lpgDelay:3,
+    illegal:61,
+    manager:"Ҳудуд раҳбарияти"
+  },
+
+  {
+    id:"kashkadarya",
+    name:"Қашқадарё вилояти",
+    debt:1450,
+    loss:3.5,
+    debalance:4.1,
+    online:86,
+    winter:89,
+    lpg:42000,
+    lpgDelay:4,
+    illegal:119,
+    manager:"Ҳудуд раҳбарияти"
+  },
+
+  {
+    id:"navoi",
+    name:"Навоий вилояти",
+    debt:760,
+    loss:2.5,
+    debalance:2.9,
+    online:94,
+    winter:95,
+    lpg:18000,
+    lpgDelay:1,
+    illegal:42,
+    manager:"Ҳудуд раҳбарияти"
+  },
+
+  {
+    id:"namangan",
+    name:"Наманган вилояти",
+    debt:1320,
+    loss:3.1,
+    debalance:3.7,
+    online:89,
+    winter:92,
+    lpg:39000,
+    lpgDelay:3,
+    illegal:105,
+    manager:"Ҳудуд раҳбарияти"
+  },
+
+  {
+    id:"samarkand",
+    name:"Самарқанд вилояти",
+    debt:1510,
+    loss:3.0,
+    debalance:3.6,
+    online:91,
+    winter:93,
+    lpg:47000,
+    lpgDelay:2,
+    illegal:113,
+    manager:"Ҳудуд раҳбарияти"
+  },
+
+  {
+    id:"surkhandarya",
+    name:"Сурхондарё вилояти",
+    debt:940,
+    loss:3.6,
+    debalance:4.2,
+    online:84,
+    winter:88,
+    lpg:33000,
+    lpgDelay:4,
+    illegal:96,
+    manager:"Ҳудуд раҳбарияти"
+  },
+
+  {
+    id:"syrdarya",
+    name:"Сирдарё вилояти",
+    debt:510,
+    loss:3.3,
+    debalance:3.9,
+    online:87,
+    winter:90,
+    lpg:15000,
+    lpgDelay:3,
+    illegal:49,
+    manager:"Ҳудуд раҳбарияти"
+  },
+
+  {
+    id:"fergana",
+    name:"Фарғона вилояти",
+    debt:1380,
+    loss:3.0,
+    debalance:3.5,
+    online:91,
+    winter:93,
+    lpg:41000,
+    lpgDelay:2,
+    illegal:108,
+    manager:"Ҳудуд раҳбарияти"
+  },
+
+  {
+    id:"khorezm",
+    name:"Хоразм вилояти",
+    debt:870,
+    loss:2.8,
+    debalance:3.3,
+    online:92,
+    winter:94,
+    lpg:27000,
+    lpgDelay:2,
+    illegal:71,
+    manager:"Ҳудуд раҳбарияти"
+  },
+
+  {
+    id:"karakalpakstan",
+    name:"Қорақалпоғистон Республикаси",
+    debt:990,
+    loss:3.8,
+    debalance:4.4,
+    online:82,
+    winter:86,
+    lpg:29000,
+    lpgDelay:5,
+    illegal:91,
+    manager:"Республика ҳудуд раҳбарияти"
+  }
+];
+
+
+/* =========================
+   2. AI RISK
+   ========================= */
+
+function calculateRisk(x){
+
+  let score = 0;
+
+  if(Number(x.debt) >= 1500) score += 30;
+  else if(Number(x.debt) >= 1000) score += 20;
+  else if(Number(x.debt) >= 600) score += 10;
+
+  if(Number(x.loss) >= 4) score += 25;
+  else if(Number(x.loss) >= 3) score += 15;
+  else if(Number(x.loss) >= 2.5) score += 8;
+
+  if(Number(x.debalance) >= 4) score += 20;
+  else if(Number(x.debalance) >= 3) score += 12;
+
+  if(Number(x.online) < 85) score += 15;
+  else if(Number(x.online) < 90) score += 8;
+
+  if(Number(x.winter) < 90) score += 10;
+
+  if(score >= 60){
+    return {
+      level:"RED",
+      text:"🔴 ЮҚОРИ ХАВФ",
+      className:"risk-red",
+      score:score
+    };
+  }
+
+  if(score >= 35){
+    return {
+      level:"YELLOW",
+      text:"🟡 ЎРТА ХАВФ",
+      className:"risk-yellow",
+      score:score
+    };
+  }
+
+  return {
+    level:"GREEN",
+    text:"🟢 ПАСТ ХАВФ",
+    className:"risk-green",
+    score:score
+  };
+}
+
+
+/* =========================
+   3. РЕСПУБЛИКА KPI
+   ========================= */
+
+function republicTotals(){
+
+  const total = {
+    debt:0,
+    loss:0,
+    debalance:0,
+    online:0,
+    winter:0,
+    lpg:0,
+    illegal:0
+  };
+
+  regions.forEach(r=>{
+    total.debt += Number(r.debt || 0);
+    total.loss += Number(r.loss || 0);
+    total.debalance += Number(r.debalance || 0);
+    total.online += Number(r.online || 0);
+    total.winter += Number(r.winter || 0);
+    total.lpg += Number(r.lpg || 0);
+    total.illegal += Number(r.illegal || 0);
+  });
+
+  const n = regions.length;
+
+  total.loss = +(total.loss/n).toFixed(2);
+  total.debalance = +(total.debalance/n).toFixed(2);
+  total.online = +(total.online/n).toFixed(1);
+  total.winter = +(total.winter/n).toFixed(1);
+
+  return total;
+}
+
+
+/* =========================
+   4. RISK РАНГИ
+   ========================= */
+
+function getRiskRanking(){
+
+  return regions
+    .map(r=>{
+      const risk = calculateRisk(r);
+
+      return {
+        ...r,
+        risk:risk
+      };
+    })
+    .sort((a,b)=>b.risk.score-a.risk.score);
+}
+
+
+/* =========================
+   5. ТАҲЛИЛ
+   ========================= */
+
+function generateAnalysis(){
+
+  const ranking = getRiskRanking();
+
+  const red = ranking.filter(x=>x.risk.level==="RED");
+  const yellow = ranking.filter(x=>x.risk.level==="YELLOW");
+  const green = ranking.filter(x=>x.risk.level==="GREEN");
+
+  return {
+    red,
+    yellow,
+    green,
+    topDebt:[...regions].sort((a,b)=>b.debt-a.debt).slice(0,5),
+    topLoss:[...regions].sort((a,b)=>b.loss-a.loss).slice(0,5),
+    topDebalance:[...regions].sort((a,b)=>b.debalance-a.debalance).slice(0,5)
+  };
+}
+
+
+/* =========================
+   6. КАРТА УЧУН
+   ========================= */
+
+function mapColor(r){
+
+  const risk = calculateRisk(r);
+
+  if(risk.level==="RED")
+    return "#dc2626";
+
+  if(risk.level==="YELLOW")
+    return "#f59e0b";
+
+  return "#16a34a";
+}
+
+
+/* =========================
+   7. КАРТА ЭЛЕМЕНТЛАРИНИ
+      АВТОМАТИК БОШҚАРИШ
+   ========================= */
+
+function updateMap(){
+
+  const ranking = getRiskRanking();
+
+  ranking.forEach(r=>{
+
+    const id =
+      "map-" +
+      String(r.id)
+        .toLowerCase()
+        .replace(/[^a-z0-9_]/g,"");
+
+    const el = document.getElementById(id);
+
+    if(!el) return;
+
+    el.style.fill = mapColor(r);
+    el.style.cursor = "pointer";
+
+    el.onclick = function(){
+
+      showRegionDetails(r);
+    };
+
+    el.onmouseenter = function(){
+
+      el.style.opacity = "0.75";
+    };
+
+    el.onmouseleave = function(){
+
+      el.style.opacity = "1";
+    };
+  });
+}
+
+
+/* =========================
+   8. ҲУДУД БАТАФСИЛ
+   ========================= */
+
+function showRegionDetails(r){
+
+  const risk = calculateRisk(r);
+
+  const html = `
+    <div class="region-detail">
+
+      <h2>${r.name}</h2>
+
+      <div class="risk-box ${risk.className}">
+        ${risk.text}
+        <strong>${risk.score}/100</strong>
+      </div>
+
+      <div class="detail-grid">
+
+        <div>
+          <b>💰 Қарздорлик</b>
+          <span>${Number(r.debt).toLocaleString()} млрд сўм</span>
+        </div>
+
+        <div>
+          <b>📉 Йўқотиш</b>
+          <span>${r.loss}%</span>
+        </div>
+
+        <div>
+          <b>⚖️ Дебаланс</b>
+          <span>${r.debalance}%</span>
+        </div>
+
+        <div>
+          <b>📡 Онлайн ҳисоблагич</b>
+          <span>${r.online}%</span>
+        </div>
+
+        <div>
+          <b>❄️ Қишга тайёргарлик</b>
+          <span>${r.winter}%</span>
+        </div>
+
+        <div>
+          <b>🔥 LPG абонентлари</b>
+          <span>${Number(r.lpg).toLocaleString()}</span>
+        </div>
+
+        <div>
+          <b>⏱ LPG кечикиши</b>
+          <span>${r.lpgDelay} кун</span>
+        </div>
+
+        <div>
+          <b>⚠️ Ноқонуний уланиш</b>
+          <span>${r.illegal}</span>
+        </div>
+
+      </div>
+
+      <div class="manager">
+        <b>Масъул:</b> ${r.manager}
+      </div>
+
+    </div>
+  `;
+
+  const modal = document.getElementById("districtModal");
+
+  if(modal){
+
+    const title =
+      document.getElementById("districtModalTitle");
+
+    if(title)
+      title.innerHTML = "📊 " + r.name;
+
+    const name = document.getElementById("fName");
+    const debt = document.getElementById("fDebt");
+    const loss = document.getElementById("fLoss");
+    const debalance = document.getElementById("fDebalance");
+    const online = document.getElementById("fOnline");
+    const winter = document.getElementById("fWinter");
+    const lpg = document.getElementById("fLpg");
+    const delay = document.getElementById("fLpgDelay");
+    const illegal = document.getElementById("fIllegal");
+    const manager = document.getElementById("fManager");
+
+    if(name) name.value = r.name;
+    if(debt) debt.value = r.debt;
+    if(loss) loss.value = r.loss;
+    if(debalance) debalance.value = r.debalance;
+    if(online) online.value = r.online;
+    if(winter) winter.value = r.winter;
+    if(lpg) lpg.value = r.lpg;
+    if(delay) delay.value = r.lpgDelay;
+    if(illegal) illegal.value = r.illegal;
+    if(manager) manager.value = r.manager;
+
+    modal.style.display = "flex";
+
+  }else{
+
+    alert(
+      r.name +
+      "\n\n" +
+      risk.text +
+      "\nҚарздорлик: " + r.debt +
+      " млрд сўм" +
+      "\nЙўқотиш: " + r.loss +
+      "%" +
+      "\nДебаланс: " + r.debalance +
+      "%" +
+      "\nОнлайн: " + r.online +
+      "%"
+    );
+  }
+}
+
+
+/* =========================
+   9. DASHBOARD CONSOLE
+   ========================= */
+
+function printDashboardAnalysis(){
+
+  const total = republicTotals();
+  const analysis = generateAnalysis();
+
+  console.log("================================");
+  console.log("HUDUDGAZTAAMINOT AJ — v8.2");
+  console.log("================================");
+
+  console.log("Республика қарздорлиги:",
+    total.debt.toLocaleString(),
+    "млрд сўм");
+
+  console.log("Ўртача йўқотиш:",
+    total.loss + "%");
+
+  console.log("Ўртача дебаланс:",
+    total.debalance + "%");
+
+  console.log("Онлайн:",
+    total.online + "%");
+
+  console.log("Қишга тайёргарлик:",
+    total.winter + "%");
+
+  console.log("LPG:",
+    total.lpg.toLocaleString());
+
+  console.log("Ноқонуний уланиш:",
+    total.illegal);
+
+  console.log("🔴 RED:",analysis.red.length);
+  console.log("🟡 YELLOW:",analysis.yellow.length);
+  console.log("🟢 GREEN:",analysis.green.length);
+}
+
+
+/* =========================
+   10. TOP / ANTI-TOP
+   ========================= */
+
+function renderTopAnalysis(containerId){
+
+  const box = document.getElementById(containerId);
+
+  if(!box) return;
+
+  const analysis = generateAnalysis();
+
+  let html = `
+    <div class="analysis-title">
+      📊 Республика TOP / ANTITOP
+    </div>
+  `;
+
+  html += `
+    <h3>🔴 Қарздорлик бўйича TOP-5</h3>
+    <ol>
+  `;
+
+  analysis.topDebt.forEach(r=>{
+    html += `
+      <li>
+        <b>${r.name}</b>
+        — ${r.debt.toLocaleString()} млрд сўм
+      </li>
+    `;
+  });
+
+  html += `</ol>`;
+
+  html += `
+    <h3>📉 Йўқотиш бўйича TOP-5</h3>
+    <ol>
+  `;
+
+  analysis.topLoss.forEach(r=>{
+    html += `
+      <li>
+        <b>${r.name}</b>
+        — ${r.loss}%
+      </li>
+    `;
+  });
+
+  html += `</ol>`;
+
+  html += `
+    <h3>⚖️ Дебаланс бўйича TOP-5</h3>
+    <ol>
+  `;
+
+  analysis.topDebalance.forEach(r=>{
+    html += `
+      <li>
+        <b>${r.name}</b>
+        — ${r.debalance}%
+      </li>
+    `;
+  });
+
+  html += `</ol>`;
+
+  box.innerHTML = html;
+}
+
+
+/* =========================
+   11. МАЪЛУМОТНИ САҚЛАШ
+   ========================= */
+
+function saveDistrictData(){
+
+  const name =
+    document.getElementById("fName")?.value || "";
+
+  const debt =
+    Number(document.getElementById("fDebt")?.value || 0);
+
+  const loss =
+    Number(document.getElementById("fLoss")?.value || 0);
+
+  const debalance =
+    Number(document.getElementById("fDebalance")?.value || 0);
+
+  const online =
+    Number(document.getElementById("fOnline")?.value || 0);
+
+  const winter =
+    Number(document.getElementById("fWinter")?.value || 0);
+
+  if(!name){
+
+    alert("Ҳудуд номини киритинг.");
+    return;
+  }
+
+  const data = {
+    name,
+    debt,
+    loss,
+    debalance,
+    online,
+    winter,
+    updatedAt:new Date().toISOString()
+  };
+
+  localStorage.setItem(
+    "hududgaz_last_district",
+    JSON.stringify(data)
+  );
+
+  alert(
+    "✅ Маълумот сақланди\n\n" +
+    name
+  );
+}
+
+
+/* =========================
+   12. GOOGLE SHEETS УЛАНИШ
+   ========================= */
+
+function loadFromGoogleSheets(){
+
+  if(
+    typeof google !== "undefined" &&
+    google.script &&
+    google.script.run
+  ){
+
+    google.script.run
+      .withSuccessHandler(function(data){
+
+        if(!data) return;
+
+        console.log(
+          "Google Sheets маълумотлари қабул қилинди:",
+          data
+        );
+
+      })
+      .withFailureHandler(function(err){
+
+        console.error(
+          "Google Sheets хатолиги:",
+          err
+        );
+
+      })
+      .getDashboardData();
+
+  }else{
+
+    console.log(
+      "Локал режим: Google Sheets ҳозирча уланмаган."
+    );
+  }
+}
+
+
+/* =========================
+   13. АВТО ИШГА ТУШИШ
+   ========================= */
+
+document.addEventListener(
+  "DOMContentLoaded",
+  function(){
+
+    try{
+
+      updateMap();
+
+      printDashboardAnalysis();
+
+      loadFromGoogleSheets();
+
+      /*
+       Агар HTML ичида:
+       <div id="topAnalysis"></div>
+       бўлса автоматик тўлдиради.
+      */
+
+      renderTopAnalysis("topAnalysis");
+
+    }catch(error){
+
+      console.error(
+        "Dashboard v8.2:",
+        error
+      );
+    }
+
+  }
+);
+
+</script><!-- =====================================================
+     HUDUDGAZTAAMINOT AJ — v8.2
+     6-QISM — INTERAKTIV RESPUBLIKA XARITASI
+     ===================================================== -->
+
+<style>
+
+#republicMapSection{
+    margin:24px 0;
+    background:#ffffff;
+    border-radius:18px;
+    padding:20px;
+    box-shadow:0 8px 30px rgba(0,0,0,.08);
+}
+
+.map-header{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:15px;
+    flex-wrap:wrap;
+    margin-bottom:15px;
+}
+
+.map-title{
+    font-size:22px;
+    font-weight:800;
+    color:#17202a;
+}
+
+.map-subtitle{
+    font-size:13px;
+    color:#68737d;
+    margin-top:4px;
+}
+
+.map-legend{
+    display:flex;
+    gap:12px;
+    flex-wrap:wrap;
+    font-size:13px;
+}
+
+.map-legend span{
+    display:flex;
+    align-items:center;
+    gap:5px;
+}
+
+.legend-dot{
+    width:13px;
+    height:13px;
+    border-radius:50%;
+    display:inline-block;
+}
+
+.legend-red{
+    background:#dc2626;
+}
+
+.legend-yellow{
+    background:#f59e0b;
+}
+
+.legend-green{
+    background:#16a34a;
+}
+
+.map-wrapper{
+    width:100%;
+    min-height:560px;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    overflow:auto;
+    background:
+        linear-gradient(
+            135deg,
+            #f8fafc,
+            #eef5fb
+        );
+    border-radius:16px;
+    padding:15px;
+}
+
+#uzbekistanMap{
+    width:100%;
+    max-width:950px;
+    height:auto;
+}
+
+.map-region{
+    stroke:#ffffff;
+    stroke-width:1.5;
+    transition:
+        transform .2s ease,
+        opacity .2s ease,
+        filter .2s ease;
+    cursor:pointer;
+}
+
+.map-region:hover{
+    opacity:.78;
+    filter:brightness(1.08);
+    stroke:#111827;
+    stroke-width:2.5;
+}
+
+.map-region-label{
+    pointer-events:none;
+    font-size:10px;
+    font-weight:700;
+    fill:#17202a;
+    text-anchor:middle;
+}
+
+.map-info{
+    margin-top:15px;
+    display:grid;
+    grid-template-columns:
+        repeat(auto-fit,minmax(180px,1fr));
+    gap:12px;
+}
+
+.map-stat{
+    padding:14px;
+    border-radius:12px;
+    background:#f8fafc;
+    border:1px solid #e5e7eb;
+}
+
+.map-stat-title{
+    font-size:12px;
+    color:#6b7280;
+}
+
+.map-stat-value{
+    font-size:20px;
+    font-weight:800;
+    margin-top:5px;
+}
+
+.map-click-info{
+    margin-top:14px;
+    padding:12px 15px;
+    background:#eff6ff;
+    border-left:4px solid #2563eb;
+    border-radius:8px;
+    font-size:13px;
+}
+
+@media(max-width:700px){
+
+    #republicMapSection{
+        padding:12px;
+    }
+
+    .map-wrapper{
+        min-height:400px;
+        padding:5px;
+    }
+
+    .map-title{
+        font-size:18px;
+    }
+
+    #uzbekistanMap{
+        min-width:650px;
+    }
+
+}
+
+</style>
+
+
+<section id="republicMapSection">
+
+    <div class="map-header">
+
+        <div>
+            <div class="map-title">
+                🗺️ ЎЗБЕКИСТОН РЕСПУБЛИКАСИ
+                — AI KPI RISK ХАРИТАСИ
+            </div>
+
+            <div class="map-subtitle">
+                Ҳудудни босинг → қарздорлик,
+                йўқотиш, дебаланс, онлайн ҳисоблагич
+                ва AI Risk кўрсаткичлари
+            </div>
+        </div>
+
+        <div class="map-legend">
+
+            <span>
+                <i class="legend-dot legend-red"></i>
+                Юқори хавф
+            </span>
+
+            <span>
+                <i class="legend-dot legend-yellow"></i>
+                Ўрта хавф
+            </span>
+
+            <span>
+                <i class="legend-dot legend-green"></i>
+                Паст хавф
+            </span>
+
+        </div>
+
+    </div>
+
+
+    <div class="map-wrapper">
+
+        <svg
+            id="uzbekistanMap"
+            viewBox="0 0 1000 650"
+            xmlns="http://www.w3.org/2000/svg"
+            aria-label="Ўзбекистон Республикаси интерактив харитаси"
+        >
+
+            <!-- ҚОРАҚАЛПОҒИСТОН -->
+
+            <path
+                id="map-karakalpakstan"
+                class="map-region"
+                d="
+                M70 80
+                L190 45
+                L300 65
+                L350 125
+                L330 205
+                L275 245
+                L180 235
+                L105 195
+                L65 135
+                Z
+                "
+            />
+
+            <!-- ХОРАЗМ -->
+
+            <path
+                id="map-khorezm"
+                class="map-region"
+                d="
+                M315 205
+                L365 180
+                L405 205
+                L398 260
+                L345 275
+                L305 245
+                Z
+                "
+            />
+
+            <!-- БУХОРО -->
+
+            <path
+                id="map-bukhara"
+                class="map-region"
+                d="
+                M345 275
+                L420 260
+                L500 285
+                L485 360
+                L405 375
+                L350 335
+                Z
+                "
+            />
+
+            <!-- НАВОИЙ -->
+
+            <path
+                id="map-navoi"
+                class="map-region"
+                d="
+                M420 205
+                L510 190
+                L570 230
+                L555 300
+                L500 285
+                L420 260
+                Z
+                "
+            />
+
+            <!-- СИРДАРЁ -->
+
+            <path
+                id="map-syrdarya"
+                class="map-region"
+                d="
+                M585 330
+                L650 310
+                L700 345
+                L675 395
+                L610 390
+                L570 365
+                Z
+                "
+            />
+
+            <!-- ЖИЗЗАХ -->
+
+            <path
+                id="map-jizzakh"
+                class="map-region"
+                d="
+                M500 285
+                L555 300
+                L585 330
+                L570 365
+                L505 350
+                L485 315
+                Z
+                "
+            />
+
+            <!-- САМАРҚАНД -->
+
+            <path
+                id="map-samarkand"
+                class="map-region"
+                d="
+                M405 375
+                L485 360
+                L540 380
+                L555 440
+                L480 455
+                L420 425
+                Z
+                "
+            />
+
+            <!-- ҚАШҚАДАРЁ -->
+
+            <path
+                id="map-kashkadarya"
+                class="map-region"
+                d="
+                M350 335
+                L405 375
+                L420 425
+                L400 505
+                L330 490
+                L300 425
+                Z
+                "
+            />
+
+            <!-- СУРХОНДАРЁ -->
+
+            <path
+                id="map-surkhandarya"
+                class="map-region"
+                d="
+                M420 425
+                L480 455
+                L515 500
+                L485 575
+                L420 545
+                L400 505
+                Z
+                "
+            />
+
+            <!-- ҚАШҚАДАРЁ / ФАРҒОНА ОРАЛИҒИ -->
+
+            <path
+                id="map-fergana"
+                class="map-region"
+                d="
+                M700 345
+                L790 325
+                L860 360
+                L840 420
+                L760 440
+                L690 405
+                Z
+                "
+            />
+
+            <!-- АНДИЖОН -->
+
+            <path
+                id="map-andijan"
+                class="map-region"
+                d="
+                M840 420
+                L900 405
+                L935 440
+                L915 475
+                L850 465
+                Z
+                "
+            />
+
+            <!-- НАМАНГАН -->
+
+            <path
+                id="map-namangan"
+                class="map-region"
+                d="
+                M790 325
+                L850 300
+                L900 325
+                L900 405
+                L840 420
+                Z
+                "
+            />
+
+            <!-- ТОШКЕНТ ВИЛОЯТИ -->
+
+            <path
+                id="map-tashkent"
+                class="map-region"
+                d="
+                M650 220
+                L730 205
+                L790 250
+                L790 325
+                L700 345
+                L650 310
+                Z
+                "
+            />
+
+            <!-- ТОШКЕНТ ШАҲРИ -->
+
+            <path
+                id="map-tashkent_city"
+                class="map-region"
+                d="
+                M690 255
+                L720 245
+                L735 270
+                L720 290
+                L690 285
+                Z
+                "
+            />
+
+            <!-- LABELS -->
+
+            <text
+                x="175"
+                y="140"
+                class="map-region-label">
+                Қорақалпоғистон
+            </text>
+
+            <text
+                x="355"
+                y="225"
+                class="map-region-label">
+                Хоразм
+            </text>
+
+            <text
+                x="420"
+                y="320"
+                class="map-region-label">
+                Бухоро
+            </text>
+
+            <text
+                x="490"
+                y="245"
+                class="map-region-label">
+                Навоий
+            </text>
+
+            <text
+                x="530"
+                y="330"
+                class="map-region-label">
+                Жиззах
+            </text>
+
+            <text
+                x="620"
+                y="350"
+                class="map-region-label">
+                Сирдарё
+            </text>
+
+            <text
+                x="470"
+                y="405"
+                class="map-region-label">
+                Самарқанд
+            </text>
+
+            <text
+                x="350"
+                y="420"
+                class="map-region-label">
+                Қашқадарё
+            </text>
+
+            <text
+                x="450"
+                y="500"
+                class="map-region-label">
+                Сурхондарё
+            </text>
+
+            <text
+                x="735"
+                y="380"
+                class="map-region-label">
+                Фарғона
+            </text>
+
+            <text
+                x="870"
+                y="440"
+                class="map-region-label">
+                Андижон
+            </text>
+
+            <text
+                x="825"
+                y="345"
+                class="map-region-label">
+                Наманган
+            </text>
+
+            <text
+                x="700"
+                y="270"
+                class="map-region-label">
+                Тошкент
+            </text>
+
+        </svg>
+
+    </div>
+
+
+    <div
+        id="mapClickInfo"
+        class="map-click-info">
+
+        👆 Харитадаги ҳудудни босинг —
+        AI Risk ва KPI маълумотлари чиқади.
+
+    </div>
+
+
+    <div class="map-info">
+
+        <div class="map-stat">
+
+            <div class="map-stat-title">
+                🔴 Юқори хавф
+            </div>
+
+            <div
+                id="mapRedCount"
+                class="map-stat-value">
+                0
+            </div>
+
+        </div>
+
+
+        <div class="map-stat">
+
+            <div class="map-stat-title">
+                🟡 Ўрта хавф
+            </div>
+
+            <div
+                id="mapYellowCount"
+                class="map-stat-value">
+                0
+            </div>
+
+        </div>
+
+
+        <div class="map-stat">
+
+            <div class="map-stat-title">
+                🟢 Паст хавф
+            </div>
+
+            <div
+                id="mapGreenCount"
+                class="map-stat-value">
+                0
+            </div>
+
+        </div>
+
+
+        <div class="map-stat">
+
+            <div class="map-stat-title">
+                💰 Республика қарздорлиги
+            </div>
+
+            <div
+                id="mapDebtTotal"
+                class="map-stat-value">
+                0
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<script>
+
+/* =====================================================
+   6-QISM JAVASCRIPT
+   ===================================================== */
+
+(function(){
+
+    function getRegionById(id){
+
+        if(typeof regions === "undefined")
+            return null;
+
+        return regions.find(
+            r => r.id === id
+        );
+
+    }
+
+
+    function setMapColor(){
+
+        if(typeof regions === "undefined"){
+            console.warn(
+                "regions массиви топилмади."
+            );
+            return;
+        }
+
+
+        let red = 0;
+        let yellow = 0;
+        let green = 0;
+
+        let totalDebt = 0;
+
+
+        regions.forEach(region => {
+
+            const element =
+                document.getElementById(
+                    "map-" + region.id
+                );
+
+            if(!element)
+                return;
+
+
+            const risk =
+                typeof calculateRisk === "function"
+                ? calculateRisk(region)
+                : {
+                    level:"GREEN",
+                    score:0
+                };
+
+
+            let color = "#16a34a";
+
+
+            if(risk.level === "RED"){
+
+                color = "#dc2626";
+                red++;
+
+            }
+
+            else if(risk.level === "YELLOW"){
+
+                color = "#f59e0b";
+                yellow++;
+
+            }
+
+            else{
+
+                color = "#16a34a";
+                green++;
+
+            }
+
+
+            element.style.fill = color;
+
+
+            totalDebt +=
+                Number(region.debt || 0);
+
+
+            element.addEventListener(
+                "click",
+                function(){
+
+                    const info =
+                        document.getElementById(
+                            "mapClickInfo"
+                        );
+
+
+                    if(info){
+
+                        info.innerHTML =
+                            "📍 <b>" +
+                            region.name +
+                            "</b> — " +
+                            risk.text +
+                            " · Risk: " +
+                            risk.score +
+                            "/100 · Қарздорлик: " +
+                            Number(region.debt)
+                                .toLocaleString() +
+                            " млрд сўм";
+
+                    }
+
+
+                    if(
+                        typeof showRegionDetails ===
+                        "function"
+                    ){
+
+                        showRegionDetails(region);
+
+                    }
+
+                }
+            );
+
+        });
+
+
+        const redBox =
+            document.getElementById(
+                "mapRedCount"
+            );
+
+        const yellowBox =
+            document.getElementById(
+                "mapYellowCount"
+            );
+
+        const greenBox =
+            document.getElementById(
+                "mapGreenCount"
+            );
+
+        const debtBox =
+            document.getElementById(
+                "mapDebtTotal"
+            );
+
+
+        if(redBox)
+            redBox.textContent = red;
+
+
+        if(yellowBox)
+            yellowBox.textContent = yellow;
+
+
+        if(greenBox)
+            greenBox.textContent = green;
+
+
+        if(debtBox){
+
+            debtBox.textContent =
+                totalDebt.toLocaleString() +
+                " млрд";
+
+        }
+
+    }
+
+
+    function startMap(){
+
+        setTimeout(
+            setMapColor,
+            300
+        );
+
+    }
+
+
+    if(
+        document.readyState ===
+        "loading"
+    ){
+
+        document.addEventListener(
+            "DOMContentLoaded",
+            startMap
+        );
+
+    }else{
+
+        startMap();
+
+    }
+
+})();
+
+</script>
+
+<!-- ===== 6-QISM TUGADI ===== --><script>
+/* =========================================================
+   HUDUDGAZTAAMINOT AJ — AI KPI DASHBOARD v8.2
+   7-QISM — MAP + REPUBLIC / REGION / DISTRICT ANALYTICS
+   ========================================================= */
+
+const REGION_DATA = [
+  {
+    id:"toshkent",
+    name:"Тошкент вилояти",
+    lat:41.05,
+    lng:69.70,
+    debt:1700,
+    loss:3.2,
+    debalance:3.7,
+    online:91,
+    winter:88,
+    lpg:44000,
+    illegal:126
+  },
+  {
+    id:"andijon",
+    name:"Андижон вилояти",
+    lat:40.78,
+    lng:72.34,
+    debt:920,
+    loss:3.0,
+    debalance:3.4,
+    online:93,
+    winter:90,
+    lpg:31000,
+    illegal:82
+  },
+  {
+    id:"bukhara",
+    name:"Бухоро вилояти",
+    lat:39.77,
+    lng:64.42,
+    debt:870,
+    loss:3.4,
+    debalance:3.9,
+    online:89,
+    winter:86,
+    lpg:28000,
+    illegal:74
+  },
+  {
+    id:"jizzakh",
+    name:"Жиззах вилояти",
+    lat:40.12,
+    lng:67.84,
+    debt:610,
+    loss:3.1,
+    debalance:3.6,
+    online:90,
+    winter:87,
+    lpg:19000,
+    illegal:61
+  },
+  {
+    id:"qashqadaryo",
+    name:"Қашқадарё вилояти",
+    lat:38.85,
+    lng:65.78,
+    debt:1120,
+    loss:3.8,
+    debalance:4.2,
+    online:87,
+    winter:84,
+    lpg:36000,
+    illegal:109
+  },
+  {
+    id:"navoiy",
+    name:"Навоий вилояти",
+    lat:40.10,
+    lng:65.37,
+    debt:540,
+    loss:2.7,
+    debalance:3.1,
+    online:95,
+    winter:92,
+    lpg:14000,
+    illegal:42
+  },
+  {
+    id:"namangan",
+    name:"Наманган вилояти",
+    lat:41.00,
+    lng:71.67,
+    debt:980,
+    loss:3.3,
+    debalance:3.8,
+    online:91,
+    winter:89,
+    lpg:33000,
+    illegal:91
+  },
+  {
+    id:"samarkand",
+    name:"Самарқанд вилояти",
+    lat:39.65,
+    lng:66.96,
+    debt:1050,
+    loss:3.5,
+    debalance:4.0,
+    online:90,
+    winter:87,
+    lpg:35000,
+    illegal:98
+  },
+  {
+    id:"surkhandarya",
+    name:"Сурхондарё вилояти",
+    lat:37.94,
+    lng:67.57,
+    debt:760,
+    loss:3.7,
+    debalance:4.1,
+    online:86,
+    winter:83,
+    lpg:27000,
+    illegal:87
+  },
+  {
+    id:"sirdaryo",
+    name:"Сирдарё вилояти",
+    lat:40.48,
+    lng:68.78,
+    debt:430,
+    loss:2.9,
+    debalance:3.3,
+    online:92,
+    winter:90,
+    lpg:12000,
+    illegal:38
+  },
+  {
+    id:"tashkent_city",
+    name:"Тошкент шаҳри",
+    lat:41.31,
+    lng:69.28,
+    debt:1250,
+    loss:2.8,
+    debalance:3.2,
+    online:96,
+    winter:94,
+    lpg:0,
+    illegal:67
+  },
+  {
+    id:"fergana",
+    name:"Фарғона вилояти",
+    lat:40.39,
+    lng:71.78,
+    debt:1010,
+    loss:3.2,
+    debalance:3.7,
+    online:92,
+    winter:90,
+    lpg:30000,
+    illegal:88
+  },
+  {
+    id:"khorezm",
+    name:"Хоразм вилояти",
+    lat:41.55,
+    lng:60.63,
+    debt:690,
+    loss:3.1,
+    debalance:3.6,
+    online:91,
+    winter:88,
+    lpg:22000,
+    illegal:63
+  },
+  {
+    id:"karakalpakstan",
+    name:"Қорақалпоғистон Республикаси",
+    lat:43.80,
+    lng:59.60,
+    debt:820,
+    loss:3.9,
+    debalance:4.4,
+    online:84,
+    winter:81,
+    lpg:29000,
+    illegal:102
+  }
+];
+
+
+/* =========================================================
+   ТАШКЕНТ ВИЛОЯТИ — ТУМАН ВА ШАҲАРЛАР
+   ========================================================= */
+
+const TASHKENT_DISTRICTS = [
+ ["Чирчиқ шаҳри",73,3.0,3.5,94,91,3100,8],
+ ["Оҳангарон тумани",62,2.9,3.4,92,89,2400,6],
+ ["Ангрен шаҳри",62,2.8,3.2,95,93,2100,5],
+ ["Оққўрғон тумани",71,3.1,3.7,89,86,1800,7],
+ ["Юқори Чирчиқ тумани",58,2.8,3.3,93,90,2200,4],
+ ["Қуйи Чирчиқ тумани",66,3.2,3.8,88,85,2600,8],
+ ["Бекобод шаҳри",81,3.6,4.1,86,82,1900,11],
+ ["Бекобод тумани",69,3.3,3.9,88,84,2300,9],
+ ["Бўстонлиқ тумани",55,2.6,3.0,96,93,1700,3],
+ ["Бўка тумани",64,3.0,3.5,91,88,2100,6],
+ ["Зангиота тумани",77,3.4,4.0,90,87,3200,10],
+ ["Қибрай тумани",61,2.7,3.2,95,92,2800,5],
+ ["Паркент тумани",59,2.9,3.4,93,89,2400,5],
+ ["Пискент тумани",67,3.1,3.6,90,87,1800,6],
+ ["Тошкент тумани",84,3.5,4.1,94,91,3500,12],
+ ["Ўрта Чирчиқ тумани",63,3.0,3.5,92,89,2300,5],
+ ["Янгийўл шаҳри",79,3.3,3.9,91,87,2600,9],
+ ["Янгийўл тумани",68,3.1,3.7,89,86,2100,7],
+ ["Чиноз тумани",65,2.9,3.4,92,89,1900,5],
+ ["Олмалиқ шаҳри",72,3.0,3.6,94,90,2200,7],
+ ["Олмалиқ тумани",60,2.8,3.3,93,90,1600,4],
+ ["Нурафшон шаҳри",82,2.7,3.1,97,94,900,3]
+];
+
+
+/* =========================================================
+   РЕСПУБЛИКА ЖАМИ
+   ========================================================= */
+
+const REPUBLIC_TOTAL = {
+  debt:13760,
+  loss:3.25,
+  debalance:3.65,
+  online:91.4,
+  winter:88.2,
+  lpg:0,
+  illegal:1042
+};
+
+
+/* =========================================================
+   RISK ҲИСОБЛАШ
+   ========================================================= */
+
+function calculateRisk(debt,loss,debalance,online,winter){
+
+  let score = 0;
+
+  if(Number(debt) >= 100) score += 20;
+  if(Number(debt) >= 70) score += 10;
+
+  if(Number(loss) >= 4) score += 25;
+  else if(Number(loss) >= 3.5) score += 15;
+  else if(Number(loss) >= 3) score += 8;
+
+  if(Number(debalance) >= 4) score += 20;
+  else if(Number(debalance) >= 3.5) score += 12;
+
+  if(Number(online) < 85) score += 20;
+  else if(Number(online) < 90) score += 10;
+
+  if(Number(winter) < 85) score += 15;
+  else if(Number(winter) < 90) score += 8;
+
+  if(score >= 55){
+    return {
+      level:"RED",
+      text:"🔴 ЮҚОРИ ХАВФ",
+      cls:"risk-red",
+      score:score
+    };
+  }
+
+  if(score >= 30){
+    return {
+      level:"YELLOW",
+      text:"🟡 ЎРТА ХАВФ",
+      cls:"risk-yellow",
+      score:score
+    };
+  }
+
+  return {
+    level:"GREEN",
+    text:"🟢 ПАСТ ХАВФ",
+    cls:"risk-green",
+    score:score
+  };
+}
+
+
+/* =========================================================
+   ХАРИТА КОНТЕЙНЕРИНИ АВТОМАТИК ТАЙЁРЛАШ
+   ========================================================= */
+
+function prepareMapContainer(){
+
+  let map = document.getElementById("uzbekistanMap");
+
+  if(!map){
+
+    map = document.createElement("div");
+
+    map.id = "uzbekistanMap";
+
+    map.style.cssText = `
+      width:100%;
+      min-height:520px;
+      border-radius:18px;
+      overflow:hidden;
+      background:#eef3f8;
+      position:relative;
+      z-index:1;
+      margin-top:15px;
+    `;
+
+    const target =
+      document.querySelector("#map") ||
+      document.querySelector(".map-container") ||
+      document.querySelector(".dashboard") ||
+      document.querySelector("main");
+
+    if(target){
+      target.appendChild(map);
+    }else{
+      document.body.appendChild(map);
+    }
+  }
+
+  return map;
+}
+
+
+/* =========================================================
+   LEAFLET КУТУБХОНАСИНИ УЛАШ
+   ========================================================= */
+
+function loadLeaflet(){
+
+  if(window.L){
+    initRepublicMap();
+    return;
+  }
+
+  if(!document.querySelector('link[href*="leaflet"]')){
+
+    const css = document.createElement("link");
+
+    css.rel = "stylesheet";
+
+    css.href =
+      "https://unpkg.com/leaflet@1.9.4/dist/leaflet.css";
+
+    document.head.appendChild(css);
+  }
+
+  const script = document.createElement("script");
+
+  script.src =
+    "https://unpkg.com/leaflet@1.9.4/dist/leaflet.js";
+
+  script.onload = function(){
+    initRepublicMap();
+  };
+
+  document.head.appendChild(script);
+}
+
+
+/* =========================================================
+   ХАРИТАНИ ЧИЗИШ
+   ========================================================= */
+
+let republicMap = null;
+let mapMarkers = [];
+
+function clearMapMarkers(){
+
+  mapMarkers.forEach(function(marker){
+
+    if(republicMap){
+      republicMap.removeLayer(marker);
+    }
+
+  });
+
+  mapMarkers = [];
+}
+
+
+/* =========================================================
+   ХАРИТА
+   ========================================================= */
+
+function initRepublicMap(){
+
+  const container = prepareMapContainer();
+
+  if(!container) return;
+
+  if(republicMap){
+
+    setTimeout(function(){
+      republicMap.invalidateSize();
+    },300);
+
+    return;
+  }
+
+  republicMap = L.map(container,{
+    zoomControl:true,
+    attributionControl:true
+  }).setView([41.2,64.8],6);
+
+  L.tileLayer(
+    "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
+    {
+      maxZoom:18,
+      attribution:"© OpenStreetMap"
+    }
+  ).addTo(republicMap);
+
+  drawRepublicMarkers();
+
+  setTimeout(function(){
+    republicMap.invalidateSize();
+  },500);
+}
+
+
+/* =========================================================
+   MARKER РАНГИ
+   ========================================================= */
+
+function markerColor(risk){
+
+  if(risk === "RED") return "#dc2626";
+
+  if(risk === "YELLOW") return "#f59e0b";
+
+  return "#16a34a";
+}
+
+
+function makeMarkerIcon(risk){
+
+  const color = markerColor(risk);
+
+  return L.divIcon({
+
+    className:"ai-map-marker",
+
+    html:`
+      <div style="
+        width:34px;
+        height:34px;
+        border-radius:50%;
+        background:${color};
+        border:4px solid white;
+        box-shadow:0 2px 10px rgba(0,0,0,.35);
+        display:flex;
+        align-items:center;
+        justify-content:center;
+        color:#fff;
+        font-size:13px;
+        font-weight:800;
+      ">●</div>
+    `,
+
+    iconSize:[34,34],
+    iconAnchor:[17,17]
+  });
+}
+
+
+/* =========================================================
+   POPUP
+   ========================================================= */
+
+function createRegionPopup(r){
+
+  const risk = calculateRisk(
+    r.debt,
+    r.loss,
+    r.debalance,
+    r.online,
+    r.winter
+  );
+
+  return `
+    <div style="min-width:250px;font-family:Arial">
+
+      <div style="
+        font-size:17px;
+        font-weight:800;
+        margin-bottom:8px;
+      ">
+        🇺🇿 ${r.name}
+      </div>
+
+      <div style="
+        padding:8px;
+        border-radius:8px;
+        background:${markerColor(risk.level)};
+        color:#fff;
+        font-weight:700;
+        margin-bottom:8px;
+      ">
+        ${risk.text} · ${risk.score} балл
+      </div>
+
+      <div>💰 Қарздорлик:
+        <b>${Number(r.debt).toLocaleString("ru-RU")} млрд сўм</b>
+      </div>
+
+      <div>📉 Йўқотиш:
+        <b>${r.loss}%</b>
+      </div>
+
+      <div>⚖️ Дебаланс:
+        <b>${r.debalance}%</b>
+      </div>
+
+      <div>📡 Онлайн:
+        <b>${r.online}%</b>
+      </div>
+
+      <div>❄️ Қишга тайёргарлик:
+        <b>${r.winter}%</b>
+      </div>
+
+      <div>⛽ LPG:
+        <b>${Number(r.lpg).toLocaleString("ru-RU")}</b>
+      </div>
+
+      <div>⚠️ Ноқонуний уланиш:
+        <b>${r.illegal}</b>
+      </div>
+
+    </div>
+  `;
+}
+
+
+/* =========================================================
+   РЕСПУБЛИКА МАРКЕРЛАРИ
+   ========================================================= */
+
+function drawRepublicMarkers(){
+
+  if(!republicMap) return;
+
+  clearMapMarkers();
+
+  REGION_DATA.forEach(function(r){
+
+    const risk = calculateRisk(
+      r.debt,
+      r.loss,
+      r.debalance,
+      r.online,
+      r.winter
+    );
+
+    const marker = L.marker(
+      [r.lat,r.lng],
+      {
+        icon:makeMarkerIcon(risk.level)
+      }
+    ).addTo(republicMap);
+
+    marker.bindPopup(
+      createRegionPopup(r)
+    );
+
+    marker.on("click",function(){
+
+      showRegionAnalysis(r);
+
+    });
+
+    mapMarkers.push(marker);
+
+  });
+}
+
+
+/* =========================================================
+   ВИЛОЯТ ТАНЛАНГАНДА
+   ========================================================= */
+
+function showRegionAnalysis(region){
+
+  const districts =
+    region.id === "toshkent"
+      ? TASHKENT_DISTRICTS
+      : [];
+
+  let html = `
+    <div class="region-analysis-box">
+
+      <div class="analysis-title">
+        📊 ${region.name} — AI таҳлил
+      </div>
+
+      <div class="analysis-grid">
+
+        <div>
+          <b>💰 Қарздорлик</b>
+          <span>${region.debt} млрд</span>
+        </div>
+
+        <div>
+          <b>📉 Йўқотиш</b>
+          <span>${region.loss}%</span>
+        </div>
+
+        <div>
+          <b>⚖️ Дебаланс</b>
+          <span>${region.debalance}%</span>
+        </div>
+
+        <div>
+          <b>📡 Онлайн</b>
+          <span>${region.online}%</span>
+        </div>
+
+        <div>
+          <b>❄️ Қишга тайёргарлик</b>
+          <span>${region.winter}%</span>
+        </div>
+
+        <div>
+          <b>⚠️ Ноқонуний уланиш</b>
+          <span>${region.illegal}</span>
+        </div>
+
+      </div>
+  `;
+
+  if(districts.length){
+
+    html += `
+      <div class="district-analysis-title">
+        🏙 Туман ва шаҳарлар
+      </div>
+
+      <div class="district-analysis-table">
+
+        <table>
+
+          <thead>
+            <tr>
+              <th>№</th>
+              <th>Туман / шаҳар</th>
+              <th>Қарз</th>
+              <th>Йўқотиш</th>
+              <th>Дебаланс</th>
+              <th>Онлайн</th>
+              <th>Қиш</th>
+              <th>Risk</th>
+            </tr>
+          </thead>
+
+          <tbody>
+    `;
+
+    districts.forEach(function(d,i){
+
+      const risk =
+        calculateRisk(
+          d[1],
+          d[2],
+          d[3],
+          d[4],
+          d[5]
+        );
+
+      html += `
+        <tr>
+
+          <td>${i+1}</td>
+
+          <td>
+            <b>${d[0]}</b>
+          </td>
+
+          <td>
+            ${d[1]}
+          </td>
+
+          <td>
+            ${d[2]}%
+          </td>
+
+          <td>
+            ${d[3]}%
+          </td>
+
+          <td>
+            ${d[4]}%
+          </td>
+
+          <td>
+            ${d[5]}%
+          </td>
+
+          <td>
+            <span class="risk-pill ${risk.cls}">
+              ${risk.text}
+            </span>
+          </td>
+
+        </tr>
+      `;
+
+    });
+
+    html += `
+          </tbody>
+        </table>
+
+      </div>
+    `;
+
+  }else{
+
+    html += `
+      <div style="
+        margin-top:15px;
+        padding:14px;
+        background:#f8fafc;
+        border-radius:10px;
+      ">
+        📌 Бу ҳудуд учун туман/шаҳар маълумотлари
+        кейинги маълумотлар базасидан олинади.
+      </div>
+    `;
+
+  }
+
+  html += `</div>`;
+
+  let box =
+    document.getElementById("regionAnalysis");
+
+  if(!box){
+
+    box = document.createElement("div");
+
+    box.id = "regionAnalysis";
+
+    const map =
+      document.getElementById("uzbekistanMap");
+
+    if(map && map.parentNode){
+
+      map.parentNode.insertBefore(
+        box,
+        map.nextSibling
+      );
+
+    }else{
+
+      document.body.appendChild(box);
+
+    }
+
+  }
+
+  box.innerHTML = html;
+
+  box.scrollIntoView({
+    behavior:"smooth",
+    block:"start"
+  });
+}
+
+
+/* =========================================================
+   РЕСПУБЛИКА УМУМИЙ ТАҲЛИЛ
+   ========================================================= */
+
+function showRepublicAnalysis(){
+
+  const r = REPUBLIC_TOTAL;
+
+  const risk =
+    calculateRisk(
+      r.debt / 14,
+      r.loss,
+      r.debalance,
+      r.online,
+      r.winter
+    );
+
+  let box =
+    document.getElementById("republicAnalysis");
+
+  if(!box){
+
+    box = document.createElement("div");
+
+    box.id = "republicAnalysis";
+
+    const map =
+      document.getElementById("uzbekistanMap");
+
+    if(map && map.parentNode){
+
+      map.parentNode.insertBefore(
+        box,
+        map
+      );
+
+    }else{
+
+      document.body.appendChild(box);
+
+    }
+  }
+
+  box.innerHTML = `
+
+    <div class="republic-summary">
+
+      <div class="summary-head">
+        🇺🇿 РЕСПУБЛИКА БЎЙИЧА AI KPI ТАҲЛИЛ
+      </div>
+
+      <div class="summary-risk">
+        ${risk.text}
+        <b>${risk.score} балл</b>
+      </div>
+
+      <div class="summary-grid">
+
+        <div class="summary-card">
+          <span>💰 Қарздорлик</span>
+          <strong>
+            ${r.debt.toLocaleString("ru-RU")} млрд сўм
+          </strong>
+        </div>
+
+        <div class="summary-card">
+          <span>📉 Ўртача йўқотиш</span>
+          <strong>${r.loss}%</strong>
+        </div>
+
+        <div class="summary-card">
+          <span>⚖️ Дебаланс</span>
+          <strong>${r.debalance}%</strong>
+        </div>
+
+        <div class="summary-card">
+          <span>📡 Онлайн ҳисоблагич</span>
+          <strong>${r.online}%</strong>
+        </div>
+
+        <div class="summary-card">
+          <span>❄️ Қишга тайёргарлик</span>
+          <strong>${r.winter}%</strong>
+        </div>
+
+        <div class="summary-card">
+          <span>⚠️ Ноқонуний уланиш</span>
+          <strong>${r.illegal}</strong>
+        </div>
+
+      </div>
+
+      <div class="ai-conclusion">
+
+        <b>🤖 AI хулоса:</b>
+
+        Республика кесимида асосий эътиборни
+        қарздорликни камайтириш, йўқотишларни
+        пасайтириш, дебалансни назорат қилиш,
+        онлайн ҳисоблагичлар улушини ошириш ва
+        қишки мавсумга тайёргарликни тезлаштиришга
+        қаратиш зарур.
+
+      </div>
+
+    </div>
+  `;
+}
+
+
+/* =========================================================
+   ХАРИТА + ТАҲЛИЛНИ ИШГА ТУШИРИШ
+   ========================================================= */
+
+function startRepublicDashboard(){
+
+  showRepublicAnalysis();
+
+  setTimeout(function(){
+
+    loadLeaflet();
+
+  },300);
+
+}
+
+
+/* =========================================================
+   CSS
+   ========================================================= */
+
+(function(){
+
+  if(document.getElementById("v82MapStyle")) return;
+
+  const style =
+    document.createElement("style");
+
+  style.id = "v82MapStyle";
+
+  style.textContent = `
+
+    #uzbekistanMap{
+      min-height:520px;
+      border-radius:18px;
+      overflow:hidden;
+      box-shadow:0 8px 25px rgba(0,0,0,.08);
+    }
+
+    .region-analysis-box,
+    .republic-summary{
+      margin:18px 0;
+      padding:18px;
+      border-radius:18px;
+      background:#fff;
+      box-shadow:0 8px 25px rgba(0,0,0,.08);
+    }
+
+    .analysis-title,
+    .summary-head{
+      font-size:20px;
+      font-weight:800;
+      margin-bottom:15px;
+    }
+
+    .analysis-grid,
+    .summary-grid{
+      display:grid;
+      grid-template-columns:
+        repeat(auto-fit,minmax(170px,1fr));
+      gap:12px;
+    }
+
+    .analysis-grid>div,
+    .summary-card{
+      padding:14px;
+      border-radius:12px;
+      background:#f4f7fb;
+    }
+
+    .analysis-grid b,
+    .summary-card span{
+      display:block;
+      font-size:12px;
+      color:#64748b;
+      margin-bottom:6px;
+    }
+
+    .analysis-grid span,
+    .summary-card strong{
+      font-size:18px;
+      font-weight:800;
+    }
+
+    .summary-risk{
+      padding:12px;
+      border-radius:10px;
+      background:#f8fafc;
+      margin-bottom:15px;
+      font-weight:700;
+    }
+
+    .summary-risk b{
+      float:right;
+    }
+
+    .district-analysis-title{
+      margin-top:20px;
+      margin-bottom:10px;
+      font-size:18px;
+      font-weight:800;
+    }
+
+    .district-analysis-table{
+      width:100%;
+      overflow-x:auto;
+    }
+
+    .district-analysis-table table{
+      width:100%;
+      border-collapse:collapse;
+      min-width:850px;
+    }
+
+    .district-analysis-table th,
+    .district-analysis-table td{
+      padding:10px;
+      border-bottom:1px solid #e5e7eb;
+      text-align:left;
+    }
+
+    .district-analysis-table th{
+      background:#f1f5f9;
+      font-size:12px;
+    }
+
+    .risk-pill{
+      display:inline-block;
+      padding:5px 8px;
+      border-radius:999px;
+      font-size:11px;
+      font-weight:800;
+    }
+
+    .risk-red{
+      background:#fee2e2;
+      color:#b91c1c;
+    }
+
+    .risk-yellow{
+      background:#fef3c7;
+      color:#b45309;
+    }
+
+    .risk-green{
+      background:#dcfce7;
+      color:#15803d;
+    }
+
+    .ai-conclusion{
+      margin-top:18px;
+      padding:15px;
+      border-left:4px solid #0b5cab;
+      background:#f8fafc;
+      line-height:1.6;
+      border-radius:8px;
+    }
+
+    @media(max-width:700px){
+
+      #uzbekistanMap{
+        min-height:430px;
+      }
+
+      .analysis-grid,
+      .summary-grid{
+        grid-template-columns:1fr 1fr;
+      }
+
+    }
+
+  `;
+
+  document.head.appendChild(style);
+
+})();
+
+
+/* =========================================================
+   АВТОМАТИК ИШГА ТУШИРИШ
+   ========================================================= */
+
+document.addEventListener(
+  "DOMContentLoaded",
+  function(){
+
+    setTimeout(
+      startRepublicDashboard,
+      700
+    );
+
+  }
+);
+
+</script><!-- =========================================================
+     HUDUDGAZTAAMINOT AJ — v8.2
+     8-QISM
+     GOOGLE SHEETS + CRUD + KPI AUTO UPDATE
+     ========================================================= -->
+
+<script>
+
+/* =========================================================
+   1. GLOBAL DATA
+   ========================================================= */
+
+let dashboardData = [];
+
+let selectedRegionId = "all";
+
+let selectedDistrictName = "";
+
+let googleSheetsOnline = false;
+
+
+/* =========================================================
+   2. LOCAL STORAGE
+   ========================================================= */
+
+const STORAGE_KEY =
+  "HUDUDGAZTAAMINOT_AI_KPI_V82_DATA";
+
+
+function loadLocalData(){
+
+  try{
+
+    const saved =
+      localStorage.getItem(STORAGE_KEY);
+
+    if(saved){
+
+      dashboardData =
+        JSON.parse(saved);
+
+    }else{
+
+      dashboardData = [];
+
+    }
+
+  }catch(error){
+
+    console.error(
+      "Local data error:",
+      error
+    );
+
+    dashboardData = [];
+
+  }
+
+}
+
+
+function saveLocalData(){
+
+  try{
+
+    localStorage.setItem(
+      STORAGE_KEY,
+      JSON.stringify(dashboardData)
+    );
+
+  }catch(error){
+
+    console.error(
+      "Save local data error:",
+      error
+    );
+
+  }
+
+}
+
+
+/* =========================================================
+   3. GOOGLE APPS SCRIPT API
+   ========================================================= */
+
+/*
+   Агар Code.gs Web App URL мавжуд бўлса,
+   шу ерга қўйилади.
+
+   Масалан:
+
+   https://script.google.com/macros/s/XXXXXXXX/exec
+*/
+
+const GOOGLE_SCRIPT_URL =
+  window.GOOGLE_SCRIPT_URL ||
+  "";
+
+
+/* =========================================================
+   4. GOOGLE SHEETS GET
+   ========================================================= */
+
+async function loadFromGoogleSheets(){
+
+  if(!GOOGLE_SCRIPT_URL){
+
+    console.log(
+      "Google Script URL ҳали берилмаган."
+    );
+
+    googleSheetsOnline = false;
+
+    return false;
+
+  }
+
+  try{
+
+    setConnectionStatus(
+      "⏳ Google Sheets уланмоқда..."
+    );
+
+    const response =
+      await fetch(
+        GOOGLE_SCRIPT_URL +
+        "?action=getData",
+        {
+          method:"GET",
+          cache:"no-store"
+        }
+      );
+
+    if(!response.ok){
+
+      throw new Error(
+        "HTTP " + response.status
+      );
+
+    }
+
+    const result =
+      await response.json();
+
+    if(
+      result &&
+      Array.isArray(result.data)
+    ){
+
+      dashboardData =
+        result.data;
+
+      saveLocalData();
+
+      googleSheetsOnline = true;
+
+      setConnectionStatus(
+        "🟢 Google Sheets ONLINE"
+      );
+
+      refreshDashboardAll();
+
+      return true;
+
+    }
+
+    throw new Error(
+      "Маълумот формати нотўғри"
+    );
+
+  }catch(error){
+
+    console.error(
+      "Google Sheets GET error:",
+      error
+    );
+
+    googleSheetsOnline = false;
+
+    setConnectionStatus(
+      "🟡 Local Mode"
+    );
+
+    return false;
+
+  }
+
+}
+
+
+/* =========================================================
+   5. GOOGLE SHEETS SAVE
+   ========================================================= */
+
+async function saveToGoogleSheets(data){
+
+  if(!GOOGLE_SCRIPT_URL){
+
+    return false;
+
+  }
+
+  try{
+
+    const response =
+      await fetch(
+        GOOGLE_SCRIPT_URL,
+        {
+          method:"POST",
+
+          headers:{
+            "Content-Type":
+              "text/plain;charset=utf-8"
+          },
+
+          body:JSON.stringify({
+            action:"saveData",
+            data:data
+          })
+        }
+      );
+
+    if(!response.ok){
+
+      throw new Error(
+        "HTTP " + response.status
+      );
+
+    }
+
+    const result =
+      await response.json();
+
+    return (
+      result &&
+      result.success === true
+    );
+
+  }catch(error){
+
+    console.error(
+      "Google Sheets SAVE error:",
+      error
+    );
+
+    return false;
+
+  }
+
+}
+
+
+/* =========================================================
+   6. CONNECTION STATUS
+   ========================================================= */
+
+function setConnectionStatus(text){
+
+  let el =
+    document.getElementById(
+      "connectionStatus"
+    );
+
+  if(!el){
+
+    el =
+      document.createElement("div");
+
+    el.id =
+      "connectionStatus";
+
+    el.style.cssText = `
+      position:fixed;
+      right:15px;
+      bottom:15px;
+      z-index:99999;
+      padding:9px 13px;
+      border-radius:999px;
+      background:#ffffff;
+      box-shadow:0 4px 18px rgba(0,0,0,.15);
+      font-size:12px;
+      font-weight:700;
+    `;
+
+    document.body.appendChild(el);
+
+  }
+
+  el.textContent = text;
+
+}
+
+
+/* =========================================================
+   7. DISTRICT DATA NORMALIZER
+   ========================================================= */
+
+function normalizeDistrict(item){
+
+  return {
+
+    id:
+      item.id ||
+      ("D-" + Date.now() + "-" +
+       Math.floor(Math.random()*10000)),
+
+    region:
+      item.region ||
+      "toshkent",
+
+    name:
+      item.name ||
+      "Номаълум ҳудуд",
+
+    debt:
+      Number(item.debt || 0),
+
+    loss:
+      Number(item.loss || 0),
+
+    debalance:
+      Number(item.debalance || 0),
+
+    online:
+      Number(item.online || 0),
+
+    winter:
+      Number(item.winter || 0),
+
+    lpg:
+      Number(item.lpg || 0),
+
+    lpgDelay:
+      Number(item.lpgDelay || 0),
+
+    illegal:
+      Number(item.illegal || 0),
+
+    manager:
+      item.manager ||
+      "",
+
+    note:
+      item.note ||
+      "",
+
+    updated:
+      item.updated ||
+      new Date().toISOString()
+
+  };
+
+}
+
+
+/* =========================================================
+   8. SAVE DISTRICT
+   ========================================================= */
+
+async function saveDistrictV82(){
+
+  const id =
+    document.getElementById(
+      "editId"
+    )?.value || "";
+
+  const region =
+    document.getElementById(
+      "fRegion"
+    )?.value || "toshkent";
+
+  const name =
+    document.getElementById(
+      "fName"
+    )?.value.trim() || "";
+
+  if(!name){
+
+    alert(
+      "Туман / шаҳар номини киритинг."
+    );
+
+    return;
+
+  }
+
+  const item =
+    normalizeDistrict({
+
+      id:id || undefined,
+
+      region:region,
+
+      name:name,
+
+      debt:
+        document.getElementById(
+          "fDebt"
+        )?.value,
+
+      loss:
+        document.getElementById(
+          "fLoss"
+        )?.value,
+
+      debalance:
+        document.getElementById(
+          "fDebalance"
+        )?.value,
+
+      online:
+        document.getElementById(
+          "fOnline"
+        )?.value,
+
+      winter:
+        document.getElementById(
+          "fWinter"
+        )?.value,
+
+      lpg:
+        document.getElementById(
+          "fLpg"
+        )?.value,
+
+      lpgDelay:
+        document.getElementById(
+          "fLpgDelay"
+        )?.value,
+
+      illegal:
+        document.getElementById(
+          "fIllegal"
+        )?.value,
+
+      manager:
+        document.getElementById(
+          "fManager"
+        )?.value,
+
+      note:
+        document.getElementById(
+          "fNote"
+        )?.value
+
+    });
+
+
+  if(id){
+
+    const index =
+      dashboardData.findIndex(
+        x => String(x.id) === String(id)
+      );
+
+    if(index >= 0){
+
+      dashboardData[index] =
+        item;
+
+    }else{
+
+      dashboardData.push(item);
+
+    }
+
+  }else{
+
+    dashboardData.push(item);
+
+  }
+
+
+  saveLocalData();
+
+  refreshDashboardAll();
+
+  const saved =
+    await saveToGoogleSheets(
+      dashboardData
+    );
+
+
+  if(saved){
+
+    setConnectionStatus(
+      "🟢 Google Sheets сақланди"
+    );
+
+  }else{
+
+    setConnectionStatus(
+      "🟡 Local Mode сақланди"
+    );
+
+  }
+
+
+  if(
+    typeof closeModal ===
+    "function"
+  ){
+
+    closeModal(
+      "districtModal"
+    );
+
+  }
+
+
+  if(
+    typeof showToast ===
+    "function"
+  ){
+
+    showToast(
+      "✅ Маълумот сақланди"
+    );
+
+  }else{
+
+    alert(
+      "✅ Маълумот сақланди"
+    );
+
+  }
+
+}
+
+
+/* =========================================================
+   9. EXISTING saveDistrict() NI OVERRIDE
+   ========================================================= */
+
+window.saveDistrict =
+  saveDistrictV82;
+
+
+/* =========================================================
+   10. EDIT DISTRICT
+   ========================================================= */
+
+function editDistrictV82(id){
+
+  const item =
+    dashboardData.find(
+      x => String(x.id) === String(id)
+    );
+
+  if(!item){
+
+    alert(
+      "Маълумот топилмади."
+    );
+
+    return;
+
+  }
+
+
+  const fields = {
+
+    editId:item.id,
+
+    fRegion:item.region,
+
+    fName:item.name,
+
+    fDebt:item.debt,
+
+    fLoss:item.loss,
+
+    fDebalance:item.debalance,
+
+    fOnline:item.online,
+
+    fWinter:item.winter,
+
+    fLpg:item.lpg,
+
+    fLpgDelay:item.lpgDelay,
+
+    fIllegal:item.illegal,
+
+    fManager:item.manager,
+
+    fNote:item.note
+
+  };
+
+
+  Object.keys(fields).forEach(
+    function(id){
+
+      const el =
+        document.getElementById(id);
+
+      if(el){
+
+        el.value =
+          fields[id];
+
+      }
+
+    }
+  );
+
+
+  if(
+    typeof openModal ===
+    "function"
+  ){
+
+    openModal(
+      "districtModal"
+    );
+
+  }
+
+}
+
+
+/* =========================================================
+   11. DELETE DISTRICT
+   ========================================================= */
+
+async function deleteDistrictV82(id){
+
+  const item =
+    dashboardData.find(
+      x => String(x.id) === String(id)
+    );
+
+  if(!item){
+
+    return;
+
+  }
+
+
+  const ok =
+    confirm(
+      "«" +
+      item.name +
+      "» маълумотини ўчиришни тасдиқлайсизми?"
+    );
+
+  if(!ok){
+
+    return;
+
+  }
+
+
+  dashboardData =
+    dashboardData.filter(
+      x =>
+        String(x.id) !==
+        String(id)
+    );
+
+
+  saveLocalData();
+
+  refreshDashboardAll();
+
+
+  const saved =
+    await saveToGoogleSheets(
+      dashboardData
+    );
+
+
+  setConnectionStatus(
+    saved
+      ? "🟢 Google Sheets янгиланди"
+      : "🟡 Local Mode"
+  );
+
+}
+
+
+/* =========================================================
+   12. KPI CALCULATION
+   ========================================================= */
+
+function calculateKPI(data){
+
+  if(!data.length){
+
+    return {
+
+      debt:0,
+      loss:0,
+      debalance:0,
+      online:0,
+      winter:0,
+      lpg:0,
+      illegal:0
+
+    };
+
+  }
+
+
+  const total =
+    data.length;
+
+
+  return {
+
+    debt:
+      data.reduce(
+        (s,x) =>
+          s + Number(x.debt || 0),
+        0
+      ),
+
+    loss:
+      data.reduce(
+        (s,x) =>
+          s + Number(x.loss || 0),
+        0
+      ) / total,
+
+    debalance:
+      data.reduce(
+        (s,x) =>
+          s + Number(x.debalance || 0),
+        0
+      ) / total,
+
+    online:
+      data.reduce(
+        (s,x) =>
+          s + Number(x.online || 0),
+        0
+      ) / total,
+
+    winter:
+      data.reduce(
+        (s,x) =>
+          s + Number(x.winter || 0),
+        0
+      ) / total,
+
+    lpg:
+      data.reduce(
+        (s,x) =>
+          s + Number(x.lpg || 0),
+        0
+      ),
+
+    illegal:
+      data.reduce(
+        (s,x) =>
+          s + Number(x.illegal || 0),
+        0
+      )
+
+  };
+
+}
+
+
+/* =========================================================
+   13. RISK
+   ========================================================= */
+
+function getDistrictRisk(item){
+
+  return calculateRisk(
+    Number(item.debt),
+    Number(item.loss),
+    Number(item.debalance),
+    Number(item.online),
+    Number(item.winter)
+  );
+
+}
+
+
+/* =========================================================
+   14. TOP / ANTITOP
+   ========================================================= */
+
+function getTopDistricts(limit=10){
+
+  return [...dashboardData]
+
+    .sort(
+      (a,b) =>
+        getDistrictRisk(b).score -
+        getDistrictRisk(a).score
+    )
+
+    .slice(0,limit);
+
+}
+
+
+function getBestDistricts(limit=10){
+
+  return [...dashboardData]
+
+    .sort(
+      (a,b) =>
+        getDistrictRisk(a).score -
+        getDistrictRisk(b).score
+    )
+
+    .slice(0,limit);
+
+}
+
+
+/* =========================================================
+   15. AI NEGATIVE ANALYSIS
+   ========================================================= */
+
+function generateAIAnalysis(data){
+
+  if(!data.length){
+
+    return `
+      <div class="ai-conclusion">
+        📊 Ҳозирча таҳлил учун ҳудудий маълумот мавжуд эмас.
+      </div>
+    `;
+
+  }
+
+
+  const kpi =
+    calculateKPI(data);
+
+
+  const red =
+    data.filter(
+      x =>
+        getDistrictRisk(x).level ===
+        "RED"
+    );
+
+
+  const yellow =
+    data.filter(
+      x =>
+        getDistrictRisk(x).level ===
+        "YELLOW"
+    );
+
+
+  const green =
+    data.filter(
+      x =>
+        getDistrictRisk(x).level ===
+        "GREEN"
+    );
+
+
+  const highestDebt =
+    [...data].sort(
+      (a,b) =>
+        Number(b.debt) -
+        Number(a.debt)
+    )[0];
+
+
+  const highestLoss =
+    [...data].sort(
+      (a,b) =>
+        Number(b.loss) -
+        Number(a.loss)
+    )[0];
+
+
+  const lowestOnline =
+    [...data].sort(
+      (a,b) =>
+        Number(a.online) -
+        Number(b.online)
+    )[0];
+
+
+  return `
+
+    <div class="ai-report">
+
+      <div class="ai-report-title">
+        🤖 AI НАЗОРАТ ХУЛОСАСИ
+      </div>
+
+      <div class="ai-risk-row">
+
+        <span>
+          🔴 Қизил зона:
+          <b>${red.length}</b>
+        </span>
+
+        <span>
+          🟡 Сариқ зона:
+          <b>${yellow.length}</b>
+        </span>
+
+        <span>
+          🟢 Яшил зона:
+          <b>${green.length}</b>
+        </span>
+
+      </div>
+
+
+      <div class="ai-warning">
+
+        💰 Энг юқори қарздорлик:
+        <b>${highestDebt.name}</b>
+        —
+        ${Number(highestDebt.debt).toLocaleString("ru-RU")}
+        млрд сўм.
+
+      </div>
+
+
+      <div class="ai-warning">
+
+        📉 Энг юқори йўқотиш:
+        <b>${highestLoss.name}</b>
+        —
+        ${highestLoss.loss}%.
+
+      </div>
+
+
+      <div class="ai-warning">
+
+        📡 Онлайн ҳисоблагич кўрсаткичи энг паст:
+        <b>${lowestOnline.name}</b>
+        —
+        ${lowestOnline.online}%.
+
+      </div>
+
+
+      <div class="ai-recommendation">
+
+        <b>🎯 AI тавсияси:</b>
+
+        Биринчи навбатда қизил зонадаги
+        ҳудудлар бўйича қарздорлик,
+        йўқотиш ва дебаланс сабабларини
+        таҳлил қилиш; онлайн ҳисоблагичларни
+        тиклаш; қишки тайёргарлик режаларини
+        назоратга олиш ва масъулларга муддатли
+        вазифалар белгилаш тавсия этилади.
+
+      </div>
+
+    </div>
+
+  `;
+
+}
+
+
+/* =========================================================
+   16. AI REPORT CONTAINER
+   ========================================================= */
+
+function renderAIReport(){
+
+  let container =
+    document.getElementById(
+      "aiAutoReport"
+    );
+
+
+  if(!container){
+
+    container =
+      document.createElement("div");
+
+    container.id =
+      "aiAutoReport";
+
+
+    const map =
+      document.getElementById(
+        "uzbekistanMap"
+      );
+
+
+    if(map){
+
+      map.parentNode.insertBefore(
+        container,
+        map
+      );
+
+    }else{
+
+      document.body.prepend(
+        container
+      );
+
+    }
+
+  }
+
+
+  container.innerHTML =
+    generateAIAnalysis(
+      dashboardData
+    );
+
+}
+
+
+/* =========================================================
+   17. DISTRICT TABLE
+   ========================================================= */
+
+function renderDistrictTable(){
+
+  let container =
+    document.getElementById(
+      "dynamicDistrictTable"
+    );
+
+
+  if(!container){
+
+    container =
+      document.createElement("div");
+
+    container.id =
+      "dynamicDistrictTable";
+
+
+    const target =
+      document.getElementById(
+        "regionAnalysis"
+      ) ||
+      document.getElementById(
+        "uzbekistanMap"
+      );
+
+
+    if(target){
+
+      target.parentNode.insertBefore(
+        container,
+        target.nextSibling
+      );
+
+    }
+
+  }
+
+
+  if(!container) return;
+
+
+  if(!dashboardData.length){
+
+    container.innerHTML = "";
+
+    return;
+
+  }
+
+
+  let rows = "";
+
+
+  dashboardData.forEach(
+    function(item,index){
+
+      const risk =
+        getDistrictRisk(item);
+
+
+      rows += `
+
+        <tr>
+
+          <td>${index+1}</td>
+
+          <td>
+            <b>${item.name}</b>
+          </td>
+
+          <td>
+            ${item.debt}
+          </td>
+
+          <td>
+            ${item.loss}%
+          </td>
+
+          <td>
+            ${item.debalance}%
+          </td>
+
+          <td>
+            ${item.online}%
+          </td>
+
+          <td>
+            ${item.winter}%
+          </td>
+
+          <td>
+
+            <span class="
+              risk-pill
+              ${risk.cls}
+            ">
+
+              ${risk.text}
+
+            </span>
+
+          </td>
+
+          <td>
+
+            <button
+              class="btn small"
+              onclick="editDistrictV82('${item.id}')">
+
+              ✏️
+
+            </button>
+
+            <button
+              class="btn small danger"
+              onclick="deleteDistrictV82('${item.id}')">
+
+              🗑
+
+            </button>
+
+          </td>
+
+        </tr>
+
+      `;
+
+    }
+  );
+
+
+  container.innerHTML = `
+
+    <div class="dynamic-table-box">
+
+      <div class="dynamic-table-title">
+
+        🏙 Туман / шаҳарлар — жорий маълумот
+
+      </div>
+
+
+      <div class="dynamic-table-scroll">
+
+        <table>
+
+          <thead>
+
+            <tr>
+
+              <th>№</th>
+
+              <th>Ҳудуд</th>
+
+              <th>Қарз</th>
+
+              <th>Йўқотиш</th>
+
+              <th>Дебаланс</th>
+
+              <th>Онлайн</th>
+
+              <th>Қиш</th>
+
+              <th>Risk</th>
+
+              <th>Амал</th>
+
+            </tr>
+
+          </thead>
+
+          <tbody>
+
+            ${rows}
+
+          </tbody>
+
+        </table>
+
+      </div>
+
+    </div>
+
+  `;
+
+}
+
+
+/* =========================================================
+   18. KPI BLOCK
+   ========================================================= */
+
+function renderDynamicKPI(){
+
+  const kpi =
+    calculateKPI(
+      dashboardData
+    );
+
+
+  let container =
+    document.getElementById(
+      "dynamicKPI"
+    );
+
+
+  if(!container){
+
+    container =
+      document.createElement("div");
+
+    container.id =
+      "dynamicKPI";
+
+
+    document.body.prepend(
+      container
+    );
+
+  }
+
+
+  container.innerHTML = `
+
+    <div class="dynamic-kpi-grid">
+
+      <div class="dynamic-kpi-card">
+
+        <span>💰 Қарздорлик</span>
+
+        <strong>
+          ${kpi.debt.toLocaleString("ru-RU")}
+        </strong>
+
+        <small>млрд сўм</small>
+
+      </div>
+
+
+      <div class="dynamic-kpi-card">
+
+        <span>📉 Йўқотиш</span>
+
+        <strong>
+          ${kpi.loss.toFixed(2)}%
+        </strong>
+
+      </div>
+
+
+      <div class="dynamic-kpi-card">
+
+        <span>⚖️ Дебаланс</span>
+
+        <strong>
+          ${kpi.debalance.toFixed(2)}%
+        </strong>
+
+      </div>
+
+
+      <div class="dynamic-kpi-card">
+
+        <span>📡 Онлайн</span>
+
+        <strong>
+          ${kpi.online.toFixed(1)}%
+        </strong>
+
+      </div>
+
+
+      <div class="dynamic-kpi-card">
+
+        <span>❄️ Қишга тайёргарлик</span>
+
+        <strong>
+          ${kpi.winter.toFixed(1)}%
+        </strong>
+
+      </div>
+
+
+      <div class="dynamic-kpi-card">
+
+        <span>⚠️ Ноқонуний уланиш</span>
+
+        <strong>
+          ${kpi.illegal}
+        </strong>
+
+      </div>
+
+    </div>
+
+  `;
+
+}
+
+
+/* =========================================================
+   19. ALL REFRESH
+   ========================================================= */
+
+function refreshDashboardAll(){
+
+  renderDynamicKPI();
+
+  renderAIReport();
+
+  renderDistrictTable();
+
+  updateMapFromDynamicData();
+
+}
+
+
+/* =========================================================
+   20. DYNAMIC MAP UPDATE
+   ========================================================= */
+
+function updateMapFromDynamicData(){
+
+  if(
+    !window.L ||
+    !republicMap
+  ){
+
+    return;
+
+  }
+
+
+  dashboardData.forEach(
+    function(item){
+
+      if(
+        !item.lat ||
+        !item.lng
+      ){
+
+        return;
+
+      }
+
+
+      const risk =
+        getDistrictRisk(item);
+
+
+      const marker =
+        L.marker(
+          [
+            Number(item.lat),
+            Number(item.lng)
+          ],
+          {
+            icon:
+              makeMarkerIcon(
+                risk.level
+              )
+          }
+        )
+        .addTo(republicMap);
+
+
+      marker.bindPopup(
+        createRegionPopup({
+
+          name:item.name,
+
+          debt:item.debt,
+
+          loss:item.loss,
+
+          debalance:item.debalance,
+
+          online:item.online,
+
+          winter:item.winter,
+
+          lpg:item.lpg,
+
+          illegal:item.illegal
+
+        })
+      );
+
+
+      mapMarkers.push(
+        marker
+      );
+
+    }
+  );
+
+}
+
+
+/* =========================================================
+   21. REGION SELECT
+   ========================================================= */
+
+function populateRegionSelectV82(){
+
+  const select =
+    document.getElementById(
+      "fRegion"
+    );
+
+
+  if(!select) return;
+
+
+  select.innerHTML = "";
+
+
+  REGION_DATA.forEach(
+    function(region){
+
+      const option =
+        document.createElement(
+          "option"
+        );
+
+
+      option.value =
+        region.id;
+
+
+      option.textContent =
+        region.name;
+
+
+      select.appendChild(
+        option
+      );
+
+    }
+  );
+
+
+  select.value =
+    "toshkent";
+
+}
+
+
+/* =========================================================
+   22. SEARCH
+   ========================================================= */
+
+function searchDashboardData(text){
+
+  const q =
+    String(text || "")
+      .trim()
+      .toLowerCase();
+
+
+  if(!q){
+
+    refreshDashboardAll();
+
+    return dashboardData;
+
+  }
+
+
+  const result =
+    dashboardData.filter(
+      function(item){
+
+        return (
+
+          String(item.name)
+            .toLowerCase()
+            .includes(q)
+
+          ||
+
+          String(item.manager)
+            .toLowerCase()
+            .includes(q)
+
+        );
+
+      }
+    );
+
+
+  renderSearchResults(
+    result
+  );
+
+
+  return result;
+
+}
+
+
+function renderSearchResults(data){
+
+  let container =
+    document.getElementById(
+      "searchResultsV82"
+    );
+
+
+  if(!container){
+
+    container =
+      document.createElement("div");
+
+    container.id =
+      "searchResultsV82";
+
+    document.body.prepend(
+      container
+    );
+
+  }
+
+
+  if(!data.length){
+
+    container.innerHTML = `
+      <div class="search-empty">
+        🔎 Маълумот топилмади.
+      </div>
+    `;
+
+    return;
+
+  }
+
+
+  container.innerHTML = `
+
+    <div class="search-result-box">
+
+      <b>🔎 Қидирув натижаси</b>
+
+      <div>
+
+        ${data.map(
+          item => `
+
+            <button
+              onclick="
+                showDistrictOnMap(
+                  '${item.id}'
+                )
+              "
+            >
+
+              ${item.name}
+
+            </button>
+
+          `
+        ).join("")}
+
+      </div>
+
+    </div>
+
+  `;
+
+}
+
+
+/* =========================================================
+   23. SHOW DISTRICT ON MAP
+   ========================================================= */
+
+function showDistrictOnMap(id){
+
+  const item =
+    dashboardData.find(
+      x =>
+        String(x.id) ===
+        String(id)
+    );
+
+
+  if(!item){
+
+    return;
+
+  }
+
+
+  if(
+    republicMap &&
+    item.lat &&
+    item.lng
+  ){
+
+    republicMap.setView(
+      [
+        Number(item.lat),
+        Number(item.lng)
+      ],
+      11
+    );
+
+  }
+
+
+  const risk =
+    getDistrictRisk(item);
+
+
+  alert(
+
+    item.name +
+    "\n\n" +
+
+    risk.text +
+    "\n" +
+
+    "Қарздорлик: " +
+    item.debt +
+    " млрд сўм\n" +
+
+    "Йўқотиш: " +
+    item.loss +
+    "%\n" +
+
+    "Дебаланс: " +
+    item.debalance +
+    "%\n" +
+
+    "Онлайн: " +
+    item.online +
+    "%\n" +
+
+    "Қишга тайёргарлик: " +
+    item.winter +
+    "%"
+
+  );
+
+}
+
+
+/* =========================================================
+   24. EXPORT JSON
+   ========================================================= */
+
+function exportDashboardJSON(){
+
+  const blob =
+    new Blob(
+      [
+        JSON.stringify(
+          dashboardData,
+          null,
+          2
+        )
+      ],
+      {
+        type:
+          "application/json"
+      }
+    );
+
+
+  const url =
+    URL.createObjectURL(
+      blob
+    );
+
+
+  const a =
+    document.createElement("a");
+
+
+  a.href = url;
+
+  a.download =
+    "HUDUDGAZTAAMINOT_AI_KPI_v8_2_DATA.json";
+
+
+  document.body.appendChild(a);
+
+  a.click();
+
+  a.remove();
+
+  URL.revokeObjectURL(url);
+
+}
+
+
+/* =========================================================
+   25. RESET LOCAL DATA
+   ========================================================= */
+
+function resetLocalDashboardData(){
+
+  const ok =
+    confirm(
+      "Local маълумотларни тозалашни тасдиқлайсизми?"
+    );
+
+
+  if(!ok) return;
+
+
+  localStorage.removeItem(
+    STORAGE_KEY
+  );
+
+
+  dashboardData = [];
+
+
+  refreshDashboardAll();
+
+
+  alert(
+    "Local маълумотлар тозаланди."
+  );
+
+}
+
+
+/* =========================================================
+   26. CSS
+   ========================================================= */
+
+(function(){
+
+  if(
+    document.getElementById(
+      "v82Part8Style"
+    )
+  ){
+
+    return;
+
+  }
+
+
+  const style =
+    document.createElement(
+      "style"
+    );
+
+
+  style.id =
+    "v82Part8Style";
+
+
+  style.textContent = `
+
+    #dynamicKPI{
+      margin:18px 0;
+    }
+
+
+    .dynamic-kpi-grid{
+
+      display:grid;
+
+      grid-template-columns:
+        repeat(
+          auto-fit,
+          minmax(170px,1fr)
+        );
+
+      gap:12px;
+
+    }
+
+
+    .dynamic-kpi-card{
+
+      background:#fff;
+
+      border-radius:15px;
+
+      padding:16px;
+
+      box-shadow:
+        0 5px 20px
+        rgba(0,0,0,.08);
+
+    }
+
+
+    .dynamic-kpi-card span{
+
+      display:block;
+
+      font-size:12px;
+
+      color:#64748b;
+
+      margin-bottom:7px;
+
+    }
+
+
+    .dynamic-kpi-card strong{
+
+      display:block;
+
+      font-size:22px;
+
+      font-weight:800;
+
+    }
+
+
+    .dynamic-kpi-card small{
+
+      color:#64748b;
+
+    }
+
+
+    #aiAutoReport{
+
+      margin:18px 0;
+
+    }
+
+
+    .ai-report{
+
+      background:#fff;
+
+      border-radius:18px;
+
+      padding:18px;
+
+      box-shadow:
+        0 7px 25px
+        rgba(0,0,0,.08);
+
+    }
+
+
+    .ai-report-title{
+
+      font-size:20px;
+
+      font-weight:800;
+
+      margin-bottom:15px;
+
+    }
+
+
+    .ai-risk-row{
+
+      display:grid;
+
+      grid-template-columns:
+        repeat(
+          3,
+          1fr
+        );
+
+      gap:10px;
+
+      margin-bottom:15px;
+
+    }
+
+
+    .ai-risk-row span{
+
+      padding:12px;
+
+      background:#f8fafc;
+
+      border-radius:10px;
+
+      text-align:center;
+
+    }
+
+
+    .ai-warning{
+
+      margin-top:10px;
+
+      padding:12px;
+
+      background:#fff7ed;
+
+      border-radius:10px;
+
+    }
+
+
+    .ai-recommendation{
+
+      margin-top:14px;
+
+      padding:14px;
+
+      background:#eff6ff;
+
+      border-left:
+        4px solid #0b5cab;
+
+      border-radius:8px;
+
+      line-height:1.6;
+
+    }
+
+
+    .dynamic-table-box{
+
+      margin:18px 0;
+
+      background:#fff;
+
+      border-radius:18px;
+
+      padding:18px;
+
+      box-shadow:
+        0 7px 25px
+        rgba(0,0,0,.08);
+
+    }
+
+
+    .dynamic-table-title{
+
+      font-size:18px;
+
+      font-weight:800;
+
+      margin-bottom:12px;
+
+    }
+
+
+    .dynamic-table-scroll{
+
+      width:100%;
+
+      overflow-x:auto;
+
+    }
+
+
+    .dynamic-table-scroll table{
+
+      width:100%;
+
+      min-width:900px;
+
+      border-collapse:collapse;
+
+    }
+
+
+    .dynamic-table-scroll th,
+    .dynamic-table-scroll td{
+
+      padding:10px;
+
+      border-bottom:
+        1px solid #e5e7eb;
+
+      text-align:left;
+
+    }
+
+
+    .dynamic-table-scroll th{
+
+      background:#f1f5f9;
+
+      font-size:12px;
+
+    }
+
+
+    .btn.small{
+
+      padding:5px 8px;
+
+      border:0;
+
+      border-radius:7px;
+
+      cursor:pointer;
+
+    }
+
+
+    .btn.danger{
+
+      background:#fee2e2;
+
+      color:#b91c1c;
+
+    }
+
+
+    .search-result-box{
+
+      margin:15px 0;
+
+      padding:14px;
+
+      background:#fff;
+
+      border-radius:14px;
+
+      box-shadow:
+        0 5px 20px
+        rgba(0,0,0,.08);
+
+    }
+
+
+    .search-result-box button{
+
+      margin:6px 5px 0 0;
+
+      padding:8px 12px;
+
+      border:1px solid #dbe3ec;
+
+      background:#f8fafc;
+
+      border-radius:8px;
+
+      cursor:pointer;
+
+    }
+
+
+    .search-empty{
+
+      padding:15px;
+
+      background:#fff;
+
+      border-radius:12px;
+
+    }
+
+
+    @media(max-width:700px){
+
+      .ai-risk-row{
+
+        grid-template-columns:1fr;
+
+      }
+
+      .dynamic-kpi-grid{
+
+        grid-template-columns:
+          1fr 1fr;
+
+      }
+
+    }
+
+  `;
+
+
+  document.head.appendChild(
+    style
+  );
+
+})();
+
+
+/* =========================================================
+   27. INIT
+   ========================================================= */
+
+function initPart8(){
+
+  loadLocalData();
+
+  populateRegionSelectV82();
+
+  refreshDashboardAll();
+
+  setConnectionStatus(
+    "🟡 Local Mode"
+  );
+
+
+  /*
+     Агар Google Apps Script URL
+     берилган бўлса, автоматик
+     Google Sheets'дан маълумот олади.
+  */
+
+  if(GOOGLE_SCRIPT_URL){
+
+    loadFromGoogleSheets();
+
+  }
+
+}
+
+
+/* =========================================================
+   28. START
+   ========================================================= */
+
+if(
+  document.readyState ===
+  "loading"
+){
+
+  document.addEventListener(
+    "DOMContentLoaded",
+    initPart8
+  );
+
+}else{
+
+  initPart8();
+
+}
+
+
+/* =========================================================
+   29. PUBLIC API
+   ========================================================= */
+
+window.HUDUDGAZ_V82 = {
+
+  data:
+    () =>
+      dashboardData,
+
+  refresh:
+    refreshDashboardAll,
+
+  loadSheets:
+    loadFromGoogleSheets,
+
+  saveSheets:
+    () =>
+      saveToGoogleSheets(
+        dashboardData
+      ),
+
+  add:
+    saveDistrictV82,
+
+  edit:
+    editDistrictV82,
+
+  remove:
+    deleteDistrictV82,
+
+  search:
+    searchDashboardData,
+
+  export:
+    exportDashboardJSON,
+
+  reset:
+    resetLocalDashboardData
+
+};
+
+</script>
 </body>
 </html>

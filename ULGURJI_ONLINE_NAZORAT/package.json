@@ -1,0 +1,10 @@
+{
+  "name": "ulgurji-online-nazorat",
+  "version": "3.1.0",
+  "private": true,
+  "scripts": {
+    "start": "node server.js",
+    "import": "python import_excel.py",
+    "check": "node --check server.js && node --check public/app.js"
+  }
+}

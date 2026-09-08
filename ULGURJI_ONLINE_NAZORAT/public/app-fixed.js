@@ -1,172 +1,26 @@
-var token = localStorage.getItem('uog_token') || '';
-var me = null;
-var lastPos = null;
-
-function $(id) { return document.getElementById(id); }
-
-async function api(url, options) {
-  options = options || {};
-  options.headers = Object.assign({}, options.headers || {}, {
-    'Content-Type': 'application/json',
-    'Authorization': 'Bearer ' + token
-  });
-  var r = await fetch(url, options);
-  var d = await r.json().catch(function () { return {}; });
-  if (!r.ok) throw new Error(d.error || 'API_ERROR');
-  return d;
-}
-
-function show(id) {
-  ['loginScreen', 'employee', 'admin'].forEach(function (x) {
-    var el = $(x);
-    if (el) el.classList.add('hidden');
-  });
-  var target = $(id);
-  if (target) target.classList.remove('hidden');
-}
-
-async function loginApp() {
-  var msg = $('loginMsg');
-  var btn = $('loginBtn');
-  var user = $('loginUser');
-  var pass = $('loginPass');
-  if (msg) msg.textContent = '';
-  if (!user || !pass || !user.value.trim() || !pass.value) {
-    if (msg) msg.textContent = 'Логин ва паролни киритинг';
-    return;
-  }
-  if (btn) btn.disabled = true;
-  try {
-    var r = await fetch('/api/login', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      cache: 'no-store',
-      body: JSON.stringify({ login: user.value.trim(), password: pass.value })
-    });
-    var d = await r.json().catch(function () { return {}; });
-    if (!r.ok || !d.token) throw new Error(d.error === 'LOGIN_FAILED' ? 'Логин ёки парол хато' : (d.error || 'Киришда хатолик'));
-    token = d.token;
-    me = d.user;
-    localStorage.setItem('uog_token', token);
-    await boot();
-  } catch (e) {
-    if (msg) msg.textContent = e.message || 'Киришда хатолик';
-  } finally {
-    if (btn) btn.disabled = false;
-  }
-}
-
-function logout() {
-  localStorage.removeItem('uog_token');
-  location.reload();
-}
-
-async function boot() {
-  try {
-    me = await api('/api/me');
-    if (me.role === 'admin') {
-      show('admin');
-      loadReport();
-      loadConsumers();
-      loadAudit();
-      loadMetrics();
-    } else {
-      show('employee');
-      if ($('empName')) $('empName').textContent = me.name || '';
-      loadToday();
-    }
-  } catch (e) {
-    localStorage.removeItem('uog_token');
-    token = '';
-    show('loginScreen');
-  }
-}
-
-async function loadToday() {
-  try {
-    var d = await api('/api/today');
-    var items = d.items || [];
-    var q = (($('search') && $('search').value) || '').toLowerCase();
-    var filtered = items.filter(function (x) {
-      return (String(x.name || '') + ' ' + String(x.district || '') + ' ' + String(x.branch || '')).toLowerCase().indexOf(q) >= 0;
-    });
-    var visited = items.filter(function (x) { return x.visit_id; }).length;
-    if ($('planned')) $('planned').textContent = items.length;
-    if ($('visited')) $('visited').textContent = visited;
-    if ($('notVisited')) $('notVisited').textContent = items.length - visited;
-    if ($('completion')) $('completion').textContent = (items.length ? Math.round(visited / items.length * 100) : 0) + '%';
-    if ($('list')) $('list').innerHTML = filtered.map(function (x) {
-      return '<div class="consumer"><b>' + esc(x.name) + '</b><div class="muted">' + esc(x.branch) + ' • ' + esc(x.district) + ' • ' + esc(x.category) + '</div></div>';
-    }).join('') || '<p>Натижа йўқ</p>';
-  } catch (e) {}
-}
-
-async function loadConsumers() {
-  var box = $('consumerList');
-  if (!box) return;
-  try {
-    var term = (($('consumerSearch') && $('consumerSearch').value) || '').trim();
-    var d = await api('/api/consumers' + (term ? '?q=' + encodeURIComponent(term) : ''));
-    var items = Array.isArray(d) ? d : (d.items || []);
-    if ($('consumerCount')) $('consumerCount').textContent = 'Кўрсатилаяпти: ' + items.length + (items.length === 200 ? ' (биринчи 200 та)' : '');
-    box.innerHTML = items.map(function (x) {
-      var loc = (x.lat != null && x.lon != null) ? '📍 Жойлашув бор' : '📍 Жойлашув киритилмаган';
-      return '<div class="consumer"><b>' + esc(x.name || 'Номсиз') + '</b><div class="muted">' + esc(x.branch || '') + ' • ' + esc(x.district || '') + (x.mahalla ? ' • ' + esc(x.mahalla) : '') + '</div><div class="muted">' + esc(x.category || '') + (x.phone ? ' • ' + esc(x.phone) : '') + ' • ' + loc + '</div></div>';
-    }).join('') || '<p>Истеъмолчи топилмади</p>';
-  } catch (e) {
-    box.innerHTML = '<p class="bad">Истеъмолчилар рўйхатини юклашда хатолик</p>';
-  }
-}
-
-async function loadReport() {
-  try {
-    var d = await api('/api/report');
-    var rows = d.result || [];
-    var p = 0, v = 0, m = 0, s = 0;
-    if ($('report')) $('report').innerHTML = '<table><tr><th>Ходим</th><th>Режа</th><th>Ташриф</th><th>Ташрифсиз</th><th>Шубҳали</th><th>%</th></tr>' + rows.map(function (x) {
-      p += x.planned; v += x.visited; m += x.not_visited; s += x.suspicious;
-      return '<tr><td>' + esc(x.employee) + '</td><td>' + x.planned + '</td><td>' + x.visited + '</td><td>' + x.not_visited + '</td><td>' + x.suspicious + '</td><td>' + x.completion + '%</td></tr>';
-    }).join('') + '</table>';
-    if ($('aPlanned')) $('aPlanned').textContent = p;
-    if ($('aVisited')) $('aVisited').textContent = v;
-    if ($('aMissing')) $('aMissing').textContent = m;
-    if ($('aSuspicious')) $('aSuspicious').textContent = s;
-  } catch (e) {}
-}
-
-async function loadAudit() {
-  try {
-    var d = await api('/api/audit');
-    if ($('auditState')) $('auditState').textContent = d.chain_valid ? '✅ Audit chain бутун — ' + (d.rows || []).length + ' та ёзув.' : '🚨 Audit chain бузилган!';
-  } catch (e) {}
-}
-
-async function loadMetrics() {
-  try {
-    var d = await api('/api/metrics');
-    if ($('dbState')) $('dbState').textContent = 'DB: ' + d.integrity + ' • истеъмолчи ' + d.consumers + ' • ходим ' + d.employees + ' • GPS ' + d.gps_points + ' • ташриф ' + d.visits;
-  } catch (e) {}
-}
-
-function esc(s) {
-  return String(s == null ? '' : s).replace(/[&<>\"']/g, function (m) {
-    return {'&':'&amp;','<':'&lt;','>':'&gt;','\"':'&quot;',"'":'&#039;'}[m];
-  });
-}
-
-window.loginApp = loginApp;
-window.login = loginApp;
-window.logout = logout;
-window.loadToday = loadToday;
-window.loadConsumers = loadConsumers;
-window.loadAudit = loadAudit;
-
-document.addEventListener('DOMContentLoaded', function () {
-  var btn = $('loginBtn');
-  var form = $('loginForm');
-  var pass = $('loginPass');
-  if (btn) btn.addEventListener('click', loginApp);
-  if (form) form.addEventListener('submit', function (e) { e.preventDefault(); loginApp(); });
-  if (pass) pass.addEventListener('keydown', function (e) { if (e.key === 'Enter') { e.preventDefault(); loginApp(); } });
-  if (token) boot();
-});
+var token=localStorage.getItem('uog_token')||'',me=null,watchId=null,lastPos=null,activeVisit=null,map=null,routeLine=null,routeMarkers=[];
+function $(id){return document.getElementById(id)}
+async function api(url,opt){opt=opt||{};opt.headers=Object.assign({},opt.headers||{},{'Content-Type':'application/json','Authorization':'Bearer '+token});var r=await fetch(url,opt),d=await r.json().catch(()=>({}));if(!r.ok)throw Error(d.error||'API_ERROR');return d}
+function esc(s){return String(s??'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[m]))}
+function show(id){['loginScreen','employee','admin'].forEach(x=>$(x)?.classList.add('hidden'));$(id)?.classList.remove('hidden')}
+function today(){return new Date().toISOString().slice(0,10)}
+function month(){return new Date().toISOString().slice(0,7)}
+async function loginApp(){var msg=$('loginMsg'),btn=$('loginBtn');msg.textContent='';if(btn)btn.disabled=true;try{var r=await fetch('/api/login',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({login:$('loginUser').value.trim(),password:$('loginPass').value})}),d=await r.json();if(!r.ok)throw Error(d.error==='LOGIN_FAILED'?'Логин ёки парол хато':(d.error||'Киришда хатолик'));token=d.token;me=d.user;localStorage.setItem('uog_token',token);await boot()}catch(e){msg.textContent=e.message}finally{if(btn)btn.disabled=false}}
+function logout(){stopGps();localStorage.removeItem('uog_token');location.reload()}
+async function boot(){try{me=await api('/api/me');if(me.role==='admin'){show('admin');await Promise.all([loadMetrics(),loadReport(),loadConsumers(),loadEmployees(),loadMonthly(),loadConsumerMonthly(),loadAudit()]);}else{show('employee');$('empName').textContent=me.name||'';$('empTerritory').textContent=(me.region||'')+' • '+(me.district||'');await loadToday();startGps()}}catch(e){localStorage.removeItem('uog_token');token='';show('loginScreen')}}
+function startGps(){if(!navigator.geolocation||watchId)return;watchId=navigator.geolocation.watchPosition(async p=>{lastPos=p;var b={lat:p.coords.latitude,lon:p.coords.longitude,accuracy:p.coords.accuracy,speed:p.coords.speed,client_event_id:'gps-'+me.id+'-'+Date.now()};try{await api('/api/gps',{method:'POST',body:JSON.stringify(b)});$('gpsState').textContent='GPS: онлайн • ±'+Math.round(p.coords.accuracy)+' м'}catch(e){$('gpsState').textContent='GPS: '+e.message}},e=>{$('gpsState').textContent='GPS: '+e.message},{enableHighAccuracy:true,maximumAge:10000,timeout:20000})}
+function stopGps(){if(watchId!==null){navigator.geolocation.clearWatch(watchId);watchId=null}}
+async function loadToday(){try{var d=await api('/api/today');var items=d.items||[],qv=(($('search')?.value)||'').toLowerCase(),f=items.filter(x=>(x.name+' '+x.district+' '+x.branch).toLowerCase().includes(qv));$('planned').textContent=items.length;$('visited').textContent=items.filter(x=>x.visit_id).length;$('notVisited').textContent=items.filter(x=>!x.visit_id).length;$('completion').textContent=(items.length?Math.round(items.filter(x=>x.visit_id).length/items.length*100):0)+'%';$('list').innerHTML=f.map(x=>`<div class="consumer"><b>${esc(x.name)}</b><div class="muted">${esc(x.branch)} • ${esc(x.district)} • ${esc(x.mahalla||'')}</div><div class="muted">${esc(x.category||'')}</div><div class="row"><span class="${x.visit_id?'ok':'bad'}">${x.visit_id?'✅ Кирилган':'⛔ Кирилмаган'}</span>${x.visit_id?`<span class="muted">${esc(x.visit_status||'')}</span>`:`<button onclick="startVisit(${x.id})">📍 Ташрифни бошлаш</button>`}${x.visit_id&&x.ended_server==null?`<button class="secondary" onclick="endVisit(${x.visit_id})">Ташрифни якунлаш</button>`:''}</div></div>`).join('')||'<p>Натижа йўқ</p>'}catch(e){$('list').innerHTML='<p class="bad">Маълумот юкланмади</p>'}}
+async function startVisit(id){try{if(!lastPos)throw Error('GPS жойлашуви ҳали олинмади');var p=lastPos.coords,r=await api('/api/visit/start',{method:'POST',body:JSON.stringify({consumer_id:id,lat:p.latitude,lon:p.longitude,accuracy:p.accuracy,client_event_id:'visit-'+me.id+'-'+id+'-'+Date.now()})});activeVisit=r.visit_id;alert('Ташриф қайд этилди. Масофа: '+Math.round(r.distance_m)+' м');await loadToday()}catch(e){alert(e.message)}}
+async function endVisit(id){try{if(!lastPos)throw Error('GPS керак');var p=lastPos.coords;await api('/api/visit/end',{method:'POST',body:JSON.stringify({visit_id:id,lat:p.latitude,lon:p.longitude,accuracy:p.accuracy})});activeVisit=null;alert('Ташриф якунланди');await loadToday()}catch(e){alert(e.message)}}
+async function loadMetrics(){try{var d=await api('/api/metrics');$('dbState').textContent='DB: '+d.integrity+' • истеъмолчи '+d.consumers+' • ходим '+d.employees+' • GPS '+d.gps_points+' • ташриф '+d.visits}catch(e){}}
+async function loadEmployees(){try{var d=await api('/api/employees');$('employeeSelect').innerHTML='<option value="">Ходимни танланг</option>'+d.map(e=>`<option value="${e.id}">${esc(e.employee_name)} — ${esc(e.region||'')} / ${esc(e.district||'')}</option>`).join('');$('employeeTable').innerHTML='<table><tr><th>Ходим</th><th>Вилоят</th><th>Туман/шаҳар</th><th>Лавозим</th><th>Телефон</th></tr>'+d.map(e=>`<tr><td>${esc(e.employee_name)}</td><td>${esc(e.region||'')}</td><td>${esc(e.district||'')}</td><td>${esc(e.position||'')}</td><td>${esc(e.phone||'')}</td></tr>`).join('')+'</table>'}catch(e){}}
+async function loadConsumers(){try{var term=(($('consumerSearch')?.value)||'').trim(),d=await api('/api/consumers?limit=200'+(term?'&q='+encodeURIComponent(term):''));var items=d.items||[];$('consumerCount').textContent='Кўрсатилаяпти: '+items.length+' / '+d.total;$('consumerList').innerHTML=items.map(x=>`<div class="consumer"><b>${esc(x.name||'Номсиз')}</b><div class="muted">${esc(x.branch||'')} • ${esc(x.district||'')} • ${esc(x.mahalla||'')}</div><div class="muted">${esc(x.category||'')} ${x.phone?'• '+esc(x.phone):''} • ${x.lat!=null?'📍 GPS бор':'⚠️ GPS йўқ'}</div></div>`).join('')||'<p>Истеъмолчи топилмади</p>'}catch(e){$('consumerList').innerHTML='<p class="bad">Истеъмолчилар рўйхатини юклашда хатолик</p>'}}
+async function assign(){try{var eid=Number($('employeeSelect').value),cid=Number($('consumerId').value),date=$('assignDate').value||today();if(!eid||!cid)return alert('Ходим ва истеъмолчини танланг');await api('/api/assign',{method:'POST',body:JSON.stringify({employee_id:eid,consumer_id:cid,work_date:date})});alert('Режага қўшилди');await loadReport()}catch(e){alert(e.message)}}
+async function loadReport(){try{var d=await api('/api/report?date='+encodeURIComponent($('reportDate').value||today())),r=d.result||[];let p=0,v=0,m=0,s=0;$('report').innerHTML='<table><tr><th>Ходим</th><th>Ҳудуд</th><th>Режа</th><th>Ташриф</th><th>Ташрифсиз</th><th>Шубҳали</th><th>%</th><th>Маршрут</th></tr>'+r.map(x=>{p+=x.planned;v+=x.visited;m+=x.not_visited;s+=x.suspicious;return `<tr><td>${esc(x.employee)}</td><td>${esc(x.region)} / ${esc(x.district)}</td><td>${x.planned}</td><td>${x.visited}</td><td>${x.not_visited}</td><td>${x.suspicious}</td><td>${x.completion}%</td><td><button onclick="showRoute(${x.employee_id})">Кўриш</button></td></tr>`}).join('')+'</table>';$('aPlanned').textContent=p;$('aVisited').textContent=v;$('aMissing').textContent=m;$('aSuspicious').textContent=s}catch(e){}}
+async function loadMonthly(){try{var d=await api('/api/monthly?month='+encodeURIComponent($('monthDate').value||month()));$('monthly').innerHTML='<table><tr><th>Ходим</th><th>Ҳудуд</th><th>Режа кунлари</th><th>Ташрифлар</th><th>VALID</th></tr>'+d.result.map(x=>`<tr><td>${esc(x.employee_name)}</td><td>${esc(x.region)} / ${esc(x.district)}</td><td>${x.planned_days}</td><td>${x.visits}</td><td>${x.valid_visits}</td></tr>`).join('')+'</table>'}catch(e){}}
+async function loadConsumerMonthly(){try{var d=await api('/api/consumer-monthly?month='+encodeURIComponent($('monthDate').value||month()));$('consumerMonthly').innerHTML='<table><tr><th>Истеъмолчи</th><th>Ҳудуд</th><th>Туман</th><th>Ойлик ташриф</th><th>Ходимлар</th><th>Охирги ташриф</th></tr>'+d.result.map(x=>`<tr><td>${esc(x.name)}</td><td>${esc(x.branch)}</td><td>${esc(x.district)}</td><td><b>${x.visits}</b></td><td>${x.employees}</td><td>${esc(x.last_visit||'—')}</td></tr>`).join('')+'</table>'}catch(e){}}
+async function showRoute(eid){try{var d=await api('/api/route?employee_id='+eid+'&date='+encodeURIComponent($('reportDate').value||today()));if(!map){map=L.map('map').setView([41.3,69.24],7);L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{maxZoom:19,attribution:'© OpenStreetMap'}).addTo(map)}if(routeLine)map.removeLayer(routeLine);routeMarkers.forEach(m=>map.removeLayer(m));routeMarkers=[];var pts=d.points||[];if(!pts.length){alert('Бу санада GPS маршрути йўқ');return}var latlngs=pts.map(p=>[p.lat,p.lon]);routeLine=L.polyline(latlngs,{weight:4}).addTo(map);pts.forEach((p,i)=>routeMarkers.push(L.circleMarker([p.lat,p.lon],{radius:4}).bindPopup('#'+(i+1)+' '+new Date(p.ts_server).toLocaleString()).addTo(map)));map.fitBounds(routeLine.getBounds(),{padding:[20,20]});$('routeCard').scrollIntoView({behavior:'smooth'})}catch(e){alert(e.message)}}
+async function loadAudit(){try{var d=await api('/api/audit');$('auditState').textContent=d.chain_valid?'✅ Audit chain бутун — '+d.rows.length+' та ёзув.':'🚨 Audit chain бузилган!';$('auditRows').innerHTML=d.rows.slice(0,100).map(x=>`<tr><td>${x.id}</td><td>${esc(x.ts_server)}</td><td>${x.actor_id||'—'}</td><td>${esc(x.action)}</td></tr>`).join('')}catch(e){}}
+window.loginApp=loginApp;window.logout=logout;window.loadToday=loadToday;window.loadConsumers=loadConsumers;window.loadReport=loadReport;window.loadMonthly=loadMonthly;window.loadConsumerMonthly=loadConsumerMonthly;window.loadAudit=loadAudit;window.startVisit=startVisit;window.endVisit=endVisit;window.assign=assign;window.showRoute=showRoute;
+document.addEventListener('DOMContentLoaded',()=>{var form=$('loginForm');form?.addEventListener('submit',e=>{e.preventDefault();loginApp()});$('loginBtn')?.addEventListener('click',e=>{e.preventDefault();loginApp()});if(token)boot();$('assignDate').value=today();$('reportDate').value=today();$('monthDate').value=month()});

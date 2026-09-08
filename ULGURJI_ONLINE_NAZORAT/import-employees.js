@@ -1,10 +1,13 @@
 import fs from 'node:fs';
 import crypto from 'node:crypto';
+import zlib from 'node:zlib';
 import { DatabaseSync } from 'node:sqlite';
 const DB=process.env.DB_PATH||'/app/data/data.sqlite';
 const db=new DatabaseSync(DB);
 for(const sql of ['ALTER TABLE users ADD COLUMN region TEXT','ALTER TABLE users ADD COLUMN district TEXT','ALTER TABLE users ADD COLUMN position TEXT','ALTER TABLE users ADD COLUMN phone TEXT']){try{db.exec(sql)}catch(e){if(!String(e.message).includes('duplicate column name'))throw e}}
-const rows=[];for(let i=1;i<=6;i++)rows.push(...JSON.parse(fs.readFileSync(new URL(`./employees_seed_part${i}.json`,import.meta.url),'utf8')));
+const b64=fs.readFileSync(new URL('./seed1.b64',import.meta.url),'utf8')+fs.readFileSync(new URL('./seed2.b64',import.meta.url),'utf8');
+const rows=JSON.parse(zlib.gunzipSync(Buffer.from(b64,'base64')).toString('utf8'));
+if(rows.length!==285)throw Error(`EMPLOYEE_SEED_INVALID:${rows.length}`);
 const sha=s=>crypto.createHash('sha256').update(String(s??'')).digest('hex');
 const password=process.env.EMPLOYEE_PASSWORD||'Ulgurji2026';
 const hash=sha(password);

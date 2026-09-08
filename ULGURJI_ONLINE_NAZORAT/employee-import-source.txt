@@ -1,0 +1,1 @@
+This file is intentionally replaced by the compressed seed through the Git data API.

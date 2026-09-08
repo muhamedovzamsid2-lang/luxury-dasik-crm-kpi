@@ -67,6 +67,7 @@ async function boot() {
     if (me.role === 'admin') {
       show('admin');
       loadReport();
+      loadConsumers();
       loadAudit();
       loadMetrics();
     } else {
@@ -98,6 +99,23 @@ async function loadToday() {
       return '<div class="consumer"><b>' + esc(x.name) + '</b><div class="muted">' + esc(x.branch) + ' • ' + esc(x.district) + ' • ' + esc(x.category) + '</div></div>';
     }).join('') || '<p>Натижа йўқ</p>';
   } catch (e) {}
+}
+
+async function loadConsumers() {
+  var box = $('consumerList');
+  if (!box) return;
+  try {
+    var term = (($('consumerSearch') && $('consumerSearch').value) || '').trim();
+    var d = await api('/api/consumers' + (term ? '?q=' + encodeURIComponent(term) : ''));
+    var items = Array.isArray(d) ? d : (d.items || []);
+    if ($('consumerCount')) $('consumerCount').textContent = 'Кўрсатилаяпти: ' + items.length + (items.length === 200 ? ' (биринчи 200 та)' : '');
+    box.innerHTML = items.map(function (x) {
+      var loc = (x.lat != null && x.lon != null) ? '📍 Жойлашув бор' : '📍 Жойлашув киритилмаган';
+      return '<div class="consumer"><b>' + esc(x.name || 'Номсиз') + '</b><div class="muted">' + esc(x.branch || '') + ' • ' + esc(x.district || '') + (x.mahalla ? ' • ' + esc(x.mahalla) : '') + '</div><div class="muted">' + esc(x.category || '') + (x.phone ? ' • ' + esc(x.phone) : '') + ' • ' + loc + '</div></div>';
+    }).join('') || '<p>Истеъмолчи топилмади</p>';
+  } catch (e) {
+    box.innerHTML = '<p class="bad">Истеъмолчилар рўйхатини юклашда хатолик</p>';
+  }
 }
 
 async function loadReport() {
@@ -140,6 +158,7 @@ window.loginApp = loginApp;
 window.login = loginApp;
 window.logout = logout;
 window.loadToday = loadToday;
+window.loadConsumers = loadConsumers;
 window.loadAudit = loadAudit;
 
 document.addEventListener('DOMContentLoaded', function () {

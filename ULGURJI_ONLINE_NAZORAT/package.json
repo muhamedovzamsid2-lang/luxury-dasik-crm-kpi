@@ -1,7 +1,9 @@
 {
   "name": "ulgurji-online-nazorat",
-  "version": "3.1.0",
+  "version": "3.2.0",
   "private": true,
+  "type": "module",
+  "engines": { "node": ">=22.13.0" },
   "scripts": {
     "start": "node server.js",
     "import": "python import_excel.py",

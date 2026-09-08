@@ -1,0 +1,24 @@
+name: ULGURJI syntax check
+on:
+  push:
+    paths:
+      - 'ULGURJI_ONLINE_NAZORAT/**'
+  pull_request:
+    paths:
+      - 'ULGURJI_ONLINE_NAZORAT/**'
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ULGURJI_ONLINE_NAZORAT
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - run: node --check server.js
+      - run: node --check gateway.js
+      - run: node --check boot.js
+      - run: node --check import-employees.js
+      - run: node --check public/app-fixed.js

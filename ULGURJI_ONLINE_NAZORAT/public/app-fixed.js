@@ -1,24 +1,153 @@
-let token=localStorage.getItem("uog_token"),me=null,lastPos=null;
-const $=id=>document.getElementById(id);
-const api=async(url,opt={})=>{opt.headers={...(opt.headers||{}),Authorization:`Bearer ${token}`,"Content-Type":"application/json"};const r=await fetch(url,opt),d=await r.json().catch(()=>({}));if(!r.ok)throw Error(d.error||"API_ERROR");return d};
-function show(id){["loginScreen","employee","admin"].forEach(x=>$(x).classList.add("hidden"));$(id).classList.remove("hidden")}
-async function loginApp(){const msg=$("loginMsg"),btn=$("loginBtn"),loginUser=$("loginUser"),loginPass=$("loginPass");msg.textContent="";if(!loginUser.value.trim()||!loginPass.value){msg.textContent="Логин ва паролни киритинг";return}if(btn)btn.disabled=true;try{const r=await fetch("/api/login",{method:"POST",headers:{"Content-Type":"application/json"},cache:"no-store",body:JSON.stringify({login:loginUser.value.trim(),password:loginPass.value})});const d=await r.json().catch(()=>({}));if(!r.ok||!d.token)throw Error(d.error==="LOGIN_FAILED"?"Логин ёки парол хато":(d.error||"Киришда хатолик"));token=d.token;localStorage.setItem("uog_token",token);me=d.user;await boot()}catch(e){msg.textContent=e.message||"Киришда хатолик"}finally{if(btn)btn.disabled=false}}
-function logout(){localStorage.removeItem("uog_token");location.reload()}
-async function boot(){try{me=await api("/api/me");show(me.role==="admin"?"admin":"employee");if(me.role==="admin"){loadReport();loadAudit();loadLive();loadMetrics();setInterval(loadLive,10000);setInterval(loadMetrics,30000)}else{$("empName").textContent=me.name;loadToday();startGPS()}}catch{localStorage.removeItem("uog_token");show("loginScreen")}}
-function startGPS(){if(!navigator.geolocation){$("gpsState").textContent="❌ GPS мавжуд эмас";return}navigator.geolocation.watchPosition(async p=>{lastPos=p.coords;$("gpsState").textContent=`🟢 GPS: ${p.coords.latitude.toFixed(6)}, ${p.coords.longitude.toFixed(6)} ±${Math.round(p.coords.accuracy||0)}м`;$("mapText").textContent=`📍 ${p.coords.latitude.toFixed(6)}, ${p.coords.longitude.toFixed(6)} | accuracy ${Math.round(p.coords.accuracy||0)}m`;try{await api("/api/gps",{method:"POST",body:JSON.stringify({lat:p.coords.latitude,lon:p.coords.longitude,accuracy:p.coords.accuracy,speed:p.coords.speed,client_event_id:crypto.randomUUID()})})}catch{}},e=>$("gpsState").textContent="⚠️ GPS: "+e.message,{enableHighAccuracy:true,maximumAge:10000,timeout:15000})}
-async function loadToday(){const d=await api("/api/today"),q=($("search")?.value||"").toLowerCase(),items=d.items.filter(x=>(x.name+" "+x.district+" "+x.branch).toLowerCase().includes(q)),vv=d.items.filter(x=>x.visit_id).length;$("planned").textContent=d.items.length;$("visited").textContent=vv;$("notVisited").textContent=d.items.length-vv;$("completion").textContent=(d.items.length?Math.round(vv/d.items.length*100):0)+"%";$("list").innerHTML=items.map(x=>`<div class="consumer"><b>${esc(x.name)}</b><div class="muted">${esc(x.branch)} • ${esc(x.district)} • ${esc(x.category)}</div><div class="row" style="margin-top:8px">${x.visit_id?`<span class="${x.visit_status==="VALID"?"ok":"bad"}">${x.visit_status} • ${x.started_server}</span>`:`<button onclick="startVisit(${x.id})">📍 Ташрифни бошлаш</button>`}${x.visit_id&&!x.ended_server?`<button class="secondary" onclick="endVisit(${x.visit_id})">Ташрифни якунлаш</button>`:""}</div></div>`).join("")||"<p>Натижа йўқ</p>"}
-async function startVisit(id){if(!lastPos){alert("GPS ҳали тайёр эмас.");return}try{const d=await api("/api/visit/start",{method:"POST",body:JSON.stringify({consumer_id:id,lat:lastPos.latitude,lon:lastPos.longitude,accuracy:lastPos.accuracy,client_event_id:crypto.randomUUID()})});alert(`${d.status}${d.distance_m==null?"":" • "+Math.round(d.distance_m)+" м"}`);loadToday()}catch(e){alert(e.message)}}
-async function endVisit(id){if(!lastPos){alert("GPS ҳали тайёр эмас.");return}try{await api("/api/visit/end",{method:"POST",body:JSON.stringify({visit_id:id,lat:lastPos.latitude,lon:lastPos.longitude,accuracy:lastPos.accuracy,client_event_id:crypto.randomUUID()}));loadToday()}catch(e){alert(e.message)}}
-async function loadReport(){const d=await api("/api/report");let p=0,v=0,m=0,s=0;$("report").innerHTML=`<table><tr><th>Ходим</th><th>Режа</th><th>Ташриф</th><th>Ташрифсиз</th><th>Шубҳали</th><th>%</th></tr>`+d.result.map(x=>{p+=x.planned;v+=x.visited;m+=x.not_visited;s+=x.suspicious;return`<tr><td>${esc(x.employee)}</td><td>${x.planned}</td><td>${x.visited}</td><td class="bad">${x.not_visited}</td><td class="bad">${x.suspicious}</td><td>${x.completion}%</td></tr>`}).join("")+"</table>";$("aPlanned").textContent=p;$("aVisited").textContent=v;$("aMissing").textContent=m;$("aSuspicious").textContent=s}
-async function loadAudit(){const d=await api("/api/audit");$("auditState").innerHTML=d.chain_valid?`<span class="ok">✅ Audit chain бутун — ${d.rows.length} та ёзув текширилди.</span>`:`<span class="bad">🚨 Audit chain бузилган!</span>`}
-async function loadMetrics(){try{const d=await api("/api/metrics");if($("dbState"))$("dbState").innerHTML=`<span class="ok">DB: ${d.integrity} • истеъмолчи ${d.consumers} • ходим ${d.employees} • GPS ${d.gps_points} • ташриф ${d.visits}</span>`}catch{}}
-function esc(s){return String(s??"").replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#039;"}[m]))}
-async function loadLive(){try{const d=await api("/api/live"),rows=d.rows||[];$("mapDots").innerHTML=rows.map(x=>{const minLon=55,maxLon=74,minLat=37,maxLat=46,left=Math.max(2,Math.min(96,(x.lon-minLon)/(maxLon-minLon)*100)),top=Math.max(4,Math.min(94,100-(x.lat-minLat)/(maxLat-minLat)*100));return`<div class="dot" title="${esc(x.employee_name)} • ${x.lat.toFixed(6)}, ${x.lon.toFixed(6)} • ${x.ts_server}" style="left:${left}%;top:${top}%"></div>`}).join("")}catch{}}
-window.loginApp=loginApp;
-window.login=loginApp;
-window.logout=logout;
-window.startVisit=startVisit;
-window.endVisit=endVisit;
-window.loadToday=loadToday;
-window.loadAudit=loadAudit;
-document.addEventListener("DOMContentLoaded",()=>{const btn=$("loginBtn"),form=$("loginForm"),pass=$("loginPass");if(btn)btn.addEventListener("click",loginApp);if(form)form.addEventListener("submit",e=>{e.preventDefault();loginApp()});if(pass)pass.addEventListener("keydown",e=>{if(e.key==="Enter"){e.preventDefault();loginApp()}});if(token)boot()});
+var token = localStorage.getItem('uog_token') || '';
+var me = null;
+var lastPos = null;
+
+function $(id) { return document.getElementById(id); }
+
+async function api(url, options) {
+  options = options || {};
+  options.headers = Object.assign({}, options.headers || {}, {
+    'Content-Type': 'application/json',
+    'Authorization': 'Bearer ' + token
+  });
+  var r = await fetch(url, options);
+  var d = await r.json().catch(function () { return {}; });
+  if (!r.ok) throw new Error(d.error || 'API_ERROR');
+  return d;
+}
+
+function show(id) {
+  ['loginScreen', 'employee', 'admin'].forEach(function (x) {
+    var el = $(x);
+    if (el) el.classList.add('hidden');
+  });
+  var target = $(id);
+  if (target) target.classList.remove('hidden');
+}
+
+async function loginApp() {
+  var msg = $('loginMsg');
+  var btn = $('loginBtn');
+  var user = $('loginUser');
+  var pass = $('loginPass');
+  if (msg) msg.textContent = '';
+  if (!user || !pass || !user.value.trim() || !pass.value) {
+    if (msg) msg.textContent = 'Логин ва паролни киритинг';
+    return;
+  }
+  if (btn) btn.disabled = true;
+  try {
+    var r = await fetch('/api/login', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      cache: 'no-store',
+      body: JSON.stringify({ login: user.value.trim(), password: pass.value })
+    });
+    var d = await r.json().catch(function () { return {}; });
+    if (!r.ok || !d.token) throw new Error(d.error === 'LOGIN_FAILED' ? 'Логин ёки парол хато' : (d.error || 'Киришда хатолик'));
+    token = d.token;
+    me = d.user;
+    localStorage.setItem('uog_token', token);
+    await boot();
+  } catch (e) {
+    if (msg) msg.textContent = e.message || 'Киришда хатолик';
+  } finally {
+    if (btn) btn.disabled = false;
+  }
+}
+
+function logout() {
+  localStorage.removeItem('uog_token');
+  location.reload();
+}
+
+async function boot() {
+  try {
+    me = await api('/api/me');
+    if (me.role === 'admin') {
+      show('admin');
+      loadReport();
+      loadAudit();
+      loadMetrics();
+    } else {
+      show('employee');
+      if ($('empName')) $('empName').textContent = me.name || '';
+      loadToday();
+    }
+  } catch (e) {
+    localStorage.removeItem('uog_token');
+    token = '';
+    show('loginScreen');
+  }
+}
+
+async function loadToday() {
+  try {
+    var d = await api('/api/today');
+    var items = d.items || [];
+    var q = (($('search') && $('search').value) || '').toLowerCase();
+    var filtered = items.filter(function (x) {
+      return (String(x.name || '') + ' ' + String(x.district || '') + ' ' + String(x.branch || '')).toLowerCase().indexOf(q) >= 0;
+    });
+    var visited = items.filter(function (x) { return x.visit_id; }).length;
+    if ($('planned')) $('planned').textContent = items.length;
+    if ($('visited')) $('visited').textContent = visited;
+    if ($('notVisited')) $('notVisited').textContent = items.length - visited;
+    if ($('completion')) $('completion').textContent = (items.length ? Math.round(visited / items.length * 100) : 0) + '%';
+    if ($('list')) $('list').innerHTML = filtered.map(function (x) {
+      return '<div class="consumer"><b>' + esc(x.name) + '</b><div class="muted">' + esc(x.branch) + ' • ' + esc(x.district) + ' • ' + esc(x.category) + '</div></div>';
+    }).join('') || '<p>Натижа йўқ</p>';
+  } catch (e) {}
+}
+
+async function loadReport() {
+  try {
+    var d = await api('/api/report');
+    var rows = d.result || [];
+    var p = 0, v = 0, m = 0, s = 0;
+    if ($('report')) $('report').innerHTML = '<table><tr><th>Ходим</th><th>Режа</th><th>Ташриф</th><th>Ташрифсиз</th><th>Шубҳали</th><th>%</th></tr>' + rows.map(function (x) {
+      p += x.planned; v += x.visited; m += x.not_visited; s += x.suspicious;
+      return '<tr><td>' + esc(x.employee) + '</td><td>' + x.planned + '</td><td>' + x.visited + '</td><td>' + x.not_visited + '</td><td>' + x.suspicious + '</td><td>' + x.completion + '%</td></tr>';
+    }).join('') + '</table>';
+    if ($('aPlanned')) $('aPlanned').textContent = p;
+    if ($('aVisited')) $('aVisited').textContent = v;
+    if ($('aMissing')) $('aMissing').textContent = m;
+    if ($('aSuspicious')) $('aSuspicious').textContent = s;
+  } catch (e) {}
+}
+
+async function loadAudit() {
+  try {
+    var d = await api('/api/audit');
+    if ($('auditState')) $('auditState').textContent = d.chain_valid ? '✅ Audit chain бутун — ' + (d.rows || []).length + ' та ёзув.' : '🚨 Audit chain бузилган!';
+  } catch (e) {}
+}
+
+async function loadMetrics() {
+  try {
+    var d = await api('/api/metrics');
+    if ($('dbState')) $('dbState').textContent = 'DB: ' + d.integrity + ' • истеъмолчи ' + d.consumers + ' • ходим ' + d.employees + ' • GPS ' + d.gps_points + ' • ташриф ' + d.visits;
+  } catch (e) {}
+}
+
+function esc(s) {
+  return String(s == null ? '' : s).replace(/[&<>\"']/g, function (m) {
+    return {'&':'&amp;','<':'&lt;','>':'&gt;','\"':'&quot;',"'":'&#039;'}[m];
+  });
+}
+
+window.loginApp = loginApp;
+window.login = loginApp;
+window.logout = logout;
+window.loadToday = loadToday;
+window.loadAudit = loadAudit;
+
+document.addEventListener('DOMContentLoaded', function () {
+  var btn = $('loginBtn');
+  var form = $('loginForm');
+  var pass = $('loginPass');
+  if (btn) btn.addEventListener('click', loginApp);
+  if (form) form.addEventListener('submit', function (e) { e.preventDefault(); loginApp(); });
+  if (pass) pass.addEventListener('keydown', function (e) { if (e.key === 'Enter') { e.preventDefault(); loginApp(); } });
+  if (token) boot();
+});

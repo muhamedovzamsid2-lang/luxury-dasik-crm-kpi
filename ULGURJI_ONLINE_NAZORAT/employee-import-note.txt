@@ -1,0 +1,1 @@
+Employee seed is sourced from the verified 285-row workbook in the user's Library. The production DB must not be wiped.

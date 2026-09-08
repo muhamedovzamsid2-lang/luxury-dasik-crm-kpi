@@ -1,0 +1,3 @@
+Deployment trigger after production frontend/login verification.
+Current frontend entrypoint: public/index.html -> /app-fixed.js?v=2
+Railway source must deploy commit af3baf6371579a7acbb5c0af4047b5d966adfac6.

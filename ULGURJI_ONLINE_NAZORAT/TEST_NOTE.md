@@ -1,3 +1,3 @@
 # Test
 
-Repository syntax check is configured in package.json via `npm run check`.
+Automated syntax check: `npm run check` validates server.js, app-fixed.js, tasks.js, import-employees.js and boot.js.

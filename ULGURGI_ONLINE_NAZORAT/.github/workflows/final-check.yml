@@ -1,0 +1,19 @@
+name: ULGURJI final UI check
+on:
+  push:
+    paths:
+      - 'ULGURGI_ONLINE_NAZORAT/public/**'
+      - 'ULGURGI_ONLINE_NAZORAT/.github/workflows/final-check.yml'
+jobs:
+  syntax:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ULGURGI_ONLINE_NAZORAT
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Validate task UI
+        run: node --check public/tasks-v2.js

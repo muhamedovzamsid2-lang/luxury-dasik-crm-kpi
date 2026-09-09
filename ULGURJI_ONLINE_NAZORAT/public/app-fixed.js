@@ -1,1 +1,1 @@
-(()=>{const load=(src)=>new Promise((ok,no)=>{const s=document.createElement('script');s.src=src;s.onload=ok;s.onerror=no;document.head.appendChild(s)});load('/app-fixed-v8.js?v=10').then(()=>load('/final-ui.js?v=10')).catch(e=>console.error('UI_LOAD_ERROR',e))})();
+(()=>{const load=(src)=>new Promise((ok,no)=>{const s=document.createElement('script');s.src=src;s.onload=ok;s.onerror=no;document.head.appendChild(s)});load('/app-fixed-v8.js?v=11').then(()=>load('/final-ui.js?v=11')).then(()=>load('/ultimate-ui.js?v=1')).catch(e=>console.error('UI_LOAD_ERROR',e))})();

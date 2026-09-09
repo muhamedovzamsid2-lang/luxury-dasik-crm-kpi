@@ -1,0 +1,1 @@
+(()=>{const s=document.createElement('script');s.src='/management-v9.js?v=1';document.head.appendChild(s);const t=document.createElement('script');t.src='/tasks-v3.js?v=4';document.head.appendChild(t)})();

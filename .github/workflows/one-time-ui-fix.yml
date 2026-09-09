@@ -18,8 +18,8 @@ jobs:
           p = Path('ULGURJI_ONLINE_NAZORAT/public/index.html')
           s = p.read_text(encoding='utf-8')
           marker = '<script src="/app-fixed.js?v=52"></script>'
-          inject = marker + '\n<script src="/tasks.js?v=4"></script>\n<script src="/final-ui.js?v=4"></script>'
-          if marker in s and '/tasks.js?v=4' not in s:
+          inject = marker + '\n<script src="/tasks.js?v=5"></script>\n<script src="/final-ui.js?v=5"></script>\n<script src="/login-fix3.js?v=1"></script>'
+          if marker in s and '/login-fix3.js?v=1' not in s:
               s = s.replace(marker, inject)
           p.write_text(s, encoding='utf-8')
           
@@ -37,5 +37,5 @@ jobs:
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
           git add ULGURJI_ONLINE_NAZORAT/public/index.html ULGURJI_ONLINE_NAZORAT/public/tasks.js
           git diff --cached --quiet && exit 0
-          git commit -m 'Repair live UI loading and employee access [ui-fix-done]'
+          git commit -m 'Repair login loading and live UI [ui-fix-done]'
           git push

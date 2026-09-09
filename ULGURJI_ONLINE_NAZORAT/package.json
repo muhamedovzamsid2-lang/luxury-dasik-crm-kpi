@@ -1,12 +1,12 @@
 {
   "name": "ulgurji-online-nazorat",
-  "version": "6.6.0",
+  "version": "6.7.0",
   "private": true,
   "type": "module",
   "engines": { "node": ">=22.13.0" },
   "scripts": {
     "start": "node boot-v3.js",
     "import": "python import_excel.py",
-    "check": "node --check server.js && node --check public/app-fixed.js && node --check public/app-fixed-v8.js && node --check public/tasks-v3.js && node --check import-employees.js && node --check boot.js && node --check boot-v2.js && node --check boot-v3.js"
+    "check": "node --check server.js && node --check public/app-fixed.js && node --check public/app-fixed-v8.js && node --check public/tasks-v3.js && node --check public/final-ui.js && node --check import-employees.js && node --check boot.js && node --check boot-v2.js && node --check boot-v3.js"
   }
 }

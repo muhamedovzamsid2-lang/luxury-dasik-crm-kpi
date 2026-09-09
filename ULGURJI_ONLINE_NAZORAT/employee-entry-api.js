@@ -1,0 +1,49 @@
+import crypto from 'node:crypto';
+import path from 'node:path';
+import {DatabaseSync} from 'node:sqlite';
+
+const DB_PATH=process.env.DB_PATH||'/app/data/data.sqlite';
+const SECRET=process.env.JWT_SECRET||'ULGURJI_CHANGE_SECRET';
+const db=new DatabaseSync(DB_PATH);
+db.exec(`CREATE TABLE IF NOT EXISTS employee_entries(id INTEGER PRIMARY KEY AUTOINCREMENT,employee_id INTEGER NOT NULL,consumer_id INTEGER NOT NULL,entry_date TEXT NOT NULL,status TEXT NOT NULL DEFAULT 'DRAFT',contact_name TEXT DEFAULT '',order_amount TEXT DEFAULT '',payment_status TEXT DEFAULT '',notes TEXT DEFAULT '',next_action TEXT DEFAULT '',lat REAL,lon REAL,accuracy REAL,created_at TEXT NOT NULL,updated_at TEXT NOT NULL,submitted_at TEXT)`);
+db.exec(`CREATE TABLE IF NOT EXISTS employee_entry_files(id INTEGER PRIMARY KEY AUTOINCREMENT,entry_id INTEGER NOT NULL,filename TEXT NOT NULL,mime TEXT DEFAULT 'application/octet-stream',data BLOB NOT NULL,created_at TEXT NOT NULL)`);
+const q=s=>db.prepare(s),now=()=>new Date().toISOString();
+const b64=s=>Buffer.from(s).toString('base64url');
+function verify(t){const a=String(t||'').split('.');if(a.length!==3)throw Error('AUTH_INVALID');const sig=b64(crypto.createHmac('sha256',SECRET).update(a[0]+'.'+a[1]).digest());if(sig!==a[2])throw Error('AUTH_INVALID');const p=JSON.parse(Buffer.from(a[1],'base64url').toString());if(!p.exp||p.exp<Date.now()/1000)throw Error('AUTH_INVALID');return p}
+function send(res,status,data){res.writeHead(status,{'Content-Type':'application/json','Cache-Control':'no-store','Access-Control-Allow-Origin':'*','Access-Control-Allow-Headers':'Authorization, Content-Type','Access-Control-Allow-Methods':'GET, POST, OPTIONS'});res.end(JSON.stringify(data))}
+async function json(req){return await new Promise((ok,no)=>{let a=[],n=0;req.on('data',c=>{n+=c.length;if(n>12e6){no(Error('BODY_TOO_LARGE'));req.destroy();return}a.push(c)});req.on('end',()=>{try{ok(JSON.parse(Buffer.concat(a).toString()||'{}'))}catch(e){no(Error('INVALID_JSON'))}});req.on('error',no)})}
+function auth(req){const h=req.headers.authorization||'';if(!h.startsWith('Bearer '))throw Error('AUTH_INVALID');return verify(h.slice(7))}
+function cleanFile(f){return {name:path.basename(String(f?.name||'photo')).slice(0,120),type:String(f?.type||'application/octet-stream').slice(0,120),data:String(f?.data||'')}}
+function getEntry(id,u){const e=q('SELECT * FROM employee_entries WHERE id=?').get(id);if(!e||e.employee_id!==u.id)throw Error('ENTRY_NOT_FOUND');return e}
+export async function handleEmployeeApi(req,res,url){
+ if(!url.startsWith('/api/employee-'))return false;
+ if(req.method==='OPTIONS'){send(res,204,{});return true}
+ let u;try{u=auth(req);if(u.role!=='employee')return send(res,403,{error:'EMPLOYEE_ONLY'}),true}catch(e){send(res,401,{error:'AUTH_INVALID'});return true}
+ try{
+  if(req.method==='GET'&&url==='/api/employee-consumers'){
+   const p=new URL(req.url,'http://x').searchParams,term=String(p.get('q')||'').trim(),page=Math.max(1,+(p.get('page')||1)),limit=Math.min(200,Math.max(1,+(p.get('limit')||100))),off=(page-1)*limit;
+   let w='active=1',a=[];if(term){w+=' AND (name LIKE ? OR district LIKE ? OR branch LIKE ? OR region LIKE ? OR mahalla LIKE ? OR street LIKE ? OR phone LIKE ?)';a.push(...Array(7).fill('%'+term+'%'))}
+   const total=q(`SELECT COUNT(*) n FROM consumers WHERE ${w}`).get(...a).n,items=q(`SELECT id,name,branch,district,mahalla,street,category,activity,phone,region,lat,lon FROM consumers WHERE ${w} ORDER BY name LIMIT ? OFFSET ?`).all(...a,limit,off);
+   return send(res,200,{items,total,page,limit,has_more:off+items.length<total}),true;
+  }
+  if(req.method==='GET'&&url.startsWith('/api/employee-entries')){
+   const p=new URL(req.url,'http://x').searchParams,cid=+(p.get('consumer_id')||0),rows=cid?q('SELECT id,consumer_id,entry_date,status,contact_name,order_amount,payment_status,notes,next_action,lat,lon,accuracy,created_at,updated_at,submitted_at FROM employee_entries WHERE employee_id=? AND consumer_id=? ORDER BY id DESC').all(u.id,cid):q('SELECT id,consumer_id,entry_date,status,contact_name,order_amount,payment_status,notes,next_action,lat,lon,accuracy,created_at,updated_at,submitted_at FROM employee_entries WHERE employee_id=? ORDER BY id DESC LIMIT 100').all(u.id);
+   return send(res,200,{items:rows}),true;
+  }
+  if(req.method==='POST'&&url==='/api/employee-entry'){
+   const b=await json(req),cid=+b.consumer_id;if(!cid)return send(res,400,{error:'CONSUMER_REQUIRED'}),true;
+   if(!q('SELECT id FROM consumers WHERE id=? AND active=1').get(cid))return send(res,404,{error:'CONSUMER_NOT_FOUND'}),true;
+   const status=b.status==='SUBMITTED'?'SUBMITTED':'DRAFT',ts=now(),id=+b.entry_id||0;
+   let eid=id;
+   if(id){const old=getEntry(id,u);q('UPDATE employee_entries SET status=?,contact_name=?,order_amount=?,payment_status=?,notes=?,next_action=?,lat=?,lon=?,accuracy=?,updated_at=?,submitted_at=? WHERE id=?').run(status,String(b.contact_name||''),String(b.order_amount||''),String(b.payment_status||''),String(b.notes||''),String(b.next_action||''),b.lat==null?null:+b.lat,b.lon==null?null:+b.lon,b.accuracy==null?null:+b.accuracy,ts,status==='SUBMITTED'?ts:old.submitted_at,id)}
+   else {eid=q('INSERT INTO employee_entries(employee_id,consumer_id,entry_date,status,contact_name,order_amount,payment_status,notes,next_action,lat,lon,accuracy,created_at,updated_at,submitted_at) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)').run(u.id,cid,ts.slice(0,10),status,String(b.contact_name||''),String(b.order_amount||''),String(b.payment_status||''),String(b.notes||''),String(b.next_action||''),b.lat==null?null:+b.lat,b.lon==null?null:+b.lon,b.accuracy==null?null:+b.accuracy,ts,ts,status==='SUBMITTED'?ts:null).lastInsertRowid}
+   for(const f0 of Array.isArray(b.attachments)?b.attachments:[]){const f=cleanFile(f0),raw=f.data.includes(',')?f.data.split(',').pop():f.data;if(raw)q('INSERT INTO employee_entry_files(entry_id,filename,mime,data,created_at) VALUES(?,?,?,?,?)').run(eid,f.name,f.type,Buffer.from(raw,'base64'),ts)}
+   return send(res,200,{ok:true,entry_id:eid,status}),true;
+  }
+  if(req.method==='GET'&&url.startsWith('/api/employee-entry-files/')){
+   const id=+url.split('/').pop(),f=q('SELECT f.*,e.employee_id FROM employee_entry_files f JOIN employee_entries e ON e.id=f.entry_id WHERE f.id=?').get(id);if(!f||f.employee_id!==u.id)return send(res,404,{error:'FILE_NOT_FOUND'}),true;
+   res.writeHead(200,{'Content-Type':f.mime,'Content-Length':f.data.length,'Content-Disposition':`inline; filename="${String(f.filename).replace(/"/g,'')}`,'Cache-Control':'no-store'});res.end(f.data);return true;
+  }
+ }catch(e){send(res,400,{error:e.message||'ENTRY_ERROR'});return true}
+ return false;
+}

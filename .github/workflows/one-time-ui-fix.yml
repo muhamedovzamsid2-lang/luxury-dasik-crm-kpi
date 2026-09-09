@@ -1,0 +1,41 @@
+name: One-time UI repair
+on:
+  push:
+    paths:
+      - '.github/workflows/one-time-ui-fix.yml'
+permissions:
+  contents: write
+jobs:
+  repair:
+    if: "!contains(github.event.head_commit.message, '[ui-fix-done]')"
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Patch UI loading and role isolation
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          p = Path('ULGURJI_ONLINE_NAZORAT/public/index.html')
+          s = p.read_text(encoding='utf-8')
+          marker = '<script src="/app-fixed.js?v=52"></script>'
+          inject = marker + '\n<script src="/tasks.js?v=4"></script>\n<script src="/final-ui.js?v=4"></script>'
+          if marker in s and '/tasks.js?v=4' not in s:
+              s = s.replace(marker, inject)
+          p.write_text(s, encoding='utf-8')
+          
+          p = Path('ULGURJI_ONLINE_NAZORAT/public/tasks.js')
+          s = p.read_text(encoding='utf-8')
+          old = "function start(){inject();if(timer)return;timer=setInterval(()=>{inject();},5000);new MutationObserver(()=>inject()).observe(document.body,{childList:true,subtree:true})}"
+          new = "function isolateEmployee(){const e=$('employee'),a=$('admin');if(e&&!e.classList.contains('hidden')&&a)a.classList.add('hidden');}function start(){inject();isolateEmployee();if(timer)return;timer=setInterval(()=>{inject();isolateEmployee()},8000);new MutationObserver(()=>{inject();isolateEmployee()}).observe(document.body,{childList:true,subtree:true})}"
+          if old in s and 'function isolateEmployee()' not in s:
+              s = s.replace(old, new)
+          p.write_text(s, encoding='utf-8')
+          PY
+      - name: Commit repaired files
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add ULGURJI_ONLINE_NAZORAT/public/index.html ULGURJI_ONLINE_NAZORAT/public/tasks.js
+          git diff --cached --quiet && exit 0
+          git commit -m 'Repair live UI loading and employee access [ui-fix-done]'
+          git push

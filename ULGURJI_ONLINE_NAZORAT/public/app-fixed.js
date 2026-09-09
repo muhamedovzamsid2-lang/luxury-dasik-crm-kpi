@@ -1,1 +1,1 @@
-(()=>{const s=document.createElement('script');s.src='/app-fixed-v6.js?v=6';document.head.appendChild(s)})();
+(()=>{const s=document.createElement('script');s.src='/app-fixed-v7.js?v=7';document.head.appendChild(s)})();

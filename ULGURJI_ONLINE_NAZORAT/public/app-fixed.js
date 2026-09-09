@@ -1,1 +1,1 @@
-(()=>{const s=document.createElement('script');s.src='/app-fixed-v8.js?v=8';document.head.appendChild(s)})();
+(()=>{const load=(src)=>new Promise((ok,no)=>{const s=document.createElement('script');s.src=src;s.onload=ok;s.onerror=no;document.head.appendChild(s)});load('/app-fixed-v8.js?v=9').then(()=>load('/tasks.js?v=9')).then(()=>load('/final-ui.js?v=9')).catch(e=>console.error('UI_LOAD_ERROR',e))})();

@@ -1,1 +1,1 @@
-(()=>{const a=document.createElement('script');a.src='/app-fixed-v7.js?v=7';document.head.appendChild(a);const b=document.createElement('script');b.src='/final-overrides.js?v=1';document.head.appendChild(b)})();
+(()=>{const s=document.createElement('script');s.src='/app-fixed-v8.js?v=8';document.head.appendChild(s)})();

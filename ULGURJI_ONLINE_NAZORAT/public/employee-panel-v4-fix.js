@@ -1,36 +1,28 @@
 (()=>{
 const run=()=>{const p=document.querySelector('#employee-entry-panel');if(!p||p.dataset.v4==='1')return false;const $=s=>p.querySelector(s);
-// 1) Consumer search: remove visible select UI, keep hidden value for compatibility.
-const sel=$('#v3-consumer'); if(sel){sel.style.display='none';const lab=p.querySelector('.v3select-label');if(lab)lab.remove();}
-const manual=$('#v3-manual');if(manual){manual.placeholder='Рўйхатда йўқ бўлса, истеъмолчи номини ёзинг';}
-// Remove "Алоқа қилган шахс" field.
-const contact=$('#v3-contact');if(contact){const parent=contact.parentElement;contact.remove();}
-// Rename debt label/field.
-const debt=$('#v3-debt');if(debt){debt.innerHTML='<option value="">Қарздорлик турини танланг</option><option>Олдиндан тўловдан қарздорлик</option><option>Дебитор қарздорлик</option><option>Қарздорлик мавжуд эмас</option>';}
-// Rename next action to network disconnect yes/no.
-const next=$('#v3-next');if(next){next.innerHTML='<option value="">Тармоқдан учирилди?</option><option>Ҳа</option><option>Йўқ</option>';}
-// Add meter reading + two requested photos.
-const grid=p.querySelector('.v3grid');if(grid&&!$('#v4-meter-reading')){
- const m=document.createElement('input');m.id='v4-meter-reading';m.placeholder='Ҳисоблагич кўрсаткичи';grid.insertBefore(m,$('#v3-meter-type'));
-}
-const photos=p.querySelector('.v3photo-grid');if(photos&&!$('#v4-act-photo')){
- const a=document.createElement('label');a.className='v3file';a.innerHTML='<small>📷 Тармоқдан ажратиш далолатномаси фотоси</small><input id="v4-act-photo" type="file" accept="image/*">';
- const b=document.createElement('label');b.className='v3file';b.innerHTML='<small>📷 Тармоқдан ажратилган ҳолати фотоси</small><input id="v4-disconnected-photo" type="file" accept="image/*">';photos.append(a,b);
-}
-// Clarify labels already present.
-const stamp=p.querySelector('#v3-stamp-photo')?.closest('.v3file');if(stamp)stamp.querySelector('small').textContent='📷 Тамға фотоси';
-const gas=p.querySelector('#v3-gas-photo')?.closest('.v3file');if(gas)gas.querySelector('small').textContent='📷 Барча мавжуд газ жиҳозлари фотолари';
-const meter=p.querySelector('#v3-meter-photo')?.closest('.v3file');if(meter)meter.querySelector('small').textContent='📷 Барча мавжуд ҳисоблагичлар фотолари';
-// Replace save/send handlers from v3 so new fields/photos are persisted.
+// Keep the restored second step, but remove the physical-inventory/network-disconnection block requested by the user.
+const stepCards=p.querySelectorAll('.v3steps>.v3card');
+if(stepCards[1]){const title=stepCards[1].querySelector('.v3title');if(title)title.textContent='2-қадам — Маълумот';}
+// Remove network-disconnection field and all requested inventory-only fields.
+['#v3-next','#v3-gas-count','#v3-gas-types','#v3-meter-type','#v3-meter-condition','#v4-meter-reading'].forEach(sel=>{const el=$(sel);if(el){const wrap=el.closest('label,.v3field,.v3row,.v3item')||el.parentElement;wrap?.remove();}});
+// Remove inventory/network-disconnection photo uploads.
+['#v3-gas-photo','#v3-meter-photo','#v4-act-photo','#v4-disconnected-photo'].forEach(sel=>{const el=$(sel);if(el)(el.closest('.v3file')||el).remove();});
+// Remove labels/cards whose visible text belongs only to the removed block.
+p.querySelectorAll('label,.v3field,.v3item,.v3row').forEach(el=>{const t=(el.textContent||'').trim();if(/Жойни хатловдан ўтказ|Жойни хатловдан утказ|Тармоқдан учирилди\?|Тармоқдан ўчирилди\?|Тармоқдан ажрат|Барча мавжуд газ жиҳозлари|Барча мавжуд ҳисоблагичлар/.test(t))el.remove();});
+const manual=$('#v3-manual');if(manual)manual.placeholder='Рўйхатда йўқ бўлса, истеъмолчи номини ёзинг';
+const contact=$('#v3-contact');if(contact)contact.closest('label,.v3field,.v3row,.v3item')?.remove();
+const debt=$('#v3-debt');if(debt)debt.innerHTML='<option value="">Қарздорлик турини танланг</option><option>Олдиндан тўловдан қарздорлик</option><option>Дебитор қарздорлик</option><option>Қарздорлик мавжуд эмас</option>';
+const stamp=p.querySelector('#v3-stamp-photo')?.closest('.v3file');if(stamp){const s=stamp.querySelector('small');if(s)s.textContent='📷 Тамға фотоси';}
+// Replace save/send handlers so only the remaining fields are submitted.
 const token=()=>localStorage.getItem('uog_token')||localStorage.getItem('token')||localStorage.getItem('authToken')||sessionStorage.getItem('token')||'';
 let gps=null;const status=t=>{const x=$('#v3-status');if(x)x.textContent=t};
 const locate=()=>new Promise((ok,no)=>{if(!navigator.geolocation)return no(Error('GPS_UNSUPPORTED'));const s=$('#v3-gps-state');if(s)s.textContent='Локация аниқланмоқда...';navigator.geolocation.getCurrentPosition(x=>{gps={lat:x.coords.latitude,lon:x.coords.longitude,accuracy:x.coords.accuracy,speed:x.coords.speed};if(s)s.textContent='✅ '+gps.lat.toFixed(6)+', '+gps.lon.toFixed(6)+' • ±'+Math.round(gps.accuracy||0)+' м';ok(gps)},e=>{if(s)s.textContent='❌ Локация аниқланмади';no(e)},{enableHighAccuracy:true,maximumAge:0,timeout:20000})});
 const read=files=>Promise.all(Array.from(files||[]).map(f=>new Promise(ok=>{const r=new FileReader();r.onload=()=>ok({name:f.name,type:f.type,data:r.result});r.onerror=()=>ok(null);r.readAsDataURL(f)}))).then(x=>x.filter(Boolean));
-const send=async state=>{const cid=+($('#v3-consumer')?.value||0),manualName=$('#v3-manual')?.value.trim()||'';if(!cid&&!manualName)return status('❌ Истеъмолчини қидириб танланг ёки номини киритинг.');if(!gps)try{await locate()}catch{return status('❌ Локацияни аниқлаш керак.')}if(state==='SUBMITTED'&&(!gps||+gps.accuracy>10))return status('❌ GPS аниқлиги 10 метрдан ошди. Аниқроқ локация олиб қайта юборинг.');
- const files=[];for(const id of ['v3-stamp-photo','v3-gas-photo','v3-meter-photo','v4-act-photo','v4-disconnected-photo','v3-extra-photo','v3-doc']){const x=$('#'+id);if(x)files.push(...await read(x.files))}
- const fw={debt_type:$('#v3-debt')?.value||'',disconnected:$('#v3-next')?.value||'',activity:$('#v3-activity')?.value||'',stamp_number:$('#v3-stamp')?.value.trim()||'',meter_reading:$('#v4-meter-reading')?.value.trim()||'',meter_types:$('#v3-meter-type')?.value.trim()||'',meter_condition:$('#v3-meter-condition')?.value||'',gas_appliance_count:$('#v3-gas-count')?.value||'',gas_appliance_types:$('#v3-gas-types')?.value.trim()||'',stamp_photo_label:'Тамға фотоси',gas_photo_label:'Барча мавжуд газ жиҳозлари фотолари',meter_photo_label:'Барча мавжуд ҳисоблагичлар фотолари',disconnect_act_photo_label:'Тармоқдан ажратиш далолатномаси фотоси',disconnected_state_photo_label:'Тармоқдан ажратилган ҳолати фотоси',extra_photo_label:'Қўшимча фотолар'};
- status(state==='SUBMITTED'?'Юборилмоқда...':'Сақланмоқда...');try{const r=await fetch('/api/employee-entry',{method:'POST',headers:{Authorization:'Bearer '+token(),'Content-Type':'application/json'},body:JSON.stringify({consumer_id:cid||undefined,consumer_name:manualName,status:state,contact_name:'',order_amount:$('#v3-amount')?.value||'',payment_status:$('#v3-debt')?.value||'',next_action:$('#v3-next')?.value||'',notes:$('#v3-notes')?.value||'',lat:gps.lat,lon:gps.lon,accuracy:gps.accuracy,fieldwork_data:fw,attachments:files})});const d=await r.json();if(!r.ok)throw Error(d.error||'Хатолик');status(state==='SUBMITTED'?'✅ Раҳбарга юборилди.':'✅ Маълумот сақланди.')}catch(e){status('❌ '+e.message)}};
- const oldSave=$('#v3-save'),oldSend=$('#v3-send');if(oldSave){const n=oldSave.cloneNode(true);oldSave.replaceWith(n);n.addEventListener('click',e=>{e.preventDefault();send('DRAFT')})}if(oldSend){const n=oldSend.cloneNode(true);oldSend.replaceWith(n);n.addEventListener('click',e=>{e.preventDefault();send('SUBMITTED')})}
- p.dataset.v4='1';return true};
+const send=async state=>{const cid=+($('#v3-consumer')?.value||0),manualName=$('#v3-manual')?.value.trim()||'';if(!cid&&!manualName)return status('❌ Истеъмолчини қидириб танланг ёки номини киритинг.');if(!gps)try{await locate()}catch{return status('❌ Локацияни аниқлаш керак.')};if(state==='SUBMITTED'&&(!gps||+gps.accuracy>10))return status('❌ GPS аниқлиги 10 метрдан ошди. Аниқроқ локация олиб қайта юборинг.');
+ const files=[];for(const id of ['v3-stamp-photo','v3-extra-photo','v3-doc']){const x=$('#'+id);if(x)files.push(...await read(x.files))}
+ const fw={debt_type:$('#v3-debt')?.value||'',activity:$('#v3-activity')?.value||'',stamp_number:$('#v3-stamp')?.value.trim()||''};
+ status(state==='SUBMITTED'?'Юборилмоқда...':'Сақланмоқда...');try{const r=await fetch('/api/employee-entry',{method:'POST',headers:{Authorization:'Bearer '+token(),'Content-Type':'application/json'},body:JSON.stringify({consumer_id:cid||undefined,consumer_name:manualName,status:state,contact_name:'',order_amount:$('#v3-amount')?.value||'',payment_status:$('#v3-debt')?.value||'',next_action:'',notes:$('#v3-notes')?.value||'',lat:gps.lat,lon:gps.lon,accuracy:gps.accuracy,fieldwork_data:fw,attachments:files})});const d=await r.json();if(!r.ok)throw Error(d.error||'Хатолик');status(state==='SUBMITTED'?'✅ Раҳбарга юборилди.':'✅ Маълумот сақланди.')}catch(e){status('❌ '+e.message)}};
+const oldSave=$('#v3-save'),oldSend=$('#v3-send');if(oldSave){const n=oldSave.cloneNode(true);oldSave.replaceWith(n);n.addEventListener('click',e=>{e.preventDefault();send('DRAFT')})}if(oldSend){const n=oldSend.cloneNode(true);oldSend.replaceWith(n);n.addEventListener('click',e=>{e.preventDefault();send('SUBMITTED')})}
+p.dataset.v4='1';return true};
 if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',()=>setTimeout(run,300));else setTimeout(run,300);[700,1500,3000].forEach(x=>setTimeout(run,x));new MutationObserver(()=>run()).observe(document.documentElement,{childList:true,subtree:true});
 })();

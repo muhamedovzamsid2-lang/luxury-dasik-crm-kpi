@@ -37,3 +37,4 @@ for(const r of rows){
 console.log(`EMPLOYEE_IMPORT_OK: ${rows.length}`);
 console.log(`EMPLOYEE_COUNT: ${db.prepare("SELECT COUNT(*) n FROM users WHERE role='employee' AND active=1").get().n}`);
 await import('./employee-credentials-bootstrap.js');
+await import('./employee-entry-bridge.js');

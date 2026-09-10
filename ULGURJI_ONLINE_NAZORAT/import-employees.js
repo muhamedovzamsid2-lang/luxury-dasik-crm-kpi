@@ -9,7 +9,7 @@ const b64=fs.readFileSync(new URL('./employees_seed_285_full.b64',import.meta.ur
 const rows=JSON.parse(zlib.gunzipSync(Buffer.from(b64,'base64')).toString('utf8'));
 if(rows.length!==285)throw Error(`EMPLOYEE_SEED_INVALID:${rows.length}`);
 const sha=s=>crypto.createHash('sha256').update(String(s??'')).digest('hex');
-const password=process.env.EMPLOYEE_PASSWORD||'Ulgurji2026';
+const password=process.env.EMPLOYEE_PASSWORD||'ulgurji2026';
 const hash=sha(password);
 const republic=new Set(['Темирбоев Олим','Турдиев Азиз','Комил Хошимов','Маьруф Хабибуллаев','Лазиз Холбутаев','Жасур Ахматджонов','Фазлитдин Сафаров']);
 db.prepare("DELETE FROM users WHERE login='employee1' AND employee_name='Ходим 1' AND role='employee'").run();
@@ -19,11 +19,11 @@ const updEmployee=db.prepare("UPDATE users SET login=?,password_hash=?,role='emp
 const updAdmin=db.prepare("UPDATE users SET role='admin',active=1,region=?,district=?,position=?,phone=? WHERE id=?");
 for(const r of rows){
   const wantedRole=republic.has(r.name)?'admin':'employee';
-  const login=`hodim${String(r.no).padStart(3,'0')}`;
+  const login=String(r.no).padStart(3,'0');
   const u=find.get(r.name);
   if(u){
     if(wantedRole==='employee') updEmployee.run(login,hash,r.region,r.district,r.position,r.phone,u.id);
-    else updAdmin.run(r.region,r.district,r.position,r.phone,u.id);
+    else updAdmin.run(login,r.region,r.district,r.position,r.phone,u.id);
   }else{
     const x=db.prepare('SELECT id FROM users WHERE login=?').get(login);
     if(x){

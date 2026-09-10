@@ -14,18 +14,21 @@ const hash=sha(password);
 const republic=new Set(['Темирбоев Олим','Турдиев Азиз','Комил Хошимов','Маьруф Хабибуллаев','Лазиз Холбутаев','Жасур Ахматджонов','Фазлитдин Сафаров']);
 db.prepare("DELETE FROM users WHERE login='employee1' AND employee_name='Ходим 1' AND role='employee'").run();
 const ins=db.prepare("INSERT INTO users(login,password_hash,role,employee_name,active,region,district,position,phone) VALUES(?,?,?,?,1,?,?,?,?)");
-const find=db.prepare("SELECT id,role,password_hash FROM users WHERE employee_name=? ORDER BY CASE WHEN role='admin' THEN 0 ELSE 1 END,id LIMIT 1");
-const upd=db.prepare("UPDATE users SET role=?,active=1,region=?,district=?,position=?,phone=? WHERE id=?");
+const find=db.prepare("SELECT id,login,role,password_hash FROM users WHERE employee_name=? ORDER BY CASE WHEN role='admin' THEN 0 ELSE 1 END,id LIMIT 1");
+const updEmployee=db.prepare("UPDATE users SET login=?,password_hash=?,role='employee',active=1,region=?,district=?,position=?,phone=? WHERE id=?");
+const updAdmin=db.prepare("UPDATE users SET role='admin',active=1,region=?,district=?,position=?,phone=? WHERE id=?");
 for(const r of rows){
   const wantedRole=republic.has(r.name)?'admin':'employee';
+  const login=`hodim${String(r.no).padStart(3,'0')}`;
   const u=find.get(r.name);
   if(u){
-    upd.run(wantedRole,r.region,r.district,r.position,r.phone,u.id);
+    if(wantedRole==='employee') updEmployee.run(login,hash,r.region,r.district,r.position,r.phone,u.id);
+    else updAdmin.run(r.region,r.district,r.position,r.phone,u.id);
   }else{
-    const login=`hodim${String(r.no).padStart(3,'0')}`;
     const x=db.prepare('SELECT id FROM users WHERE login=?').get(login);
     if(x){
-      upd.run(wantedRole,r.region,r.district,r.position,r.phone,x.id);
+      if(wantedRole==='employee') updEmployee.run(login,hash,r.region,r.district,r.position,r.phone,x.id);
+      else updAdmin.run(r.region,r.district,r.position,r.phone,x.id);
     }else{
       ins.run(login,hash,wantedRole,r.name,r.region,r.district,r.position,r.phone);
     }

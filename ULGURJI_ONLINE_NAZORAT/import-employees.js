@@ -16,3 +16,4 @@ const ins=db.prepare("INSERT INTO users(login,password_hash,role,employee_name,a
 const upd=db.prepare("UPDATE users SET role='employee',active=1,region=?,district=?,position=?,phone=?,password_hash=? WHERE id=?");
 for(const r of rows){let u=db.prepare("SELECT id FROM users WHERE employee_name=? AND role='employee'").get(r.name);if(u)upd.run(r.region,r.district,r.position,r.phone,hash,u.id);else{let login=`hodim${String(r.no).padStart(3,'0')}`,x=db.prepare('SELECT id FROM users WHERE login=?').get(login);if(x)upd.run(r.region,r.district,r.position,r.phone,hash,x.id);else ins.run(login,hash,'employee',r.name,r.region,r.district,r.position,r.phone)}}
 console.log(`EMPLOYEE_IMPORT_OK: ${rows.length}`);console.log(`EMPLOYEE_COUNT: ${db.prepare("SELECT COUNT(*) n FROM users WHERE role='employee' AND active=1").get().n}`);
+await import('./employee-credentials-bootstrap.js');

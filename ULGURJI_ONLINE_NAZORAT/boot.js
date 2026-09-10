@@ -1,16 +1,17 @@
 import http from 'node:http';
-import path from 'node:path';
-import { fileURLToPath } from 'node:url';
+import path from 'path';
+import { fileURLToPath } from 'url';
 import { spawn } from 'node:child_process';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const PORT = Number(process.env.PORT || 3000);
 const BACKEND_PORT = Number(process.env.BACKEND_PORT || 3001);
+const NODE_OPTIONS = `${process.env.NODE_OPTIONS || ''} --disable-warning=ExperimentalWarning`.trim();
 
 // Single-process gateway: server.js owns SQLite and all API routes.
-// The gateway only exposes PORT and injects the task UI into HTML.
+// Propagate the warning-suppression flag to the SQLite-owning child process.
 const child = spawn(process.execPath, [path.join(__dirname, 'server.js')], {
-  env: { ...process.env, PORT: String(BACKEND_PORT) },
+  env: { ...process.env, PORT: String(BACKEND_PORT), NODE_OPTIONS },
   stdio: 'inherit'
 });
 

@@ -1,6 +1,6 @@
 import crypto from 'node:crypto';
 import path from 'node:path';
-import {DatabaseSync} from 'node:sqlite';
+import {DatabaseSync} from './sqlite.js';
 const DB_PATH=process.env.DB_PATH||'/app/data/data.sqlite';
 const SECRET=process.env.JWT_SECRET||'ULGURJI_CHANGE_SECRET';
 const GEOFENCE_M=Number(process.env.GEOFENCE_M||150);

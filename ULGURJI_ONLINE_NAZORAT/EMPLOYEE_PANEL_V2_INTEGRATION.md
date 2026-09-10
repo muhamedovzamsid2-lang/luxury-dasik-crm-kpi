@@ -1,0 +1,1 @@
+Integration target: route authenticated role=employee users to /employee-panel-v2.html. The panel is intentionally isolated from all legacy frontend scripts.

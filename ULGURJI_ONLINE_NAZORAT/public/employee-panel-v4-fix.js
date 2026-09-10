@@ -1,5 +1,5 @@
 (()=>{
-const run=()=>{const p=document.querySelector('#employee-entry-panel');if(!p||p.dataset.v4==='1')return false;const $=s=>p.querySelector(s);
+const run=()=>{const p=document.querySelector('#employee-entry-panel');if(!p||p.dataset.v4==='1'||p.dataset.locfix==='1'||window.__UOG_EMPLOYEE_FINALFIX_V5)return false;const $=s=>p.querySelector(s);
 const sel=$('#v3-consumer'); if(sel){sel.style.display='';const lab=p.querySelector('.v3select-label');if(lab)lab.style.display='';}
 const manual=$('#v3-manual');if(manual){manual.placeholder='Рўйхатда йўқ бўлса, истеъмолчи номини ёзинг';}
 const contact=$('#v3-contact');if(contact){contact.remove();}

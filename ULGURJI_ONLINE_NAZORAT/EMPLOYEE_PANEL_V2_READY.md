@@ -1,0 +1,1 @@
+Employee panel v2 is a clean, isolated UI. It uses the existing authentication and employee assignment/visit APIs and does not load the legacy manager/frontend script chain.

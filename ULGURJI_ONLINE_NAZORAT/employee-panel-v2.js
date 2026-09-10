@@ -1,0 +1,1 @@
+(function(){const p='/employee-panel-v2.html';if(location.pathname!=='/')return;fetch('/api/me',{headers:{Authorization:'Bearer '+(localStorage.getItem('ulgurji_token')||'')}}).then(r=>r.ok?r.json():null).then(u=>{if(u&&u.role==='employee')location.replace(p)}).catch(()=>{})})();

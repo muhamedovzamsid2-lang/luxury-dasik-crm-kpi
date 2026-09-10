@@ -1,4 +1,6 @@
 (()=>{
+if(window.__UOG_EMPLOYEE_FINALFIX_V2)return;
+window.__UOG_EMPLOYEE_FINALFIX_V2=true;
 const boot=()=>{
  const p=document.querySelector('#employee-entry-panel');
  if(!p)return;
@@ -17,7 +19,6 @@ const boot=()=>{
    if(statusEl)dataCard.appendChild(statusEl);
    docCard.remove();
   }
-  // Remove only the requested inventory/network-disconnection block.
   ['#v3-next','#v3-gas-count','#v3-gas-types','#v3-meter-type','#v3-meter-condition','#v4-meter-reading'].forEach(sel=>{
    const el=dataCard.querySelector(sel);if(el)(el.closest('label,.v3field,.v3row,.v3item')||el.parentElement)?.remove();
   });
@@ -54,7 +55,6 @@ const boot=()=>{
   });
  }
 };
-if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',()=>setTimeout(boot,500));else setTimeout(boot,500);
-[1200,2500,5000].forEach(t=>setTimeout(boot,t));
-new MutationObserver(()=>boot()).observe(document.documentElement,{childList:true,subtree:true});
+const schedule=()=>{[500,1500,3000,5000].forEach(t=>setTimeout(boot,t));};
+if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',schedule,{once:true});else schedule();
 })();

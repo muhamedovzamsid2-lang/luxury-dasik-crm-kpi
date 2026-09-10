@@ -1,0 +1,1 @@
+Clean employee UI rebuild: single page, role-isolated, assignment-only consumer list, GPS visit workflow, visit outcome/notes, and stable logout/session handling.

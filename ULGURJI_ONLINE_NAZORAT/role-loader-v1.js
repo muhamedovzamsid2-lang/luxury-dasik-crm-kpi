@@ -1,0 +1,1 @@
+(()=>{const token=localStorage.getItem('ulgurji_token');if(!token)return;fetch('/api/me',{headers:{Authorization:'Bearer '+token},cache:'no-store'}).then(r=>r.ok?r.json():null).then(u=>{if(u?.role==='employee'&&!location.pathname.endsWith('/employee-panel-v2.html'))location.replace('/employee-panel-v2.html')}).catch(()=>{});})();

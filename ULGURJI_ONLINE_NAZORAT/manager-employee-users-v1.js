@@ -1,5 +1,5 @@
 import crypto from 'node:crypto';
-import { DatabaseSync } from 'node:sqlite';
+import { DatabaseSync } from './sqlite.js';
 const DB=process.env.DB_PATH||'/app/data/data.sqlite';
 const db=new DatabaseSync(DB);
 const sha=s=>crypto.createHash('sha256').update(String(s??'')).digest('hex');

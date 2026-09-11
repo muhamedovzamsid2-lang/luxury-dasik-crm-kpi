@@ -7,6 +7,6 @@
   "scripts": {
     "start": "NODE_OPTIONS=--disable-warning=ExperimentalWarning node gateway-v4.js",
     "import": "python import_excel.py",
-    "check": "node --check server.js && node --check public/app-fixed.js && node --check public/app-fixed-v8.js && node --check public/tasks-v3.js && node --check public/final-ui.js && node --check public/executive-control.js && node --check public/management-v9.js && node --check public/map-close-v9.js && node --check gateway-v4.js && node --check import-employees.js && node --check boot.js && node --check boot-v2.js && node --check boot-v3.js"
+    "check": "node --check server.js && node --check employee-entry-api.js && node --check territory-visit-api.js && node --check public/employee-entry-final-fix-v1.js && node --check public/employee-entry-ui-fix-v2.js && node --check gateway-v4.js && node --check import-employees.js && node --check boot.js && node --check boot-v2.js && node --check boot-v3.js"
   }
 }

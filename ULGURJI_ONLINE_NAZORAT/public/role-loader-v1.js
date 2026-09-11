@@ -4,12 +4,13 @@
   if(!token)return;
 
   const employeeScripts=[
-    '/employee-entry-final-fix-v1.js?v=4',
-    '/employee-location-submit-fix-v1.js?v=3',
-    '/employee-tasks-final-fix-v1.js?v=3',
-    '/employee-mobile-ui-v1.js?v=5',
-    '/employee-panel-v4-fix.js?v=5',
-    '/location-approval-ui-v1.js?v=3'
+    '/employee-entry-final-fix-v1.js?v=20260911-2',
+    '/employee-submit-fix-v1.js?v=20260911-1',
+    '/employee-location-submit-fix-v1.js?v=20260911-2',
+    '/employee-tasks-final-fix-v1.js?v=20260911-2',
+    '/employee-mobile-ui-v1.js?v=20260911-2',
+    '/employee-panel-v4-fix.js?v=20260911-2',
+    '/location-approval-ui-v1.js?v=20260911-2'
   ];
 
   const loaded=new Set();
@@ -34,7 +35,7 @@
 
       if(me.role==='admin'){
         if(location.pathname!=='/manager-panel-v1.html'){
-          location.replace('/manager-panel-v1.html?v=20260911');
+          location.replace('/manager-panel-v1.html?v=20260911-2');
         }
         return;
       }

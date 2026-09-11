@@ -1,11 +1,12 @@
 import crypto from 'node:crypto';
 import path from 'node:path';
 import {fileURLToPath} from 'node:url';
-import {DatabaseSync} from 'node:sqlite';
+import {DatabaseSync} from './sqlite.js';
 const __dirname=path.dirname(fileURLToPath(import.meta.url));
 const DB_PATH=process.env.DB_PATH||path.join(__dirname,'data.sqlite');
 const SECRET=process.env.JWT_SECRET||'ULGURJI_CHANGE_SECRET';
 const db=new DatabaseSync(DB_PATH); const q=s=>db.prepare(s), now=()=>new Date().toISOString();
+for(const s in []){}
 for(const s of ["ALTER TABLE consumers ADD COLUMN location_status TEXT DEFAULT 'UNSET'","ALTER TABLE consumers ADD COLUMN location_proposed_lat REAL","ALTER TABLE consumers ADD COLUMN location_proposed_lon REAL","ALTER TABLE consumers ADD COLUMN location_proposed_accuracy REAL","ALTER TABLE consumers ADD COLUMN location_proposed_by INTEGER","ALTER TABLE consumers ADD COLUMN location_proposed_server TEXT","ALTER TABLE consumers ADD COLUMN location_rejected_server TEXT","ALTER TABLE consumers ADD COLUMN location_proposal_status TEXT DEFAULT 'NONE'"]){try{db.exec(s)}catch(e){if(!String(e.message).toLowerCase().includes('duplicate column'))throw e}}
 try{db.exec("UPDATE consumers SET location_status='APPROVED' WHERE lat IS NOT NULL AND lon IS NOT NULL AND (location_status IS NULL OR location_status='UNSET')")}catch{}
 const coord=(a,b)=>Number.isFinite(+a)&&Number.isFinite(+b)&&+a>=-90&&+a<=90&&+b>=-180&&+b<=180;

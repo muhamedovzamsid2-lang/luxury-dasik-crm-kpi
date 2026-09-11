@@ -1,12 +1,12 @@
 {
   "name": "ulgurji-online-nazorat",
-  "version": "6.9.2",
+  "version": "6.9.3",
   "private": true,
   "type": "module",
   "engines": { "node": ">=22.13.0" },
   "scripts": {
     "start": "NODE_OPTIONS=--disable-warning=ExperimentalWarning node gateway-v4.js",
     "import": "python import_excel.py",
-    "check": "node --check server.js && node --check employee-entry-api.js && node --check territory-visit-api.js && node --check public/employee-entry-final-fix-v1.js && node --check public/employee-entry-ui-fix-v2.js && node --check gateway-v4.js && node --check import-employees.js && node --check boot.js && node --check boot-v2.js && node --check boot-v3.js"
+    "check": "node --check server.js && node --check employee-entry-api.js && node --check territory-visit-api.js && node --check territory-report-api.js && node --check public/employee-entry-final-fix-v1.js && node --check public/employee-entry-ui-fix-v2.js && node --check public/role-loader-v1.js && node --check public/assignment-removal-v1.js && node --check gateway-v4.js && node --check import-employees.js && node --check boot.js && node --check boot-v2.js && node --check boot-v3.js"
   }
 }

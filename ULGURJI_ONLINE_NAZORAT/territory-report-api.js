@@ -1,56 +1,16 @@
+import crypto from 'node:crypto';
 import { DatabaseSync } from './sqlite.js';
 const db=new DatabaseSync(process.env.DB_PATH||'/app/data/data.sqlite');
+const SECRET=process.env.JWT_SECRET||'ULGURJI_CHANGE_SECRET';
 const q=s=>db.prepare(s),now=()=>new Date().toISOString().slice(0,10);
 const validDate=x=>/^\d{4}-\d{2}-\d{2}$/.test(String(x||''));
 const validMonth=x=>/^\d{4}-\d{2}$/.test(String(x||''));
 const norm=s=>String(s??'').trim().toLowerCase().replace(/[ʻ’‘`']/g,"'").replace(/[–—-]/g,' ').replace(/\s+/g,' ');
-function sameTerritory(e,c){
-  const er=norm(e.region), cr=norm(c.region||c.branch);
-  if(!er||!cr||er!==cr)return false;
-  return !e.district||!c.district||norm(e.district)===norm(c.district);
-}
+const b64=s=>Buffer.from(s).toString('base64url');
+function verify(t){const a=String(t||'').split('.');if(a.length!==3)throw Error('AUTH_INVALID');const s=b64(crypto.createHmac('sha256',SECRET).update(a[0]+'.'+a[1]).digest());if(s!==a[2])throw Error('AUTH_INVALID');const p=JSON.parse(Buffer.from(a[1],'base64url').toString());if(!p.exp||p.exp<Date.now()/1000)throw Error('AUTH_INVALID');return p}
+function sameTerritory(e,c){const er=norm(e.region),cr=norm(c.region||c.branch);if(!er||!cr||er!==cr)return false;return !e.district||!c.district||norm(e.district)===norm(c.district)}
 function employees(){return q("SELECT id,employee_name,region,district FROM users WHERE role='employee' AND active=1 ORDER BY region,district,employee_name").all()}
-function territoryConsumers(e){
-  return q('SELECT id,region,branch,district FROM consumers WHERE active=1').all().filter(c=>sameTerritory(e,c));
-}
-function dayRow(e,date){
-  const cs=territoryConsumers(e),ids=new Set(cs.map(c=>c.id));
-  if(!ids.size)return {employee_id:e.id,employee:e.employee_name,region:e.region||'',district:e.district||'',planned:0,visited:0,not_visited:0,suspicious:0,completion:0};
-  const vs=q("SELECT id,consumer_id,status FROM visits WHERE employee_id=? AND substr(started_server,1,10)=?").all(e.id,date).filter(v=>ids.has(v.consumer_id));
-  const visitedIds=new Set(vs.map(v=>v.consumer_id));
-  const suspicious=new Set(vs.filter(v=>v.status!=='VALID').map(v=>v.consumer_id));
-  const planned=cs.length,visited=visitedIds.size,not_visited=Math.max(0,planned-visited),bad=suspicious.size;
-  return {employee_id:e.id,employee:e.employee_name,region:e.region||'',district:e.district||'',planned,visited,not_visited,suspicious:bad,completion:planned?Math.round(visited/planned*100):0};
-}
-export async function handleTerritoryReport(req,res,url){
-  if(req.method!=='GET'||(url!=='/api/report'&&url!=='/api/monthly'))return false;
-  const auth=String(req.headers.authorization||'');
-  if(!auth.startsWith('Bearer ')){res.writeHead(401,{'Content-Type':'application/json'});res.end(JSON.stringify({error:'AUTH_INVALID'}));return true}
-  try{
-    const token=auth.slice(7).split('.');
-    if(token.length!==3)throw Error('AUTH_INVALID');
-    const payload=JSON.parse(Buffer.from(token[1],'base64url').toString());
-    if(payload.exp<Date.now()/1000||payload.role!=='admin')throw Error('ADMIN_ONLY');
-    const p=new URL(req.url,'http://x').searchParams;
-    if(url==='/api/report'){
-      const date=validDate(p.get('date'))?p.get('date'):now();
-      return send(res,200,{date,result:employees().map(e=>dayRow(e,date))}),true;
-    }
-    const month=validMonth(p.get('month'))?p.get('month'):now().slice(0,7);
-    const y=+month.slice(0,4),m=+month.slice(5,7),days=new Date(y,m,0).getDate(),out=[];
-    for(const e of employees()){
-      const cs=territoryConsumers(e),ids=new Set(cs.map(c=>c.id));
-      let visitedIds=new Set(),suspiciousIds=new Set(),visited=0,suspicious=0;
-      for(let d=1;d<=days;d++){
-        const date=`${month}-${String(d).padStart(2,'0')}`;
-        const vs=q("SELECT consumer_id,status FROM visits WHERE employee_id=? AND substr(started_server,1,10)=?").all(e.id,date).filter(v=>ids.has(v.consumer_id));
-        visited+=new Set(vs.map(v=>v.consumer_id)).size;
-        suspicious+=new Set(vs.filter(v=>v.status!=='VALID').map(v=>v.consumer_id)).size;
-      }
-      const planned=cs.length*days,not_visited=Math.max(0,planned-visited);
-      out.push({employee_id:e.id,employee_name:e.employee_name,region:e.region||'',district:e.district||'',planned,visited,valid:Math.max(0,visited-suspicious),suspicious,not_visited,completion:planned?Math.round(visited/planned*100):0});
-    }
-    return send(res,200,{month,result:out,summary:{employees:out.length,planned:out.reduce((s,x)=>s+x.planned,0),visited:out.reduce((s,x)=>s+x.visited,0),valid:out.reduce((s,x)=>s+x.valid,0),suspicious:out.reduce((s,x)=>s+x.suspicious,0),not_visited:out.reduce((s,x)=>s+x.not_visited,0)}}),true;
-  }catch(e){return send(res,e.message==='ADMIN_ONLY'?403:401,{error:e.message==='ADMIN_ONLY'?'ADMIN_ONLY':'AUTH_INVALID'}),true}
-}
+function territoryConsumers(e){return q('SELECT id,region,branch,district FROM consumers WHERE active=1').all().filter(c=>sameTerritory(e,c))}
+function dayRow(e,date){const cs=territoryConsumers(e),ids=new Set(cs.map(c=>c.id));if(!ids.size)return {employee_id:e.id,employee:e.employee_name,region:e.region||'',district:e.district||'',planned:0,visited:0,not_visited:0,suspicious:0,completion:0};const vs=q("SELECT id,consumer_id,status FROM visits WHERE employee_id=? AND substr(started_server,1,10)=?").all(e.id,date).filter(v=>ids.has(v.consumer_id));const visitedIds=new Set(vs.map(v=>v.consumer_id)),suspicious=new Set(vs.filter(v=>v.status!=='VALID').map(v=>v.consumer_id));const planned=cs.length,visited=visitedIds.size,not_visited=Math.max(0,planned-visited),bad=suspicious.size;return {employee_id:e.id,employee:e.employee_name,region:e.region||'',district:e.district||'',planned,visited,not_visited,suspicious:bad,completion:planned?Math.round(visited/planned*100):0}}
+export async function handleTerritoryReport(req,res,url){if(req.method!=='GET'||(url!=='/api/report'&&url!=='/api/monthly'))return false;try{const payload=verify(String(req.headers.authorization||'').replace(/^Bearer\s+/i,''));if(payload.role!=='admin')throw Error('ADMIN_ONLY');const p=new URL(req.url,'http://x').searchParams;if(url==='/api/report'){const date=validDate(p.get('date'))?p.get('date'):now();return send(res,200,{date,result:employees().map(e=>dayRow(e,date))}),true}const month=validMonth(p.get('month'))?p.get('month'):now().slice(0,7),y=+month.slice(0,4),m=+month.slice(5,7),days=new Date(y,m,0).getDate(),out=[];for(const e of employees()){const cs=territoryConsumers(e),ids=new Set(cs.map(c=>c.id));let visited=0,suspicious=0;for(let d=1;d<=days;d++){const date=`${month}-${String(d).padStart(2,'0')}`,vs=q("SELECT consumer_id,status FROM visits WHERE employee_id=? AND substr(started_server,1,10)=?").all(e.id,date).filter(v=>ids.has(v.consumer_id));visited+=new Set(vs.map(v=>v.consumer_id)).size;suspicious+=new Set(vs.filter(v=>v.status!=='VALID').map(v=>v.consumer_id)).size}const planned=cs.length*days;out.push({employee_id:e.id,employee_name:e.employee_name,region:e.region||'',district:e.district||'',planned,visited,valid:Math.max(0,visited-suspicious),suspicious,not_visited:Math.max(0,planned-visited),completion:planned?Math.round(visited/planned*100):0})}return send(res,200,{month,result:out,summary:{employees:out.length,planned:out.reduce((s,x)=>s+x.planned,0),visited:out.reduce((s,x)=>s+x.visited,0),valid:out.reduce((s,x)=>s+x.valid,0),suspicious:out.reduce((s,x)=>s+x.suspicious,0),not_visited:out.reduce((s,x)=>s+x.not_visited,0)}}),true}catch(e){return send(res,e.message==='ADMIN_ONLY'?403:401,{error:e.message==='ADMIN_ONLY'?'ADMIN_ONLY':'AUTH_INVALID'}),true}}
 function send(res,status,data){const b=JSON.stringify(data);res.writeHead(status,{'Content-Type':'application/json','Cache-Control':'no-store','Access-Control-Allow-Origin':'*','Access-Control-Allow-Headers':'Authorization, Content-Type'});res.end(b)}

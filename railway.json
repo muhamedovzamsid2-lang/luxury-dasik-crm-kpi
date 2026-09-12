@@ -1,8 +1,8 @@
 {
   "$schema": "https://railway.com/railway.schema.json",
   "deploy": {
-    "startCommand": "node gateway-v4.js",
+    "startCommand": "node --import=./warning-filter.js gateway-v4.js",
     "healthcheckPath": "/api/health",
-    "restartPolicyType": "ALWAYS"
+    "restartPolicyType": "ON_FAILURE"
   }
 }

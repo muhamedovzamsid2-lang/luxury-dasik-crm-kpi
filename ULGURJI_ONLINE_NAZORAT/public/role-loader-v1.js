@@ -9,7 +9,7 @@
     '/employee-location-submit-fix-v1.js?v=20260911-2',
     '/employee-tasks-final-fix-v1.js?v=20260911-2',
     '/employee-mobile-ui-v1.js?v=20260911-2',
-    '/employee-panel-v4-fix.js?v=20260911-2',
+    '/employee-panel-v4-fix.js?v=20260912-1',
     '/location-approval-ui-v1.js?v=20260911-2',
     '/employee-entry-ui-fix-v2.js?v=20260911-1'
   ];
